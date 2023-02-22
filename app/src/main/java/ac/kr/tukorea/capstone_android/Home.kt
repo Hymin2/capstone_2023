@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +24,16 @@ class Home : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var adapter : MyAdapter
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var productsArrayList : ArrayList<Products>
+
+    lateinit var imageId : Array<Int>
+    lateinit var title : Array<String>
+    lateinit var price : Array<Int>
+    lateinit var products : Array<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,5 +69,64 @@ class Home : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataInitialize()
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        adapter = MyAdapter(productsArrayList)
+        recyclerView.adapter = adapter
+    }
+
+
+    private fun dataInitialize() {
+
+        productsArrayList = arrayListOf<Products>()
+
+        imageId = arrayOf(
+            R.drawable.galaxys23,
+            R.drawable.iphone14pro,
+            R.drawable.galaxys23,
+            R.drawable.iphone14pro,
+            R.drawable.galaxys23,
+            R.drawable.iphone14pro,
+            R.drawable.galaxys23,
+            R.drawable.iphone14pro,
+
+        )
+
+        title = arrayOf(
+            "갤럭시 S23 판매합니다",
+            "아이폰 14프로 팜",
+            "갤럭시 S23 판매합니다",
+            "아이폰 14프로 팜",
+            "갤럭시 S23 판매합니다",
+            "아이폰 14프로 팜",
+            "갤럭시 S23 판매합니다",
+            "아이폰 14프로 팜",
+
+
+        )
+
+        price = arrayOf(
+            1000000,
+            1100000,
+            1000000,
+            1100000,
+            1000000,
+            1100000,
+            1000000,
+            1100000,
+
+        )
+
+        for (i in imageId.indices) {
+            val products = Products(imageId[i], title[i], price[i])
+            productsArrayList.add(products)
+        }
     }
 }
