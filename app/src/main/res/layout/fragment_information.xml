@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat"
-    android:id="@+id/fragment_chat">
+    tools:context=".Information"
+    android:id="@+id/fragment_information">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="채팅" />
+        android:text="핸드폰 정보" />
 
 </FrameLayout>

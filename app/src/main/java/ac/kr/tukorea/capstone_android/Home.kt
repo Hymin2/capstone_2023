@@ -1,12 +1,15 @@
 package ac.kr.tukorea.capstone_android
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresPermission
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,6 +31,7 @@ class Home : Fragment() {
     private lateinit var adapter : MyAdapter
     private lateinit var recyclerView : RecyclerView
     private lateinit var productsArrayList : ArrayList<Products>
+    private lateinit var writeFAB : FloatingActionButton
 
     lateinit var imageId : Array<Int>
     lateinit var title : Array<String>
@@ -80,6 +84,12 @@ class Home : Fragment() {
         recyclerView.setHasFixedSize(true)
         adapter = MyAdapter(productsArrayList)
         recyclerView.adapter = adapter
+        writeFAB = view.findViewById(R.id.write_fab)
+
+        writeFAB.setOnClickListener{
+            val intent = Intent(getActivity(), WriteActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

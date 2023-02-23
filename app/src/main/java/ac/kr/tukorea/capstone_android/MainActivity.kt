@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
             when(it.itemId){
                 R.id.home_menu -> replaceFragment(Home())
+                R.id.community -> replaceFragment(Community())
+                R.id.information -> replaceFragment(Information())
                 R.id.chat -> replaceFragment(Chat())
                 R.id.my_menu -> replaceFragment(MyMenu())
 
