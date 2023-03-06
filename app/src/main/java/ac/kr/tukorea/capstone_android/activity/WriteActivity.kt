@@ -1,12 +1,12 @@
-package ac.kr.tukorea.capstone_android
+package ac.kr.tukorea.capstone_android.activity
 
+import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityWriteBinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import android.widget.Toolbar
 
 class WriteActivity : AppCompatActivity() {
 

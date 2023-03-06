@@ -1,16 +1,20 @@
-package ac.kr.tukorea.capstone_android
+package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.adapter.MyAdapter
+import ac.kr.tukorea.capstone_android.data.Products
+import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.activity.SaleActivity
+import ac.kr.tukorea.capstone_android.activity.WriteActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresPermission
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
 import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,7 +40,7 @@ class Home : Fragment() {
     lateinit var imageId : Array<Int>
     lateinit var title : Array<String>
     lateinit var price : Array<Int>
-    lateinit var products : Array<String>
+    lateinit var content : Array<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,6 +94,8 @@ class Home : Fragment() {
             val intent = Intent(getActivity(), WriteActivity::class.java)
             startActivity(intent)
         }
+
+        getUserData()
     }
 
 
@@ -134,9 +140,37 @@ class Home : Fragment() {
 
         )
 
+        content = arrayOf(
+            "싸게 팝니다1",
+            "급하게 팔아요2",
+            "싸게 팝니다3",
+            "급하게 팔아요4",
+            "싸게 팝니다5",
+            "급하게 팔아요6",
+            "싸게 팝니다7",
+            "급하게 팔아요8",
+        )
+    }
+
+    private fun getUserData() {
         for (i in imageId.indices) {
             val products = Products(imageId[i], title[i], price[i])
             productsArrayList.add(products)
         }
+
+        var adapter = MyAdapter(productsArrayList)
+        recyclerView.adapter = adapter
+        adapter.setOnItemClickListener(object : MyAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {
+
+                val intent = Intent(context,SaleActivity::class.java)
+                intent.putExtra("title",productsArrayList[position].title)
+                intent.putExtra("imageId",productsArrayList[position].productImage)
+                intent.putExtra("price",productsArrayList[position].price)
+                intent.putExtra("content",content[position])
+
+                startActivity(intent)
+            }
+        })
     }
 }

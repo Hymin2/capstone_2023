@@ -1,10 +1,10 @@
-package ac.kr.tukorea.capstone_android
+package ac.kr.tukorea.capstone_android.activity
 
+import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityMainBinding
+import ac.kr.tukorea.capstone_android.fragment.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Window
-import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {

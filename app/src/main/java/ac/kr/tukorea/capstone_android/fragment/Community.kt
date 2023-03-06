@@ -1,5 +1,6 @@
-package ac.kr.tukorea.capstone_android
+package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Information.newInstance] factory method to
+ * Use the [Community.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Information : Fragment() {
+class Community : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +35,7 @@ class Information : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_information, container, false)
+        return inflater.inflate(R.layout.fragment_community, container, false)
     }
 
     companion object {
@@ -44,12 +45,12 @@ class Information : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Information.
+         * @return A new instance of fragment Community.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Information().apply {
+            Community().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

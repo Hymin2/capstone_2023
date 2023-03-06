@@ -1,5 +1,6 @@
-package ac.kr.tukorea.capstone_android
+package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

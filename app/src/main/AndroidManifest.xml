@@ -14,11 +14,14 @@
         android:theme="@style/Theme.Capstone_Android"
         tools:targetApi="31">
         <activity
-            android:name=".WriteActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".activity.SaleActivity"
+            android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.WriteActivity"
+            android:exported="false"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
