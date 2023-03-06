@@ -1,6 +1,6 @@
 package ac.kr.tukorea.capstone_android.fragment
 
-import ac.kr.tukorea.capstone_android.adapter.MyAdapter
+import ac.kr.tukorea.capstone_android.adapter.SaleAdapter
 import ac.kr.tukorea.capstone_android.data.Products
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.SaleActivity
@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,7 +31,7 @@ class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var adapter : MyAdapter
+    private lateinit var adapter : SaleAdapter
     private lateinit var recyclerView : RecyclerView
     private lateinit var productsArrayList : ArrayList<Products>
     private lateinit var writeFAB : FloatingActionButton
@@ -83,10 +82,10 @@ class Home : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataInitialize()
         val layoutManager = LinearLayoutManager(context)
-        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView = view.findViewById(R.id.sale_recycler_view)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        adapter = MyAdapter(productsArrayList)
+        adapter = SaleAdapter(productsArrayList)
         recyclerView.adapter = adapter
         writeFAB = view.findViewById(R.id.write_fab)
 
@@ -158,15 +157,15 @@ class Home : Fragment() {
             productsArrayList.add(products)
         }
 
-        var adapter = MyAdapter(productsArrayList)
+        var adapter = SaleAdapter(productsArrayList)
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(object : MyAdapter.onItemClickListener{
+        adapter.setOnItemClickListener(object : SaleAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
 
                 val intent = Intent(context,SaleActivity::class.java)
-                intent.putExtra("title",productsArrayList[position].title)
-                intent.putExtra("imageId",productsArrayList[position].productImage)
-                intent.putExtra("price",productsArrayList[position].price)
+                intent.putExtra("title",productsArrayList[position].saleTitle)
+                intent.putExtra("imageId",productsArrayList[position].saleImage)
+                intent.putExtra("price",productsArrayList[position].salePrice)
                 intent.putExtra("content",content[position])
 
                 startActivity(intent)

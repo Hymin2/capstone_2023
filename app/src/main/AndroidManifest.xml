@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Capstone_Android"
         tools:targetApi="31">
         <activity
+            android:name=".activity.PostActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SaleActivity"
             android:exported="false" />
         <activity

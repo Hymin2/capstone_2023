@@ -7,9 +7,12 @@
     android:id="@+id/fragment_community">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/commu_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="커뮤니티" />
+        tools:listitem="@layout/community_list_item"/>
 
 </FrameLayout>

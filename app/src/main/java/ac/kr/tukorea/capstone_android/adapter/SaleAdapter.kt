@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 
-class MyAdapter(private val productsList : ArrayList<Products>) :
-    RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class SaleAdapter(private val productsList : ArrayList<Products>) :
+    RecyclerView.Adapter<SaleAdapter.MyViewHolder>() {
 
     private lateinit var mListener : onItemClickListener
 
@@ -29,15 +29,15 @@ class MyAdapter(private val productsList : ArrayList<Products>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.product_list_item,
-        parent, false)
+            parent, false)
         return MyViewHolder(itemView, mListener)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = productsList[position]
-        holder.productImage.setImageResource(currentItem.productImage)
-        holder.title.text = currentItem.title
-        holder.price.text = currentItem.price.toString()
+        holder.productImage.setImageResource(currentItem.saleImage)
+        holder.title.text = currentItem.saleTitle
+        holder.price.text = currentItem.salePrice.toString()
     }
 
     override fun getItemCount(): Int {
