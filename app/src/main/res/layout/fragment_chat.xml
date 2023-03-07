@@ -7,9 +7,12 @@
     android:id="@+id/fragment_chat">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/chat_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="채팅" />
+        tools:listitem="@layout/chat_list_item" />
 
 </FrameLayout>
