@@ -6,12 +6,13 @@
 
     <ImageView
         android:id="@+id/chat_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:background="@drawable/profile_image"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/chat_other_nickname"
