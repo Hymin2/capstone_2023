@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
