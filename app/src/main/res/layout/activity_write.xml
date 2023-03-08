@@ -30,6 +30,13 @@
         app:layout_constraintVertical_weight="1" />
 
     <EditText
+        android:id="@+id/edit_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:hint="가격을 입력해주세요"/>
+
+    <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -41,7 +48,7 @@
         android:hint="내용을 입력해주세요"
         android:lineSpacingMultiplier="1.2"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/edit_price"
         app:layout_constraintVertical_weight="9"
         android:maxLines="10"
         android:maxLength="100"
@@ -64,27 +71,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="3dp"
-                android:background="@color/material_dynamic_primary70"/>
-            <ImageButton
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                android:background="@color/material_dynamic_primary70"/>
-            <ImageButton
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                android:background="@color/material_dynamic_primary70" />
-            <ImageButton
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                android:background="@color/material_dynamic_primary70"/>
-            <ImageButton
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="3dp"
-                android:background="@color/material_dynamic_primary70"/>
+                android:background="@drawable/galaxys23" />
         </LinearLayout>
 
 

@@ -105,49 +105,25 @@ class Home : Fragment() {
         imageId = arrayOf(
             R.drawable.galaxys23,
             R.drawable.iphone14pro,
-            R.drawable.galaxys23,
-            R.drawable.iphone14pro,
-            R.drawable.galaxys23,
-            R.drawable.iphone14pro,
-            R.drawable.galaxys23,
-            R.drawable.iphone14pro,
-
         )
 
         title = arrayOf(
             "갤럭시 S23 판매합니다",
             "아이폰 14프로 팜",
-            "갤럭시 S23 판매합니다",
-            "아이폰 14프로 팜",
-            "갤럭시 S23 판매합니다",
-            "아이폰 14프로 팜",
-            "갤럭시 S23 판매합니다",
-            "아이폰 14프로 팜",
-
-
         )
 
         price = arrayOf(
             1000000,
             1100000,
-            1000000,
-            1100000,
-            1000000,
-            1100000,
-            1000000,
-            1100000,
-
         )
 
         content = arrayOf(
-            "싸게 팝니다1",
+            "512기가 버전이며\n" +
+                    "S23 입니다\n" +
+                    "그린색상 입니다\n" +
+                    "선물용으로도 매우 좋을 듯 싶습니다\n" +
+                    "비싼케이스와 필름도 같이 드릴게요",
             "급하게 팔아요2",
-            "싸게 팝니다3",
-            "급하게 팔아요4",
-            "싸게 팝니다5",
-            "급하게 팔아요6",
-            "싸게 팝니다7",
-            "급하게 팔아요8",
         )
     }
 

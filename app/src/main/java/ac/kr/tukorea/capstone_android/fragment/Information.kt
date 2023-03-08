@@ -3,6 +3,7 @@ package ac.kr.tukorea.capstone_android.fragment
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.FragmentInformationBinding
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
