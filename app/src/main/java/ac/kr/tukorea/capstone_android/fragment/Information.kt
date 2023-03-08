@@ -15,22 +15,25 @@ class Information : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentInformationBinding.inflate(inflater, container, false)
+
+        return inflater.inflate(R.layout.fragment_information, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val info_tab = PhoneInfoFragment()
         val marketPrice_tab = PhoneMarketPriceFragment()
         val compare_tab = PhoneCompareFragment()
-        val tabs = binding.phoneTaps
+        val tabs = view.findViewById<TabLayout>(R.id.phone_taps)
         val fragmentManager = childFragmentManager.beginTransaction()
+
+        fragmentManager.add(R.id.phone_frame, info_tab).commit()
 
         tabs.addOnTabSelectedListener(object : OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab!!.position){
-                    0 -> fragmentManager
-                        .replace(R.id.phone_frame, info_tab).commit()
-                    1 -> fragmentManager
-                        .replace(R.id.phone_frame, marketPrice_tab).commit()
-                    2 -> fragmentManager
-                        .replace(R.id.phone_frame, compare_tab).commit()
+                    0 -> replaceView(info_tab)
+                    1 -> replaceView(marketPrice_tab)
+                    2 -> replaceView(compare_tab)
                 }
             }
 
@@ -44,6 +47,10 @@ class Information : Fragment() {
 
         })
 
-        return inflater.inflate(R.layout.fragment_information, container, false)
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun replaceView(tab : Fragment){
+        childFragmentManager.beginTransaction().replace(R.id.phone_frame, tab).commit()
     }
 }

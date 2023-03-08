@@ -6,52 +6,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PhoneMarketPriceFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+            <Spinner
+                android:id="@+id/phone_marketPrice_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="65dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-        <Spinner
-            android:id="@+id/phone_marketPrice_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="65dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/phone_marketPrice_chart"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="70dp"
+                app:layout_constraintTop_toBottomOf="@id/phone_marketPrice_spinner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/phone_marketPrice_chart"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="70dp"
-            app:layout_constraintTop_toBottomOf="@id/phone_marketPrice_spinner"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:id="@+id/phone_marketPrice_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="현재 평균 거래가"
+                android:textSize="40dp"
+                app:layout_constraintTop_toBottomOf="@id/phone_marketPrice_chart"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-        <TextView
-            android:id="@+id/phone_marketPrice_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="현재 평균 거래가"
-            android:textSize="40dp"
-            app:layout_constraintTop_toBottomOf="@id/phone_marketPrice_chart"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/phone_marketPrice_priceText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="999,999,999원"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/phone_marketPrice_text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <TextView
+                android:id="@+id/phone_marketPrice_priceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="999,999,999원"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/phone_marketPrice_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>
