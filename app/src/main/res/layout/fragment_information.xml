@@ -27,12 +27,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사양 비교"/>
+                android:text="시세 확인"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시세 확인"/>
+                android:text="사양 비교"/>
         </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout
