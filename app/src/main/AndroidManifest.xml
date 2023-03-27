@@ -14,18 +14,11 @@
         android:theme="@style/Theme.Capstone_Android"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
+            android:name=".activity.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ChatActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".activity.PostActivity"
             android:exported="false" />
