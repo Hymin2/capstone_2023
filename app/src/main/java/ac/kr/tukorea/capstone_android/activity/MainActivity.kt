@@ -18,13 +18,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(Home())
+        replaceFragment(Main())
         binding.bottomNavigationView.setOnItemSelectedListener {
 
             when(it.itemId){
-                R.id.home_menu -> replaceFragment(Home())
-                R.id.community -> replaceFragment(Community())
-                R.id.information -> replaceFragment(Information())
+                R.id.main -> replaceFragment(Main())
                 R.id.chat -> replaceFragment(Chat())
                 R.id.my_menu -> replaceFragment(MyMenu())
 
@@ -36,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    interface onBackPressedListener {
+        fun onBackPressed()
+    }
+
     private fun replaceFragment(fragment: Fragment){
 
         val fragmentManager = supportFragmentManager
@@ -43,5 +45,15 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frame_layout,fragment)
         fragmentTransaction.commit()
 
+    }
+
+    override fun onBackPressed() {
+        val fragmentList = supportFragmentManager.fragments
+        for (fragment in fragmentList) {
+            if (fragment is onBackPressedListener){
+                (fragment as onBackPressedListener).onBackPressed()
+                return
+            }
+        }
     }
 }

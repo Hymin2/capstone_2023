@@ -30,6 +30,9 @@
             android:exported="false"
             android:parentActivityName=".activity.MainActivity" />
         <activity
+            android:name=".activity.MainActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
