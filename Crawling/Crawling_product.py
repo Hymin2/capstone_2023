@@ -14,13 +14,12 @@ def get_prod_items(pro_items):
     for prod_item in prod_items:
         try:
             product_name = prod_item.select('p.prod_name > a')[0].text.strip()
-            product_name_list = product_name.split(',')
-            del product_name_list[1]
-            product_name = ' '.join(product_name_list)
-            product_name_list = product_name.split()
+            product_name.replace(", 자급제", "")
             
+            product_name_list = product_name.split()
             company_name = product_name_list[0]
             del product_name_list[0]
+            
             product_name = ' '.join(product_name_list)
         except:
             product_name = ""
