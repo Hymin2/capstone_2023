@@ -87,4 +87,4 @@ prod_data_total = total
 data = pd.DataFrame(prod_data_total)
 data.columns = ['카테고리', '상품명', '모델명', '제조사명']
 
-data.to_excel('./file/danawa_crawling_result_class.xlsx', index =False)
+data.to_excel('./file/danawa_crawling_product_result_class.xlsx', index =False)
