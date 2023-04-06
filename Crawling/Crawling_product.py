@@ -1,5 +1,5 @@
 from selenium import webdriver
-#import chromedriver_autoinstaller
+#import chromedriver_autoinstaller  #크롬드라이버 자동 설치
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,7 +13,7 @@ def get_prod_items(pro_items):
 
     for prod_item in prod_items:
         try:
-            product_name = prod_item.select('p.prod_name > a')[0].text.strip()
+            product_name = prod_item.select('p.prod_name > a')[0].text.strip()  #상품명, 제조사 크롤링
             product_name.replace(", 자급제", "")
             
             product_name_list = product_name.split()
@@ -25,7 +25,7 @@ def get_prod_items(pro_items):
             product_name = ""
 
         try:
-            model_name = prod_item.select('span.cm_mark')[0].text.strip()
+            model_name = prod_item.select('span.cm_mark')[0].text.strip()   #상품 모델명 크롤링
             model_name_list = model_name.split(':')
             del model_name_list[0]
             model_name = ''.join(model_name_list)
@@ -49,10 +49,10 @@ driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(5)
 driver.set_window_size(1920,1280)
 
-url = 'https://prod.danawa.com/list/?cate=12215709'
+url = 'https://prod.danawa.com/list/?cate=12215709' #핸드폰 자급제
 driver.get(url)
-curPage = 1
-totalPage = 6
+curPage = 1  #시작 페이지
+totalPage = 6  #총 페이지
 
 prod_data_total = []
 
@@ -71,7 +71,7 @@ while curPage <= totalPage:
         break
 
     cur_css = 'div.number_wrap > a:nth-child({})'.format(curPage)
-    WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,cur_css))).click()
+    WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,cur_css))).click()    #페이지 넘기기
 
     del soup
 
