@@ -32,6 +32,7 @@
         android:background="@drawable/edt_id_pw" />
 
     <Button
+        android:id="@+id/btn_id_check_duplication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="중복 확인"
@@ -41,11 +42,13 @@
         app:layout_constraintLeft_toRightOf="@id/edt_id_register"/>
 
     <TextView
+        android:id="@+id/text_id_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="사용 가능한 아이디입니다."
         android:textSize="13dp"
         android:textColor="#0067a3"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/edt_id_register"
         app:layout_constraintBottom_toTopOf="@id/text_pw_register"
         app:layout_constraintLeft_toLeftOf="@id/edt_id_register"/>
@@ -103,12 +106,14 @@
         android:padding="10dp"/>
 
     <TextView
+        android:id="@+id/text_pw_checking_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="비밀번호가 일치합니다."
         android:textSize="13dp"
         android:textColor="#0067a3"
         android:layout_marginTop="1dp"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/edt_pwCheck"
         app:layout_constraintBottom_toTopOf="@id/text_email"
         app:layout_constraintLeft_toLeftOf="@id/edt_pwCheck"/>
@@ -140,14 +145,26 @@
         app:layout_constraintTop_toBottomOf="@+id/text_email" />
 
     <TextView
+        android:id="@+id/text_email_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일을 입력해주세요"
+        android:textSize="13dp"
+        android:textColor="#0067a3"
+        android:layout_marginTop="1dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/edt_email"
+        app:layout_constraintLeft_toLeftOf="@id/edt_email"/>
+
+    <TextView
         android:id="@+id/text_phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="핸드폰 번호"
         android:textSize="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="@+id/edt_phoneNumber"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email" />
+        app:layout_constraintTop_toBottomOf="@+id/text_email_check" />
 
     <EditText
         android:id="@+id/edt_phoneNumber"
@@ -166,15 +183,27 @@
         app:layout_constraintTop_toBottomOf="@+id/text_phoneNumber" />
 
     <TextView
+        android:id="@+id/text_phoneNumber_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="핸드폰 번호를 입력해주세요"
+        android:textSize="13dp"
+        android:textColor="#0067a3"
+        android:layout_marginTop="1dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/edt_phoneNumber"
+        app:layout_constraintLeft_toLeftOf="@id/edt_phoneNumber"/>
+
+    <TextView
         android:id="@+id/text_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:text="닉네임"
         android:textSize="20dp"
         android:maxLength="20"
         app:layout_constraintStart_toStartOf="@+id/edt_nickname"
-        app:layout_constraintTop_toBottomOf="@+id/edt_phoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/text_phoneNumber_check" />
 
     <EditText
         android:id="@+id/edt_nickname"
@@ -199,13 +228,14 @@
         app:layout_constraintLeft_toRightOf="@id/edt_nickname"/>
 
     <TextView
-        android:id="@+id/text_nickname_checking_message"
+        android:id="@+id/text_nickname_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="사용 가능한 닉네임입니다."
         android:textSize="13dp"
         android:textColor="#0067a3"
         android:layout_marginTop="1dp"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/edt_nickname"
         app:layout_constraintLeft_toLeftOf="@id/edt_nickname"/>
 
@@ -217,7 +247,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_nickname_checking_message"
+        app:layout_constraintTop_toBottomOf="@+id/text_nickname_check"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

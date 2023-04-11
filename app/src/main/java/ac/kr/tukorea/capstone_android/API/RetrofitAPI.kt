@@ -1,14 +1,13 @@
 package ac.kr.tukorea.capstone_android.API
 
 import ac.kr.tukorea.capstone_android.Interface.RegisterService
-import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitAPI {
-    private const val BASE_URL = "http://localhost:8080/"
+    private const val BASE_URL = "http://10.0.2.2:8080/"
 
     private val okHttpClient : OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -26,7 +25,7 @@ object RetrofitAPI {
             .build()
     }
 
-    val emgMedService: RegisterService by lazy {
+    val service: RegisterService by lazy {
         retrofit.create(RegisterService::class.java)
     }
 
