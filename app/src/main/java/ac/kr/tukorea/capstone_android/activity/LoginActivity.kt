@@ -1,10 +1,15 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.Retrofit.RetrofitLogin
+import ac.kr.tukorea.capstone_android.data.LoginRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityLoginBinding
+import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 
 class LoginActivity : AppCompatActivity() {
@@ -17,18 +22,30 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var btn_login = findViewById<Button>(R.id.btn_login)
-        var btn_toRegister = findViewById<Button>(R.id.btn_toRegister)
 
-        btn_login.setOnClickListener{
 
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
-        }
-        btn_toRegister.setOnClickListener{
+        binding.apply {
+            btnLogin.setOnClickListener {
+                if(edtIdLogin.text.isEmpty()){
+                    textLoginCheck.text = "아이디를 입력해주세요."
+                    textLoginCheck.setTextColor(Color.RED)
+                    textLoginCheck.visibility = View.VISIBLE
+                } else if(edtPwLogin.text.isEmpty()){
+                    textLoginCheck.text = "비밀번호를 입력해주세요."
+                    textLoginCheck.setTextColor(Color.RED)
+                    textLoginCheck.visibility = View.VISIBLE
+                } else {
+                    val retrofitLogin = RetrofitLogin()
+                    val loginInfo = LoginRequestBody(edtIdLogin.text.toString(), edtPwLogin.text.toString())
 
-            val intent = Intent(this,RegisterActivity::class.java)
-            startActivity(intent)
+                    retrofitLogin.login(loginInfo, binding, this@LoginActivity)
+                }
+            }
+
+            btnToRegister.setOnClickListener {
+                val intent = Intent(this.root.context,RegisterActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

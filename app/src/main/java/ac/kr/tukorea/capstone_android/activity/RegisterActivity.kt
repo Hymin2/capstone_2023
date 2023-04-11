@@ -1,7 +1,7 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.RetrofitWork
+import ac.kr.tukorea.capstone_android.Retrofit.RetrofitRegister
 import ac.kr.tukorea.capstone_android.data.RegisterRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityRegisterBinding
 import android.graphics.Color
@@ -25,7 +25,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val retrofitWork = RetrofitWork()
+        val retrofitRegister = RetrofitRegister()
 
         var idCheck = false
         var nicknameCheck = false
@@ -74,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
                         edtPhoneNumber.text.toString(),
                         edtNickname.text.toString()
                     )
-                    retrofitWork.register(userData, binding, this@RegisterActivity)
+                    retrofitRegister.register(userData, binding, this@RegisterActivity)
                 }
             }
 
@@ -95,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
                     Log.d("ID 중복체크", "ID의 길이가 3글자 미만")
                 }
                 else{
-                    retrofitWork.checkDuplicateId(id, binding)
+                    retrofitRegister.checkDuplicateId(id, binding)
 
                     idCheck = textIdCheck.text.equals("사용 가능한 아이디입니다.")
 
@@ -119,7 +119,7 @@ class RegisterActivity : AppCompatActivity() {
 
                     Log.d("닉네임 중복체크", "닉네임이 6글자 미만")
                 } else{
-                    retrofitWork.checkDuplicateNickname(nickname, binding)
+                    retrofitRegister.checkDuplicateNickname(nickname, binding)
                     nicknameCheck = textNicknameCheck.text.equals("사용 가능한 닉네임입니다.")
 
                     Log.d("닉네임 중복체크", "닉네임 사용가능: $nicknameCheck")

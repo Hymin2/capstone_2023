@@ -1,13 +1,11 @@
-package ac.kr.tukorea.capstone_android
+package ac.kr.tukorea.capstone_android.Retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.activity.RegisterActivity
 import ac.kr.tukorea.capstone_android.data.RegisterRequestBody
-import ac.kr.tukorea.capstone_android.data.ResponseMessage
+import ac.kr.tukorea.capstone_android.data.RegisterResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityRegisterBinding
-import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.util.Log
@@ -20,14 +18,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RetrofitWork {
+class RetrofitRegister {
+    private val service = RetrofitAPI.registerService
 
     fun register(userInfo:RegisterRequestBody, binding: ActivityRegisterBinding, activity: RegisterActivity) {
-        val service = RetrofitAPI.service
-
         CoroutineScope(Dispatchers.IO).launch {
 
-            val response = service.addUser(userInfo)
+            val response = service.register(userInfo)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful){
                     Log.d("회원가입 성공", response.code().toString())
@@ -53,20 +50,17 @@ class RetrofitWork {
     }
 
     fun checkDuplicateId(id : String, binding: ActivityRegisterBinding) {
-        val service = RetrofitAPI.service
-
         CoroutineScope(Dispatchers.IO).launch{
-            service.checkDuplicateId(id).enqueue(object: Callback<ResponseMessage>{
+            service.checkDuplicateId(id).enqueue(object: Callback<RegisterResponseBody>{
                 override fun onResponse(
-                    call: Call<ResponseMessage>,
-                    response: Response<ResponseMessage>,
+                    call: Call<RegisterResponseBody>,
+                    response: Response<RegisterResponseBody>,
                 ) {
                     if(response.isSuccessful){
                         Log.d("ID 중복체크", "ID가 중복이 아닐 때")
                         binding.textIdCheck.text = "사용 가능한 아이디입니다."
                         binding.textIdCheck.setTextColor(Color.BLUE)
                         binding.textIdCheck.visibility = View.VISIBLE
-
                     }else{
                         Log.d("ID 중복체크", "ID가 중복일 때")
                         binding.textIdCheck.text = "사용 불가능한 아이디입니다."
@@ -75,7 +69,7 @@ class RetrofitWork {
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseMessage>, t: Throwable) {
+                override fun onFailure(call: Call<RegisterResponseBody>, t: Throwable) {
                     Log.d("ID 중복체크", "서버와 연결이 원할하지 않음")
                 }
 
@@ -85,13 +79,11 @@ class RetrofitWork {
     }
 
     fun checkDuplicateNickname(nickname: String, binding: ActivityRegisterBinding) {
-        val service = RetrofitAPI.service
-
         CoroutineScope(Dispatchers.IO).launch{
-            service.checkDuplicateNickname(nickname).enqueue(object: Callback<ResponseMessage>{
+            service.checkDuplicateNickname(nickname).enqueue(object: Callback<RegisterResponseBody>{
                 override fun onResponse(
-                    call: Call<ResponseMessage>,
-                    response: Response<ResponseMessage>,
+                    call: Call<RegisterResponseBody>,
+                    response: Response<RegisterResponseBody>,
                 ) {
                     if(response.isSuccessful){
                         Log.d("Nickname 중복체크", "Nickname이 중복이 아닐 때")
@@ -106,7 +98,7 @@ class RetrofitWork {
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseMessage>, t: Throwable) {
+                override fun onFailure(call: Call<RegisterResponseBody>, t: Throwable) {
                     Log.d("Nickname 중복체크", "서버와 연결이 원할하지 않음")
                 }
             })
