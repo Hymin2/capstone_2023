@@ -25,6 +25,19 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             product_list = prod_item.select('div.spec_list')[0].text.strip()
             product_list = product_list.replace('보안/기능', '보안 및 기능')
             product_detail_list = product_list.split('/')
+
+            release_os = ''
+            screen_info = ''
+            system = ''
+            ram = ''
+            mem = ''
+            connect = ''
+            camera = ''
+            sound = ''
+            function = ''
+            battery = ''
+            size = ''
+            bench_mark = ''
             
             for i in range(len(product_detail_list)):
                 if '출시OS' in product_detail_list[i]:
@@ -57,9 +70,25 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             screen_info = screen_info.replace(' 화면정보 ','').replace('  ', '/ ')
         
             system_list = product_detail_list[idx_sys:idx_conn]
+            ram_list = []
+            mem_list = []
+            
+            for j in system_list:
+                if '램' in j:
+                    ram_list += j
+                    system_list.remove(j)
+            for k in system_list:
+                if '내장' in k:
+                    mem_list += k
+                    system_list.remove(k)
+                    
             system = ''.join(system_list)
+            ram = ''.join(ram_list)
+            mem = ''.join(mem_list)
             system = system.replace(' 시스템 ','').replace('  ', '/ ')
-        
+            ram = ram.replace('램:', '')
+            mem = mem.replace('내장:', '')
+            
             connect_list = product_detail_list[idx_conn:idx_cam]
             connect = ''.join(connect_list)
             connect = connect.replace(' 통신 ','').replace('  ', '/ ')
@@ -79,7 +108,7 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             battery_list = product_detail_list[idx_bat:idx_size]
             battery = ''.join(battery_list)
             battery = battery.replace(' 배터리 ','').replace('  ', '/ ')
-        
+
             size_list = product_detail_list[idx_size:idx_bench]
             size = ''.join(size_list)
             size = size.replace(' 규격 ','').replace('  ', '/ ')
@@ -87,16 +116,11 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             bench_mark_list = product_detail_list[idx_bench:]
             bench_mark = ''.join(bench_mark_list)
             bench_mark = bench_mark.replace(' 벤치마크 ','').replace('  ', '/ ')
+
         except:
-            release_os = ""
-            screen_info = ""
-            system = ""
-            camera = ""
-            connect = ""
-            sound = ""
-            function = ""
-            battery = ""
-            size = ""
+            size_list = product_detail_list[idx_size:]
+            size = ''.join(size_list)
+            size = size.replace(' 규격 ','').replace('  ', '/ ')
             bench_mark = ""
 
         try:
@@ -104,14 +128,12 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
 
-        mylist = [product_name, release_os, screen_info, system, camera, connect, sound, function, battery, size, bench_mark, img_link]
+        mylist = [product_name, release_os, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, bench_mark, img_link]
         
         if mylist[0]:
             prod_data.append(mylist)
-    
-    print(prod_data[0])
-    return(prod_data)
 
+    return(prod_data)
 
 # 다나와 사이트 검색
  
@@ -151,7 +173,6 @@ while curPage <= totalPage:
 
     time.sleep(3)
 
-
 driver.close()
 
 total = []
@@ -161,6 +182,6 @@ prod_detail_total = total
 
 data = pd.DataFrame(prod_detail_total)
 
-data.columns = ['상품명', '출시OS', '화면정보', '시스템', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '벤치마크', '이미지']
+data.columns = ['상품명', '출시OS', '화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '벤치마크', '이미지']
 
-data.to_excel('./files/danawa_crawling_product_detail_result_class.xlsx', index =False)
+data.to_excel('./file/danawa_crawling_product_detail_result_class.xlsx', index =False)
