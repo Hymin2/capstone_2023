@@ -59,4 +59,7 @@ dependencies {
     // OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0' //Circle ImageView
 }
