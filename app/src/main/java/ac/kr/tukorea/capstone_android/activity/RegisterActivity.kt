@@ -1,7 +1,7 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.Retrofit.RetrofitRegister
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitRegister
 import ac.kr.tukorea.capstone_android.data.RegisterRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityRegisterBinding
 import android.graphics.Color

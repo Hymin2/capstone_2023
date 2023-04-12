@@ -1,4 +1,4 @@
-package ac.kr.tukorea.capstone_android.Retrofit
+package ac.kr.tukorea.capstone_android.retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.activity.LoginActivity
@@ -14,7 +14,6 @@ import android.view.View
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

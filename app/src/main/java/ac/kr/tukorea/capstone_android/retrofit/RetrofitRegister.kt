@@ -1,4 +1,4 @@
-package ac.kr.tukorea.capstone_android.Retrofit
+package ac.kr.tukorea.capstone_android.retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.activity.RegisterActivity

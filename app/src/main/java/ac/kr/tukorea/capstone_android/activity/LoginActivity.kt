@@ -1,27 +1,24 @@
 package ac.kr.tukorea.capstone_android.activity
 
-import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.Retrofit.RetrofitLogin
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitLogin
 import ac.kr.tukorea.capstone_android.data.LoginRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityLoginBinding
-import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
 
         binding.apply {

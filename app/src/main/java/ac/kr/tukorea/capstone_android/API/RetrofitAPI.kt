@@ -1,6 +1,7 @@
 package ac.kr.tukorea.capstone_android.API
 
 import ac.kr.tukorea.capstone_android.Interface.LoginService
+import ac.kr.tukorea.capstone_android.Interface.ProductService
 import ac.kr.tukorea.capstone_android.Interface.RegisterService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,5 +34,9 @@ object RetrofitAPI {
 
     val loginService: LoginService by lazy {
         retrofit.create(LoginService::class.java)
+    }
+
+    val productService: ProductService by lazy {
+        retrofit.create(ProductService::class.java)
     }
 }

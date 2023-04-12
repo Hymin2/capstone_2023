@@ -3,6 +3,8 @@ package ac.kr.tukorea.capstone_android.activity
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityMainBinding
 import ac.kr.tukorea.capstone_android.fragment.*
+import ac.kr.tukorea.capstone_android.util.App
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +14,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(App.prefs.getString("refresh_token","") == ""){
+            val intent = Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         super.onCreate(savedInstanceState)
 
         //getSupportActionBar()?.hide()
