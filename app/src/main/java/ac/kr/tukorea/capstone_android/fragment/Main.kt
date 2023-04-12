@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.MainActivity
+import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
 import android.content.Context
+import android.content.Intent
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import com.google.android.material.tabs.TabLayout
 
 class Main : Fragment(), MainActivity.onBackPressedListener {
-
-    lateinit var main_searchview : SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +31,26 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
         val tabs = view.findViewById<TabLayout>(R.id.searchDeviceTaps)
         val fragmentManager = childFragmentManager.beginTransaction()
 
+        val searchView = view.findViewById<SearchView>(R.id.mainSearchView)
+
         fragmentManager.add(R.id.searchDeviceFrame, phone_tab).commit()
 
+        searchView.isSubmitButtonEnabled = true
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                val intent = Intent(context,SearchResultActivity::class.java)
+                startActivity(intent)
+
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return true
+            }
+
+        })
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab!!.position){
@@ -56,13 +74,7 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
     }
 
     override fun onBackPressed() {
-        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        //requireActivity().supportFragmentManager.popBackStack()
-        if (!main_searchview.isIconified) {
-            main_searchview.isIconified = true
-        } else {
-            onBackPressed()
-        }
+
     }
 
     private fun replaceView(tab : Fragment){

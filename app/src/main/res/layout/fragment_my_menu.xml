@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".MyMenu">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/shapeableImageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/profile_image"
+        android:src="@drawable/profile_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

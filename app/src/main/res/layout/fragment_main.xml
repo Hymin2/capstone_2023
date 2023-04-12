@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="430dp" >
 
-                <androidx.appcompat.widget.SearchView
+                <SearchView
                     android:id="@+id/mainSearchView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -33,8 +33,9 @@
                     app:iconifiedByDefault="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
-                    app:queryHint="검색어를 입력해주세요." />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:queryHint="검색어를 입력해주세요."
+                    android:iconifiedByDefault="false"/>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/searchDeviceTaps"
@@ -70,15 +71,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/searchDeviceTaps" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    app:title="앱 이름"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
