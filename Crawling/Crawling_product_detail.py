@@ -109,44 +109,19 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             battery = ''.join(battery_list)
             battery = battery.replace(' 배터리 ','').replace('  ', '/ ')
 
-            if idx_bench:
-                size_list = product_detail_list[idx_size:idx_bench]
-                size = ''.join(size_list)
-                size = size.replace(' 규격 ','').replace('  ', '/ ')
-                bench_mark_list = product_detail_list[idx_bench:]
-                bench_mark = ''.join(bench_mark_list)
-                bench_mark = bench_mark.replace(' 벤치마크 ','').replace('  ', '/ ')
-            else:
-                size_list = product_detail_list[idx_size:]
-                size = ''.join(size_list)
-                size = size.replace(' 규격 ','').replace('  ', '/ ')
-                bench_mark = ''
+            size_list = product_detail_list[idx_size:idx_bench]
+            size = ''.join(size_list)
+            size = size.replace(' 규격 ','').replace('  ', '/ ')
+        
+            bench_mark_list = product_detail_list[idx_bench:]
+            bench_mark = ''.join(bench_mark_list)
+            bench_mark = bench_mark.replace(' 벤치마크 ','').replace('  ', '/ ')
 
         except:
-            if not release_os:
-                release_os = ''
-            if not screen_info:
-                screen_info = ''
-            if not system:
-                system = ''
-            if not ram:
-                ram = ''
-            if not mem:
-                mem = ''
-            if not connect:
-                connect = ''
-            if not camera:
-                camera = ''
-            if not sound:
-                sound = ''
-            if not function:
-                function = ''
-            if not battery:
-                battery = ''
-            if not size:
-                size = ''
-            if not bench_mark:
-                bench_mark = ''
+            size_list = product_detail_list[idx_size:]
+            size = ''.join(size_list)
+            size = size.replace(' 규격 ','').replace('  ', '/ ')
+            bench_mark = ""
 
         try:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('data-original')
@@ -157,7 +132,7 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
         
         if mylist[0]:
             prod_data.append(mylist)
-    print(prod_data[0], prod_data[1])
+
     return(prod_data)
 
 # 다나와 사이트 검색
