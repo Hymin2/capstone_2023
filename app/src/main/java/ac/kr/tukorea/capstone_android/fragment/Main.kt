@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.activity.DetailActivity
 import ac.kr.tukorea.capstone_android.activity.MainActivity
 import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
@@ -39,6 +40,10 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
 
         retrofitProduct.getProductList(null, null, null, 1L, binding)
 
+        binding.lookmoreBtn1.setOnClickListener{
+            val intent = Intent(context,DetailActivity::class.java)
+            startActivity(intent)
+        }
         binding.apply {
             searchDeviceTaps.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {

@@ -23,7 +23,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="430dp" >
+                android:layout_height="380dp" >
 
                 <SearchView
                     android:id="@+id/mainSearchView"
@@ -99,6 +99,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/lookmore_btn1"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="더보기>>"
@@ -222,6 +223,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/horizontal_scrollview_rankingSmartPhone" />
 
             <Button
+                android:id="@+id/lookmore_btn2"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="더보기>>"
