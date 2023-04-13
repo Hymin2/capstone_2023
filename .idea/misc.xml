@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_chat.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_login.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_main.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_post.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_register.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_sale.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_search_result.xml" value="0.2995747970622342" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_home.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_main.xml" value="0.2995747970622342" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_my_menu.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_search_phone.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_search_tablet.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/item_loading.xml" value="0.40260416666666665" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/product_list_item.xml" value="0.19630192502532928" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/searchresult_list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.242" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/border.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/border2.xml" value="0.2455" />

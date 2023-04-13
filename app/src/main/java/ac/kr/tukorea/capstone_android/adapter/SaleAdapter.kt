@@ -20,9 +20,7 @@ class SaleAdapter(private val productsList : ArrayList<Products>) :
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
-
         mListener = listener
-
     }
 
 

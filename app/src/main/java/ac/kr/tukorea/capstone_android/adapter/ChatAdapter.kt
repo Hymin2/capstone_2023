@@ -17,16 +17,12 @@ class ChatAdapter(private val chatList : ArrayList<ChatList>) :
     private lateinit var chatListener : onItemClickListener
 
     interface onItemClickListener{
-
         fun onItemClick(position: Int)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
-
         chatListener = listener
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(

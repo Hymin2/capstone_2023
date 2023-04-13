@@ -8,67 +8,67 @@ import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.MainActivity
 import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
+import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import android.content.Context
 import android.content.Intent
 import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 
 class Main : Fragment(), MainActivity.onBackPressedListener {
+    lateinit var binding:FragmentMainBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val phone_tab = searchPhone()
         val tablet_tab = searchTablet()
         //val laptop_tab = searchLaptop()
-        val tabs = view.findViewById<TabLayout>(R.id.searchDeviceTaps)
         val fragmentManager = childFragmentManager.beginTransaction()
-
-        val searchView = view.findViewById<SearchView>(R.id.mainSearchView)
+        val retrofitProduct = RetrofitProduct()
 
         fragmentManager.add(R.id.searchDeviceFrame, phone_tab).commit()
 
-        searchView.isSubmitButtonEnabled = true
+        retrofitProduct.getProductList(null, null, null, 1L, binding)
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                val intent = Intent(context,SearchResultActivity::class.java)
-                startActivity(intent)
-
-                return true
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return true
-            }
-
-        })
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab!!.position){
-                    0 -> replaceView(phone_tab)
-                    1 -> replaceView(tablet_tab)
-                    //2 -> replaceView(laptop_tab)
+        binding.apply {
+            searchDeviceTaps.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when(tab!!.position){
+                        0 -> replaceView(phone_tab)
+                        1 -> replaceView(tablet_tab)
+                        //2 -> replaceView(laptop_tab)
+                    }
                 }
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            })
 
-            }
+            mainSearchView.isSubmitButtonEnabled = true
+            mainSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    val intent = Intent(context,SearchResultActivity::class.java)
+                    startActivity(intent)
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+                    return true
+                }
 
-            }
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    return true
+                }
+            })
 
-        })
+
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }

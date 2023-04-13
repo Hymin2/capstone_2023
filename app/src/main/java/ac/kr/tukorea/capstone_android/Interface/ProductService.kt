@@ -11,9 +11,9 @@ import retrofit2.http.Query
 interface ProductService {
     @GET("api/v1/product")
     fun getProductList(@Header("Authorization") token : String,
-                       @Query("name") name : String,
-                       @Query("page") page : Int,
-                       @Query("filter") filter : String,
+                       @Query("name") name : String?,
+                       @Query("page") page : Int?,
+                       @Query("filter") filter : String?,
                        @Query("category") category : Long) : Call<ProductListResponseBody>
 
     @GET("api/v1/product/{id}")

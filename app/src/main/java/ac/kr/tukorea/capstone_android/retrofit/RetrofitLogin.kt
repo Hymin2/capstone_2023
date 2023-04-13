@@ -33,8 +33,8 @@ class RetrofitLogin {
                         val responseBody = response.body()
 
                         App.prefs.setString("username", loginInfo.username)
-                        App.prefs.setString("access_token", responseBody!!.accessToken)
-                        App.prefs.setString("refresh_token", responseBody!!.refreshToken)
+                        App.prefs.setString("access_token", "Bearer " + responseBody!!.accessToken)
+                        App.prefs.setString("refresh_token", "Bearer " + responseBody!!.refreshToken)
 
                         val intent = Intent(binding.root.context, MainActivity::class.java)
                         activity.startActivity(intent)
