@@ -22,8 +22,8 @@ import retrofit2.Response
 class RetrofitProduct{
     private val service = RetrofitAPI.productService
 
-    fun getProductList(name : String?, filter : String?, page : Int?, category: Long, binding: FragmentMainBinding) {
-            service.getProductList(token = App.prefs.getString("access_token", ""), name, page, filter, category).enqueue(object: Callback<ProductListResponseBody>{
+    fun getProductList(name : String?, filter : String?, category: Long, binding: FragmentMainBinding) {
+            service.getProductList(token = App.prefs.getString("access_token", ""), name, filter, category).enqueue(object: Callback<ProductListResponseBody>{
                 override fun onResponse(
                     call: Call<ProductListResponseBody>,
                     response: Response<ProductListResponseBody>,
@@ -52,7 +52,7 @@ class RetrofitProduct{
                         val retrofitRefresh = RetrofitRefresh()
                         retrofitRefresh.refreshToken()
 
-                        getProductList(name, filter, page, category, binding)
+                        getProductList(name, filter, category, binding)
                     }
                 }
 
