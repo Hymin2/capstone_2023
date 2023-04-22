@@ -40,6 +40,11 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        binding.floatingActionBtn.setOnClickListener {
+            val intent = Intent(this,SalePostActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     interface onBackPressedListener {

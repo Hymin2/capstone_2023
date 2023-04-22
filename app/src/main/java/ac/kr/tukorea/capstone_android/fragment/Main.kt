@@ -15,7 +15,7 @@ import android.content.Intent
 import android.widget.SearchView
 import com.google.android.material.tabs.TabLayout
 
-class Main : Fragment(), MainActivity.onBackPressedListener {
+class Main : Fragment() {
     lateinit var binding:FragmentMainBinding
 
     override fun onCreateView(
@@ -74,10 +74,6 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
         }
 
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onBackPressed() {
-
     }
 
     private fun replaceView(tab : Fragment){

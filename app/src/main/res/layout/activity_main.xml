@@ -26,4 +26,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navi_menu" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_action_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame_layout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,5 +69,4 @@ dependencies {
 
     // MPAndroidChart -> 시세 그래프 그리기
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
 }
