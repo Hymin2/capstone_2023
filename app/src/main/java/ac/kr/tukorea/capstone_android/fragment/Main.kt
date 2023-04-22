@@ -11,11 +11,8 @@ import ac.kr.tukorea.capstone_android.activity.MainActivity
 import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
-import android.content.Context
 import android.content.Intent
 import android.widget.SearchView
-import androidx.activity.OnBackPressedCallback
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 
 class Main : Fragment(), MainActivity.onBackPressedListener {
@@ -45,7 +42,7 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
             startActivity(intent)
         }
         binding.apply {
-            searchDeviceTaps.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            searchDeviceTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
                         0 -> replaceView(phone_tab)

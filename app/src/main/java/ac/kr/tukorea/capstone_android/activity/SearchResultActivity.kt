@@ -2,16 +2,12 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.SearchResultAdapter
-import ac.kr.tukorea.capstone_android.data.ChatList
 import ac.kr.tukorea.capstone_android.data.SearchResult
 import ac.kr.tukorea.capstone_android.fragment.searchPhone
 import ac.kr.tukorea.capstone_android.fragment.searchTablet
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -35,7 +31,7 @@ class SearchResultActivity : AppCompatActivity() {
         val phone_tab = searchPhone()
         val tablet_tab = searchTablet()
         //val laptop_tab = searchLaptop()
-        val tabs = findViewById<TabLayout>(R.id.searchDeviceTaps)
+        val tabs = findViewById<TabLayout>(R.id.search_device_tabs)
         // val fragmentManager = FragmentManager.beginTransaction()
         // fragmentManager.add(R.id.searchDeviceFrame, phone_tab).commit()
 
