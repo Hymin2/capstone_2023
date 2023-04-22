@@ -19,8 +19,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="10dp"
                 android:gravity="center"
-                android:text="제조사"
                 android:textColor="@color/white"
+                android:text="제조사"
                 android:textStyle="bold" />
 
             <HorizontalScrollView

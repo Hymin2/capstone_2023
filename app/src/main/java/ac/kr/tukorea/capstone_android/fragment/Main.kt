@@ -35,7 +35,7 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
 
         fragmentManager.add(R.id.searchDeviceFrame, phone_tab).commit()
 
-        retrofitProduct.getProductList(null, null, null, 1L, binding)
+        retrofitProduct.getProductList(null, null, 1L, binding)
 
         binding.lookmoreBtn1.setOnClickListener{
             val intent = Intent(context,DetailActivity::class.java)
@@ -58,13 +58,14 @@ class Main : Fragment(), MainActivity.onBackPressedListener {
             mainSearchView.isSubmitButtonEnabled = true
             mainSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
-                    val intent = Intent(context,SearchResultActivity::class.java)
-                    startActivity(intent)
+                    retrofitProduct.getProductList(p0!!, null, 1L, binding)
 
                     return true
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
+                    retrofitProduct.getProductList(p0!!, null, 1L, binding)
+
                     return true
                 }
             })

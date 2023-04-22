@@ -94,6 +94,7 @@
                 android:text="인기 스마트폰 TOP 10"
                 android:textSize="20dp"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_margin="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -217,6 +218,7 @@
                 android:layout_height="wrap_content"
                 android:text="인기 태블릿 TOP 10"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_margin="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -347,6 +349,7 @@
                     android:text="스마트폰 리스트"
                     android:textSize="20dp"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_margin="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
