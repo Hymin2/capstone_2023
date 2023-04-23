@@ -23,6 +23,7 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_outline_person_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_outline_remove_red_eye_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_twotone_settings_24.xml" value="0.2455" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/square_border.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/styles.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_chat.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_detail.xml" value="0.49313893653516294" />
@@ -31,7 +32,7 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_post.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_register.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_sale.xml" value="0.264" />
-        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_sale_post.xml" value="0.536" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_sale_post.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_search_result.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_write.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/bottom_dialog.xml" value="0.1834016393442623" />

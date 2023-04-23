@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Capstone_Android" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/material_dynamic_primary70</item>
+        <item name="colorPrimary">#A5A5A5</item>
         <item name="colorPrimaryVariant">@color/material_dynamic_primary80</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -19,5 +19,8 @@
     </style>
     <style name = "BottomDialogTheme" parent="Theme.Material3.Light.BottomSheetDialog">
         <item name = "bottomSheetStyle" >@style/BottomSheetStyle </item>
+    </style>
+    <style name="ToolbarColoredBackArrow" parent="Theme.Capstone_Android">
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 </resources>

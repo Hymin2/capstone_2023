@@ -6,17 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".activity.SalePostActivity">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/salePost_AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/salePost_toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ToolbarColoredBackArrow"
+            app:titleTextColor="@color/white"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <EditText
         android:id="@+id/salePostTitle_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="판매 글 제목"
+        android:hint="제목을 입력해주세요 (15자 제한)"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="25dp"
         android:textStyle="bold"
+        android:maxLength="15"
+        android:background="@null"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/salePost_AppBar" />
 
     <View
         android:id="@+id/salePost_devideLine"
@@ -30,13 +49,12 @@
         app:layout_constraintTop_toBottomOf="@+id/salePostTitle_textview" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/salePost_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        android:text="핸드폰 기종 이름"
-        android:textColor="@color/black"
+        android:text="핸드폰 기종 선택"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/salePost_devideLine" />
@@ -48,6 +66,49 @@
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/ic_baseline_manage_search_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
+        app:layout_constraintTop_toTopOf="@+id/salePost_productName" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/square_border"
+        android:gravity="top"
+        android:hint="내용을 입력해주세요 (100자 제한)"
+        android:maxLength="100"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/salePost_productName"
+        tools:layout_editor_absoluteX="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText3">
+
+        <ImageView
+            android:id="@+id/salePost_imageView1"
+            android:layout_width="95dp"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp" />
+
+        <ImageView
+            android:id="@+id/salePost_imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp" />
+
+        <ImageView
+            android:id="@+id/salePost_imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="10dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
