@@ -29,7 +29,9 @@ class ProductAdapter(private val productList : ArrayList<ProductList>, val conte
         mListener = listener
     }
 
-
+    fun getItem(position: Int) : ProductList{
+        return productList[position]
+    }
 
     class MyViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView)
     {

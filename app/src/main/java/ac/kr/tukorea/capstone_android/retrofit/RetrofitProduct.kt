@@ -1,14 +1,22 @@
 package ac.kr.tukorea.capstone_android.retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
+import ac.kr.tukorea.capstone_android.activity.DetailActivity
 import ac.kr.tukorea.capstone_android.adapter.ProductAdapter
+import ac.kr.tukorea.capstone_android.data.ProductDetailsResponseBody
 import ac.kr.tukorea.capstone_android.data.ProductList
 import ac.kr.tukorea.capstone_android.data.ProductListResponseBody
+import ac.kr.tukorea.capstone_android.databinding.ActivityDetailBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivityMainBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivityRegisterBinding
 import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
+import ac.kr.tukorea.capstone_android.fragment.Main
 import ac.kr.tukorea.capstone_android.util.App
+import android.content.Intent
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +30,7 @@ import retrofit2.Response
 class RetrofitProduct{
     private val service = RetrofitAPI.productService
 
-    fun getProductList(name : String?, filter : String?, category: Long, binding: FragmentMainBinding) {
+    fun getProductList(name : String?, filter : String?, category: Long, binding: FragmentMainBinding, fragment: Main) {
             service.getProductList(token = App.prefs.getString("access_token", ""), name, filter, category).enqueue(object: Callback<ProductListResponseBody>{
                 override fun onResponse(
                     call: Call<ProductListResponseBody>,
@@ -42,7 +50,14 @@ class RetrofitProduct{
 
                             adapter.setOnItemClickListener(object : ProductAdapter.onItemClickListener{
                                 override fun onItemClick(position: Int) {
+                                    var intent = Intent(binding.root.context, DetailActivity::class.java)
+                                    var item = adapter.getItem(position)
 
+                                    intent.putExtra("productId", item.id)
+                                    intent.putExtra("productName", item.productName)
+                                    intent.putExtra("productPath", item.path)
+
+                                    fragment.startActivity(intent)
                                 }
                             })
                         }
@@ -52,13 +67,56 @@ class RetrofitProduct{
                         val retrofitRefresh = RetrofitRefresh()
                         retrofitRefresh.refreshToken()
 
-                        getProductList(name, filter, category, binding)
+                        getProductList(name, filter, category, binding, fragment)
                     }
                 }
 
                 override fun onFailure(call: Call<ProductListResponseBody>, t: Throwable) {
-
+                    Log.d("Product List 불러오기", "실패(서버 에러)")
                 }
             })
+    }
+
+    fun getProductDetails(id : Long, binding: ActivityDetailBinding){
+        service.getProductDetails(token = App.prefs.getString("access_token", ""), id).enqueue(object : Callback<ProductDetailsResponseBody>{
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onResponse(
+                call: Call<ProductDetailsResponseBody>,
+                response: Response<ProductDetailsResponseBody>,
+            ) {
+                if(response.isSuccessful) {
+                    var details = response.body()!!.message.productDetails
+
+                    binding.apply {
+                        details.stream().forEach { item ->
+                            when (item.detailName) {
+                                "프로세서" -> processorValueTextView.text =
+                                    item.detailContent.replace("/", "")
+                                "RAM" -> ramValueTextView.text = item.detailContent
+                                "내장메모리" -> memoryValueTextView.text = item.detailContent
+                                "통신" -> communicationValueTextView.text = item.detailContent
+                                "카메라" -> cameraValueTextView.text =
+                                    item.detailContent.replace("/ ", "\n")
+                                "보안/기능" -> functionValueTextView.text = item.detailContent
+                                "크기" -> inchValueTextView.text = item.detailContent + "인치"
+                                "디스플레이" -> displayValueTextView.text = item.detailContent
+                                "사운드" -> soundValueTextView.text = item.detailContent
+                                "배터리" -> batteryValueTextView.text = item.detailContent
+                            }
+                        }
+                    }
+                } else{
+                    val retrofitRefresh = RetrofitRefresh()
+                    retrofitRefresh.refreshToken()
+
+                    getProductDetails(id, binding)
+                }
+            }
+
+            override fun onFailure(call: Call<ProductDetailsResponseBody>, t: Throwable) {
+                Log.d("Product Details 불러오기", "실패(서버 에러)")
+            }
+
+        })
     }
 }

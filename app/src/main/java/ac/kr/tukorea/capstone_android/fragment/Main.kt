@@ -9,10 +9,12 @@ import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
 import ac.kr.tukorea.capstone_android.activity.MainActivity
 import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
+import ac.kr.tukorea.capstone_android.adapter.ProductAdapter
 import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import android.content.Intent
 import android.widget.SearchView
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 
 class Main : Fragment() {
@@ -35,7 +37,7 @@ class Main : Fragment() {
 
         fragmentManager.add(R.id.searchDeviceFrame, phone_tab).commit()
 
-        retrofitProduct.getProductList(null, null, 1L, binding)
+        retrofitProduct.getProductList(null, null, 1L, binding, this)
 
         binding.lookmoreBtn1.setOnClickListener{
             val intent = Intent(context,DetailActivity::class.java)
@@ -58,13 +60,13 @@ class Main : Fragment() {
             mainSearchView.isSubmitButtonEnabled = true
             mainSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
-                    retrofitProduct.getProductList(p0!!, null, 1L, binding)
-
+                    retrofitProduct.getProductList(p0!!, null, 1L, binding, this@Main)
+                    mainSearchView.clearFocus()
                     return true
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
-                    retrofitProduct.getProductList(p0!!, null, 1L, binding)
+                    retrofitProduct.getProductList(p0!!, null, 1L, binding, this@Main)
 
                     return true
                 }
