@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
-import ac.kr.tukorea.capstone_android.activity.MainActivity
-import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
+import ac.kr.tukorea.capstone_android.activity.ViewSalePostActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import android.content.Intent
@@ -41,6 +40,10 @@ class Main : Fragment() {
             val intent = Intent(context,DetailActivity::class.java)
             startActivity(intent)
         }
+        binding.lookmoreBtn2.setOnClickListener{
+            val intent = Intent(context, ViewSalePostActivity::class.java)
+            startActivity(intent)
+        }
         binding.apply {
             searchDeviceTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -69,7 +72,6 @@ class Main : Fragment() {
                     return true
                 }
             })
-
 
         }
 

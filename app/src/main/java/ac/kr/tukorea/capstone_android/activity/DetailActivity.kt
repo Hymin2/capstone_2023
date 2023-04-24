@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -22,49 +23,18 @@ import java.lang.Math.abs
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var viewPager2: ViewPager2
-    private lateinit var handler: Handler
-    private lateinit var imageList: ArrayList<Int>
-    private lateinit var adapter: ViewPagerAdapter
-
-    private lateinit var graphTab : TabLayout
-    private lateinit var graphViewPager : ViewPager2
+    lateinit var binding : ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
-
-        init()
-        setUpTransformer()
-
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable, 2000)
-            }
-        })
-
-        graphTab = findViewById(R.id.graphTab)
-        graphViewPager = findViewById(R.id.graph_viewPager)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initViewPager()
-/**
-        graphTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab!!.position){
-                    0 -> replaceFragment(graphWeek())
-                    //1 -> replaceFragment()
-                    //2 -> replaceView(laptop_tab)
-                }
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
-        **/
 
+        setSupportActionBar(binding.detailToolBar) //커스텀한 toolbar를 액션바로 사용
+        supportActionBar?.setDisplayShowTitleEnabled(false) //액션바에 표시되는 제목의 표시유무를 설정합니다. false로 해야 custom한 툴바의 이름이 화면에 보이게 됩니다.
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initViewPager() {
@@ -76,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
         graphTabAdapter.addFragment(graphYear())
 
         // Adapter 연결
-        graphViewPager.apply {
+        binding.graphViewPager.apply {
             adapter = graphTabAdapter
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -87,7 +57,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
 
-        TabLayoutMediator(graphTab,graphViewPager) { tab, position ->
+        TabLayoutMediator(binding.graphTab,binding.graphViewPager) { tab, position ->
             when(position){
                 0 -> tab.text = "week"
                 1 -> tab.text = "month"
@@ -97,53 +67,13 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(runnable)
-    }
-    override fun onResume() {
-        super.onResume()
-        handler.postDelayed(runnable, 2000)
-    }
-    private val runnable = Runnable {
-        viewPager2.currentItem = viewPager2.currentItem + 1
-    }
-    private fun setUpTransformer() {
-        val transformer = CompositePageTransformer()
-        transformer.addTransformer(MarginPageTransformer(40))
-        transformer.addTransformer{page,position ->
-            val r = 1 - abs(position)
-            page.scaleY = 0.85f + r + 0.14f
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                // 뒤로가기 버튼 눌렀을 때
+                finish()
+                return true
+            } else -> return super.onOptionsItemSelected(item)
         }
-
-        viewPager2.setPageTransformer(transformer)
     }
-    private fun init(){
-        viewPager2 = findViewById(R.id.product_image_viewPager)
-        handler = Handler(Looper.myLooper()!!)
-        imageList = ArrayList()
-
-        imageList.add(R.drawable.galaxys23)
-        imageList.add(R.drawable.iphone14pro)
-        imageList.add(R.drawable.profile_image)
-
-        adapter = ViewPagerAdapter(imageList, viewPager2)
-
-        viewPager2.adapter=adapter
-        viewPager2.offscreenPageLimit = 3
-        viewPager2.clipToPadding = false
-        viewPager2.clipChildren = false
-        viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-    }
-
-/**
-    private fun replaceFragment(fragment: Fragment){
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.graph_viewPager,fragment)
-        fragmentTransaction.commit()
-    }
-    **/
-
-
 }

@@ -2,6 +2,7 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.DialogAdapter
+import ac.kr.tukorea.capstone_android.databinding.ActivitySalePostBinding
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -27,52 +28,43 @@ import java.text.DecimalFormat
 
 class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
 
-    private lateinit var salePostToolbar: Toolbar
-    private lateinit var search_button: ImageButton
+    lateinit var binding : ActivitySalePostBinding
     private lateinit var dialog: BottomSheetDialog
     private lateinit var dialogAdapter: DialogAdapter
     private lateinit var dialogRecyclerView: RecyclerView
 
-    private lateinit var productName : TextView
     private val list = ArrayList<String>()
-
-    private lateinit var salePostImageView1 : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sale_post)
+        binding = ActivitySalePostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        salePostToolbar = findViewById(R.id.salePost_toolBar)
-        salePostImageView1 = findViewById(R.id.salePost_imageView1)
-        val edtPrice : EditText = findViewById(R.id.salePost_price)
-
-        setSupportActionBar(salePostToolbar) //커스텀한 toolbar를 액션바로 사용
+        setSupportActionBar(binding.salePostToolBar) //커스텀한 toolbar를 액션바로 사용
         supportActionBar?.setDisplayShowTitleEnabled(false) //액션바에 표시되는 제목의 표시유무를 설정합니다. false로 해야 custom한 툴바의 이름이 화면에 보이게 됩니다.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        salePostToolbar.title = "판매글 작성"
+        binding.salePostToolBar.title = "판매글 작성"
 
-        productName = findViewById(R.id.salePost_productName)
 
-        search_button = findViewById(R.id.search_dialog_button)
         for (i in 1..20) {
             list.add("item $i")
         }
-        search_button.setOnClickListener {
+        binding.searchDialogButton.setOnClickListener {
             showBottomSheet()
         }
 
         // 선택한 이미지 삭제
         // 이미지 선택 시 대화상자 출력
         // 대화상자 확인 선택 시 이미지 삭제
-        salePostImageView1.setOnClickListener {
-            if (salePostImageView1.drawable != null) {
+        binding.salePostImageView1.setOnClickListener {
+            if (binding.salePostImageView1.drawable != null) {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("이미지 삭제")
                     .setMessage("이미지를 삭제하시겠습니까?")
                     .setPositiveButton("확인",
                         DialogInterface.OnClickListener { imageDialog, id ->
                             // 확인 누를 시 이미지 삭제
-                            salePostImageView1.setImageResource(0)
+                            binding.salePostImageView1.setImageResource(0)
                         })
                     .setNegativeButton("취소",
                         DialogInterface.OnClickListener { imageDialog, id ->
@@ -83,25 +75,24 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
             }
         }
 
-        edtPrice.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            binding.salePostPrice.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
 
-            val price : String = edtPrice.text.toString()
+            val price : String = binding.salePostPrice.text.toString()
 
             if (hasFocus) {
                 if(price.isNotEmpty()) {
-                    edtPrice.setText(price.replace(",",""))
+                    binding.salePostPrice.setText(price.replace(",",""))
                 }
             } else {
                 if(price.isNotEmpty()) {
                     val formatPrice : String = toLongFormat(price.toLong())
-                    edtPrice.setText(formatPrice)
+                    binding.salePostPrice.setText(formatPrice)
                 }
             }
         }
     }
 
     private fun showBottomSheet() {
-        Log.e("ppp","ppp")
         val dialogView = layoutInflater.inflate(R.layout.bottom_dialog, null)
         dialog = BottomSheetDialog(this, R.style.BottomDialogTheme)
         dialog.setContentView(dialogView)
@@ -132,7 +123,6 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
             R.id.action_btn_image -> {
                 // 이미지 버튼 눌렀을 때
                 // Toast.makeText(applicationContext, "이미지 업로드", Toast.LENGTH_LONG).show()
-                Log.e("asd","asd")
                 pickImage()
                 return super.onOptionsItemSelected(item)
             }
@@ -146,17 +136,19 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
     }
 
     fun pickImage() {
-        val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
-        startActivityForResult(intent,101)
-        Log.e("123","123")
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "image/*"
+        startActivityForResult(intent,1)
+        //startActivityForResult(intent,101)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if(requestCode == 101) {
+            if(requestCode == 1) {
                 val uri = data?.data
-                salePostImageView1.setImageURI(uri)
+                binding.salePostImageView1.setImageURI(uri)
             }
         }
     }
@@ -164,7 +156,7 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
     override fun onItemClick(position: Int) {
         Toast.makeText(this,"Item $position clicked",Toast.LENGTH_SHORT)
         val clickedItem : String = list[position]
-        productName.text = clickedItem
+            binding.salePostProductName.text = clickedItem
         dialogAdapter.notifyItemChanged(position)
         dialog.dismiss()
     }
