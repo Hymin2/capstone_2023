@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "ac.kr.tukorea.capstone_android"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -70,4 +70,6 @@ dependencies {
 
     // MPAndroidChart -> 시세 그래프 그리기
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation "androidx.activity:activity-ktx:1.6.1"
 }
