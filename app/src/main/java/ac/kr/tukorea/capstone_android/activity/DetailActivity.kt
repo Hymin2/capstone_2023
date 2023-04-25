@@ -48,7 +48,6 @@ class DetailActivity : AppCompatActivity() {
         // Adapter 연결
         binding.graphViewPager.apply {
             adapter = graphTabAdapter
-
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)

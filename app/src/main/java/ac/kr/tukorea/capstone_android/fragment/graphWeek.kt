@@ -5,7 +5,6 @@ import ac.kr.tukorea.capstone_android.data.GraphData
 import ac.kr.tukorea.capstone_android.databinding.FragmentGraphWeekBinding
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,7 +96,7 @@ class graphWeek : Fragment() {
             labelRotationAngle = 0f
             setLabelCount(10, true)
         }
-        val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graph_scrollview)
+        val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graphWeek_scrollview)
         horizontalScrollView.post{
             horizontalScrollView.scrollTo(
                 lineChart.width,
