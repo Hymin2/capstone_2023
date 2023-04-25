@@ -58,9 +58,9 @@ class DetailActivity : AppCompatActivity() {
 
         TabLayoutMediator(binding.graphTab,binding.graphViewPager) { tab, position ->
             when(position){
-                0 -> tab.text = "week"
-                1 -> tab.text = "month"
-                2 -> tab.text = "year"
+                0 -> tab.text = "1-week"
+                1 -> tab.text = "3-month"
+                2 -> tab.text = "1-year"
             }
         }.attach()
 

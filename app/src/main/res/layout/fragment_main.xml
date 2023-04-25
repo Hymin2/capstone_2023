@@ -23,7 +23,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="380dp" >
+                android:layout_height="386dp" >
 
                 <SearchView
                     android:id="@+id/mainSearchView"

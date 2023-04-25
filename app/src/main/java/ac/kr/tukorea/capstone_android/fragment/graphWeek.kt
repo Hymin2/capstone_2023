@@ -26,16 +26,13 @@ class graphWeek : Fragment() {
     private val binding get() = _binding!!
 
     val graphDataList: List<GraphData> = listOf(
-        GraphData("08-28",2),
-        GraphData("08-29",2),
-        GraphData("08-30",5),
-        GraphData("08-31",2),
-        GraphData("09-01",3),
-        GraphData("09-02",6),
-        GraphData("09-03",7),
-        GraphData("09-04",1),
-        GraphData("09-05",3),
-        GraphData("09-06",2)
+        GraphData("04-20",2),
+        GraphData("04-21",3),
+        GraphData("04-22",6),
+        GraphData("04-23",7),
+        GraphData("04-24",1),
+        GraphData("04-25",3),
+        GraphData("04-26",2)
     )
 
     override fun onCreateView(
