@@ -110,7 +110,6 @@ class DetailActivity : AppCompatActivity() {
         // Adapter 연결
         graphViewPager.apply {
             adapter = graphTabAdapter
-
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
@@ -121,9 +120,9 @@ class DetailActivity : AppCompatActivity() {
 
         TabLayoutMediator(graphTab,graphViewPager) { tab, position ->
             when(position){
-                0 -> tab.text = "week"
-                1 -> tab.text = "month"
-                2 -> tab.text = "year"
+                0 -> tab.text = "1-week"
+                1 -> tab.text = "3-month"
+                2 -> tab.text = "1-year"
             }
         }.attach()
 
