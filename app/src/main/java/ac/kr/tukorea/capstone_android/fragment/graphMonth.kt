@@ -25,7 +25,7 @@ class graphMonth : Fragment() {
     private val binding get() = _binding!!
 
     val graphDataList: List<GraphData> = listOf(
-        GraphData("01-26~02-01",300000),
+/*        GraphData("01-26~02-01",300000),
         GraphData("02-02~02-08",200000),
         GraphData("02-09~02-15",400000),
         GraphData("02-16~02-22",600000),
@@ -37,7 +37,7 @@ class graphMonth : Fragment() {
         GraphData("03-30~04-05",599999),
         GraphData("04-06~04-12",412312),
         GraphData("04-13~04-19",314141),
-        GraphData("04-20~04-26",223456),
+        GraphData("04-20~04-26",223456),*/
     )
 
     override fun onCreateView(

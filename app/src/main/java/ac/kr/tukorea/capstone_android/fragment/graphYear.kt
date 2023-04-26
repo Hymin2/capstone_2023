@@ -27,7 +27,7 @@ class graphYear : Fragment() {
     private val binding get() = _binding!!
 
     val graphDataList: List<GraphData> = listOf(
-        GraphData("22-05",1),
+/*        GraphData("22-05",1),
         GraphData("22-06",1),
         GraphData("22-07",2),
         GraphData("22-08",3),
@@ -38,7 +38,7 @@ class graphYear : Fragment() {
         GraphData("23-01",2),
         GraphData("23-02",1),
         GraphData("23-03",7),
-        GraphData("23-04",6),
+        GraphData("23-04",6),*/
     )
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

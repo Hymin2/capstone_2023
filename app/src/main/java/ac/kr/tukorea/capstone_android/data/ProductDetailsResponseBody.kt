@@ -30,7 +30,7 @@ data class ProductDetails(
 
 data class UsedProductPrice(
     @SerializedName("time")
-    val time : Date,
+    val time : String,
     @SerializedName("price")
     val price : Int
 )

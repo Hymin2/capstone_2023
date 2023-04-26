@@ -1,9 +1,13 @@
 package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.GraphData
+import ac.kr.tukorea.capstone_android.data.UsedProductPrice
 import ac.kr.tukorea.capstone_android.databinding.FragmentGraphWeekBinding
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import android.content.Context
+import android.content.Intent.getIntent
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +28,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
+import java.lang.Long.getLong
 
 
 class graphWeek : Fragment() {
@@ -31,8 +36,10 @@ class graphWeek : Fragment() {
     private var _binding: FragmentGraphWeekBinding? = null
     private val binding get() = _binding!!
 
+    private val service = RetrofitAPI.productService
+
     val graphDataList: List<GraphData> = listOf(
-        GraphData("04-20",212323),
+/*        GraphData("04-20",212323),
         GraphData("04-21",323122),
         GraphData("04-22",623121),
         GraphData("04-23",74535),
@@ -56,7 +63,7 @@ class graphWeek : Fragment() {
         GraphData("04-20",26666),
         GraphData("04-21",37777),
         GraphData("04-22",68888),
-        GraphData("04-23",7999),
+        GraphData("04-23",7999),*/
     )
 
     override fun onCreateView(
@@ -66,8 +73,17 @@ class graphWeek : Fragment() {
         // Inflate the layout for this fragment
         // return inflater.inflate(R.layout.fragment_graph_week, container, false)
         _binding = FragmentGraphWeekBinding.inflate(inflater, container, false)
+
+/*        var graphDataArrayList : ArrayList<UsedProductPrice>
+        var graphPriceList : ArrayList<Int>?
+        var grpahTimeList : ArrayList<String>
+
+        graphPriceList = arguments?.getSerializable("priceList") as ArrayList<Int>?
+        var a = graphPriceList?.get(0)
+        Log.e("데이터" , "$a")*/
         return binding.root
     }
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,6 +98,20 @@ class graphWeek : Fragment() {
             entries.add(Entry(i.toFloat(),graphDataList[i].price.toFloat()))
         }
         val lineDataSet = LineDataSet(entries,"entries")
+
+        var graphDataArrayList : ArrayList<UsedProductPrice>
+        var graphPriceList : ArrayList<Int>?
+        var grpahTimeList : ArrayList<String>
+
+        graphPriceList = arguments?.getIntegerArrayList("priceList")
+        Log.e("데이터" , "$graphPriceList")
+/*        val a = arguments?.getSerializable("UsedProductPrice")
+
+
+        Log.e("데이터" , "$a")*/
+        // var retrofitProduct = RetrofitProduct()
+        //retrofitProduct.getProductUsedPrice(productId,binding)
+
 
         lineDataSet.apply {
             color = resources.getColor(android.R.color.holo_red_dark,null)
@@ -175,8 +205,7 @@ class graphWeek : Fragment() {
 
         // entry를 content의 텍스트에 지정
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
-            Log.e("asd","$e.x")
-            tvContent.text = e?.y?.toInt().toString() + "원\n"
+            tvContent.text = e?.y?.toInt().toString() + "원"
             super.refreshContent(e, highlight)
         }
 
