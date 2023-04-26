@@ -47,9 +47,17 @@ class Main : Fragment() {
             searchDeviceTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
-                        0 -> replaceView(phone_tab)
-                        1 -> replaceView(tablet_tab)
-                        //2 -> replaceView(laptop_tab)
+                        0 -> {
+                            filteringBoxPhone.visibility = View.VISIBLE
+
+                        }
+                        1 -> {
+                            filteringBoxPhone.visibility = View.GONE
+                        }
+
+                        2 -> {
+                            filteringBoxPhone.visibility = View.GONE
+                        }
                     }
                 }
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -71,6 +79,10 @@ class Main : Fragment() {
                     return true
                 }
             })
+
+            /*
+                 phone 필터링
+             */
 
 
         }

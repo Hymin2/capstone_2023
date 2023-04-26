@@ -27,24 +27,30 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(Main())
-        binding.bottomNavigationView.setOnItemSelectedListener {
 
-            when(it.itemId){
-                R.id.main -> replaceFragment(Main())
-                R.id.chat -> replaceFragment(Chat())
-                R.id.my_menu -> replaceFragment(MyMenu())
+        binding.apply {
+            bottomNavigationView.setOnItemSelectedListener {
 
-                else -> {
+                when(it.itemId){
+                    R.id.main -> replaceFragment(Main())
+                    R.id.chat -> replaceFragment(Chat())
+                    R.id.my_menu -> replaceFragment(MyMenu())
 
+                    else -> {
+
+                    }
                 }
+                true
             }
-            true
+
+            floatingActionBtn.setOnClickListener {
+                val intent = Intent(this.root.context,SalePostActivity::class.java)
+                startActivity(intent)
+            }
+
+
         }
 
-        binding.floatingActionBtn.setOnClickListener {
-            val intent = Intent(this,SalePostActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     interface onBackPressedListener {

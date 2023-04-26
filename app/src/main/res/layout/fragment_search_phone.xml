@@ -243,25 +243,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:text="A16"
+                        android:text="A16 Bionic"
                         android:textColor="@color/white" />
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:text="A15"
+                        android:text="A15 Bionic"
                         android:textColor="@color/white" />
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:text="A14"
+                        android:text="A14 Bionic"
                         android:textColor="@color/white" />
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:text="A13"
+                        android:text="A13 Bionic"
                         android:textColor="@color/white" />
 
                     <CheckBox
@@ -325,7 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:text="helio"
+                        android:text="Helio"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </HorizontalScrollView>

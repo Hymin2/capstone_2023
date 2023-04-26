@@ -58,6 +58,7 @@ class ProductAdapter(private val productList : ArrayList<ProductList>, val conte
         val item = productList[position]
 
         holder.productName.text = item.productName
+        holder.productPrice.text = item.averagePrice.toString() + "원"
 
         val glideUrl = GlideUrl(
             item.path.replace("localhost", "10.0.2.2"),
