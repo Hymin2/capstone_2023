@@ -28,6 +28,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
+import kotlinx.android.synthetic.main.fragment_graph_week.*
 import java.lang.Long.getLong
 
 
@@ -36,34 +37,30 @@ class graphWeek : Fragment() {
     private var _binding: FragmentGraphWeekBinding? = null
     private val binding get() = _binding!!
 
-    private val service = RetrofitAPI.productService
+    //private val service = RetrofitAPI.productService
 
-    val graphDataList: List<GraphData> = listOf(
-/*        GraphData("04-20",212323),
-        GraphData("04-21",323122),
-        GraphData("04-22",623121),
-        GraphData("04-23",74535),
-        GraphData("04-24",13345),
-        GraphData("04-25",36656),
-        GraphData("04-26",24545),
-        GraphData("04-20",22323),
-        GraphData("04-21",331221),
-        GraphData("04-22",6222),
-        GraphData("04-23",72312),
-        GraphData("04-24",112313),
-        GraphData("04-25",31232),
-        GraphData("04-26",233),
-        GraphData("04-20",2444),
-        GraphData("04-21",3555),
-        GraphData("04-22",6111),
-        GraphData("04-23",72222),
-        GraphData("04-24",13333),
-        GraphData("04-25",34444),
-        GraphData("04-26",25555),
-        GraphData("04-20",26666),
-        GraphData("04-21",37777),
-        GraphData("04-22",68888),
-        GraphData("04-23",7999),*/
+    val graphDataList: List<UsedProductPrice> = listOf(
+        UsedProductPrice("2023-03-19",890000),
+        UsedProductPrice("2023-03-20",900000),
+        UsedProductPrice("2023-03-24",900000),
+        UsedProductPrice("2023-03-30",915000),
+        UsedProductPrice("2023-03-31",899000),
+        UsedProductPrice("2023-04-03",890000),
+        UsedProductPrice("2023-04-07",780000),
+        UsedProductPrice("2023-04-09",890000),
+        UsedProductPrice("2023-04-10",1080000),
+        UsedProductPrice("2023-04-11",840000),
+        UsedProductPrice("2023-04-12",810000),
+        UsedProductPrice("2023-04-13",806667),
+        UsedProductPrice("2023-04-14",890000),
+        UsedProductPrice("2023-04-15",890000),
+        UsedProductPrice("2023-04-17",780000),
+        UsedProductPrice("2023-04-18",815000),
+        UsedProductPrice("2023-04-19",878000),
+        UsedProductPrice("2023-04-20",830000),
+        UsedProductPrice("2023-04-23",780000),
+        UsedProductPrice("2023-04-24",823750),
+        UsedProductPrice("2023-04-25",870000),
     )
 
     override fun onCreateView(
@@ -89,15 +86,17 @@ class graphWeek : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val lineChart = view.findViewById<LineChart>(R.id.weekLineChart)
-        val xAxis = lineChart.xAxis
+        val xAxis = binding.weekLineChart.xAxis
 
         // y축
         val entries : MutableList<Entry> = mutableListOf()
         for (i in graphDataList.indices){
             entries.add(Entry(i.toFloat(),graphDataList[i].price.toFloat()))
+            var a= entries[i]
+            Log.e("graphr값","$a")
         }
         val lineDataSet = LineDataSet(entries,"entries")
+/*
 
         var graphDataArrayList : ArrayList<UsedProductPrice>
         var graphPriceList : ArrayList<Int>?
@@ -105,13 +104,12 @@ class graphWeek : Fragment() {
 
         graphPriceList = arguments?.getIntegerArrayList("priceList")
         Log.e("데이터" , "$graphPriceList")
-/*        val a = arguments?.getSerializable("UsedProductPrice")
+        val a = arguments?.getSerializable("UsedProductPrice")
+        Log.e("데이터" , "$a")
+        var retrofitProduct = RetrofitProduct()
+        retrofitProduct.getProductUsedPrice(productId,binding)
 
-
-        Log.e("데이터" , "$a")*/
-        // var retrofitProduct = RetrofitProduct()
-        //retrofitProduct.getProductUsedPrice(productId,binding)
-
+*/
 
         lineDataSet.apply {
             color = resources.getColor(android.R.color.holo_red_dark,null)
@@ -128,9 +126,10 @@ class graphWeek : Fragment() {
             valueTextSize = 10f
         }
 
-        lineChart.apply {
-            axisRight.isEnabled = false   //y축 사용여부
+        binding.weekLineChart.apply {
+            axisRight.isEnabled = true   //y축 사용여부
             axisLeft.isEnabled = false
+            axisRight.setDrawGridLines(false)
             legend.isEnabled = false    //legend 사용여부
             description.isEnabled = false //주석
             isDragXEnabled = true   // x 축 드래그 여부
@@ -143,7 +142,7 @@ class graphWeek : Fragment() {
 
         xAxis.apply {
             setDrawGridLines(false)
-            setDrawAxisLine(false)
+            setDrawAxisLine(true)
             setDrawLabels(false)
             position = XAxis.XAxisPosition.BOTTOM
             valueFormatter = XAxisCustomFormatter(changeDateText(graphDataList))
@@ -155,26 +154,26 @@ class graphWeek : Fragment() {
         val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graphWeek_scrollview)
         horizontalScrollView.post{
             horizontalScrollView.scrollTo(
-                lineChart.width,
+                weekLineChart.width,
                 0
             )
         }
 
-        lineChart.apply {
+        binding.weekLineChart.apply {
             data = LineData(lineDataSet)
             notifyDataSetChanged() //데이터 갱신
             invalidate() // view갱신
         }
-        lineChart
+        binding.weekLineChart
     }
 
-    fun changeDateText(dataList: List<GraphData>): List<String> {
+    fun changeDateText(dataList: List<UsedProductPrice>): List<String> {
         val dataTextList = ArrayList<String>()
         for (i in dataList.indices) {
-            val textSize = dataList[i].date.length
-            val dateText = dataList[i].date.substring(textSize - 2, textSize)
+            val textSize = dataList[i].time.length
+            val dateText = dataList[i].time.substring(textSize - 2, textSize)
             if (dateText == "01") {
-                dataTextList.add(dataList[i].date)
+                dataTextList.add(dataList[i].time)
             } else {
                 dataTextList.add(dateText)
             }
@@ -205,7 +204,7 @@ class graphWeek : Fragment() {
 
         // entry를 content의 텍스트에 지정
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
-            tvContent.text = e?.y?.toInt().toString() + "원"
+            tvContent.text = e?.y?.toInt().toString() + "원\n"
             super.refreshContent(e, highlight)
         }
 

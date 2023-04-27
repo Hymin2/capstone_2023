@@ -55,13 +55,14 @@ class RetrofitProduct{
                                     intent.putExtra("productId", item.id)
                                     intent.putExtra("productName", item.productName)
                                     intent.putExtra("productPath", item.path)
-
-/*                                    val graphWeekFragment =graphWeek()
+                                    /*
+                                    val graphWeekFragment = graphWeek()
                                     var bundle = Bundle()
                                     bundle.putLong("productId", item.id)
                                     val id = item.id
                                     Log.e("보내는 아이디","$id")
-                                    graphWeekFragment.arguments = bundle*/
+                                    graphWeekFragment.arguments = bundle
+                                    */
 
                                     fragment.startActivity(intent)
                                 }
@@ -83,7 +84,7 @@ class RetrofitProduct{
             })
     }
 
-    fun getProductDetails(id : Long, binding: ActivityDetailBinding){
+    fun getProductDetails(id : Long, binding: ActivityDetailBinding) {
         service.getProductDetails(token = App.prefs.getString("access_token", ""), id).enqueue(object : Callback<ProductDetailsResponseBody>{
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onResponse(
@@ -128,8 +129,7 @@ class RetrofitProduct{
                         //bundle.putParcelableArrayList("list", graphDataArrayList as ArrayList<out Parcelable?>?)
                         Log.e("번들","$bundle")
                         graphWeekFragment.arguments = bundle
-
-/*                        val transaction = FragmentManager().beginTransaction()
+/*                      val transaction = FragmentManager().beginTransaction()
                         transaction.add(R.id.graph_viewPager, graphWeekFragment)
                         transaction.commit()*/
                     }
@@ -138,61 +138,6 @@ class RetrofitProduct{
                     val retrofitRefresh = RetrofitRefresh()
                     retrofitRefresh.refreshToken()
                     getProductDetails(id, binding)
-                }
-            }
-
-            override fun onFailure(call: Call<ProductDetailsResponseBody>, t: Throwable) {
-                Log.d("Product Details 불러오기", "실패(서버 에러)")
-            }
-
-        })
-    }
-
-
-    fun getProductUsedPrice (id : Long, binding: FragmentGraphWeekBinding){
-        service.getProductDetails(token = App.prefs.getString("access_token", ""), id).enqueue(object :
-            Callback<ProductDetailsResponseBody> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(
-                call: Call<ProductDetailsResponseBody>,
-                response: Response<ProductDetailsResponseBody>,
-            ) {
-                if(response.isSuccessful) {
-                    //var details = response.body()!!.message.productDetails
-                    var usedPrice = response.body()!!.message.usedProductPrices
-                    Log.e("가격","$usedPrice[0]")
-                    binding.apply {
-                        usedPrice.stream().forEach { item ->
-                            when (item.price) {
-                                //
-                            }
-                        }
-                    }
-                    Log.e("asd","$usedPrice")
-/*                    binding.apply {
-                        details.stream().forEach { item ->
-                            when (item.detailName) {
-                                "프로세서" -> processorValueTextView.text =
-                                    item.detailContent.replace("/", "")
-                                "RAM" -> ramValueTextView.text = item.detailContent
-                                "내장메모리" -> memoryValueTextView.text = item.detailContent
-                                "통신" -> communicationValueTextView.text = item.detailContent
-                                "카메라" -> cameraValueTextView.text =
-                                    item.detailContent.replace("/ ", "\n")
-                                "보안/기능" -> functionValueTextView.text = item.detailContent
-                                "크기" -> inchValueTextView.text = item.detailContent + "인치"
-                                "디스플레이" -> displayValueTextView.text = item.detailContent
-                                "사운드" -> soundValueTextView.text = item.detailContent
-                                "배터리" -> batteryValueTextView.text = item.detailContent
-                            }
-                        }
-                    }*/
-
-                } else{
-                    val retrofitRefresh = RetrofitRefresh()
-                    retrofitRefresh.refreshToken()
-
-                    //getProductDetails(id, binding)
                 }
             }
 

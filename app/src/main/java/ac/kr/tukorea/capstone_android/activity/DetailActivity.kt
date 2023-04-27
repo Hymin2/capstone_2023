@@ -54,7 +54,7 @@ class DetailActivity : AppCompatActivity() {
 
         var retrofitProduct = RetrofitProduct()
 
-        retrofitProduct.getProductDetails(productId, binding, this)
+        retrofitProduct.getProductDetails(productId, binding)
         binding.apply {
             detailProductNameTextview.text = productName
 
@@ -70,6 +70,35 @@ class DetailActivity : AppCompatActivity() {
                 .into(productImage)
         }
 
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.graph_viewPager,graphWeek()).commit()
+        binding.graphTab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+
+            // 탭 버튼을 선택할 때 이벤트
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val transaction = supportFragmentManager.beginTransaction()
+                // var bundle = Bundle()
+                when(tab?.text) {
+                    "1-month" -> transaction.replace(R.id.graph_viewPager, graphWeek() )
+                    "3-month" -> transaction.replace(R.id.graph_viewPager, graphMonth() )
+                    "6-month" -> transaction.replace(R.id.graph_viewPager, graphYear() )
+                }
+                transaction.commit()
+            }
+
+            // 다른 탭 버튼을 눌러 선택된 탭 버튼이 해제될 때 이벤트
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            // 선택된 탭 버튼을 다시 선택할 때 이벤
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+    }
+/*        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.graph_viewPager, graphWeek())
+        transaction.commit()*/
+
 //        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
 //            override fun onPageSelected(position: Int) {
 //                super.onPageSelected(position)
@@ -78,10 +107,10 @@ class DetailActivity : AppCompatActivity() {
 //            }
 //        })
 
-        graphTab = findViewById(R.id.graphTab)
+/*        graphTab = findViewById(R.id.graphTab)
         graphViewPager = findViewById(R.id.graph_viewPager)
 
-        initViewPager()
+        initViewPager()*/
 /**
         graphTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -100,7 +129,7 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private fun initViewPager() {
+/*    private fun initViewPager() {
 
         // ViewPager2 Adapter 세팅
         val graphTabAdapter = GraphTabAdapter(this)
@@ -127,7 +156,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }.attach()
 
-    }
+    }*/
 
 //    override fun onPause() {
 //        super.onPause()
@@ -176,6 +205,3 @@ class DetailActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
     **/
-
-
-}
