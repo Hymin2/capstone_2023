@@ -1,5 +1,5 @@
 from selenium import webdriver
-#import chromedriver_autoinstaller
+import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,22 +12,17 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
     prod_data = []
     
     for prod_item in prod_items:
-        #상품명, 제조사 크롤링
-        try:  
+        try:  #상품명, 기업명 크롤링
             product_name = prod_item.select('p.prod_name > a')[0].text.strip()
-            product_name.replace(", 자급제", "")
-            
+            product_name = product_name.replace(", 자급제", "").replace(", 공기계", "").replace("글로벌", "").replace("5G","").replace("LTE", "")
             product_name_list = product_name.split()
             company_name = product_name_list[0]
             del product_name_list[0]
-            
             product_name = ' '.join(product_name_list)
         except:
             product_name = ""
-            company_name = ""
         
-        #상품 모델명 크롤링
-        try:
+        try:  #모델명 크롤링
             model_name = prod_item.select('span.cm_mark')[0].text.strip()
             model_name_list = model_name.split(':')
             del model_name_list[0]
@@ -35,8 +30,7 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
         except:
             model_name = ""
 
-        #상품 크롤링
-        try:  
+        try:  #상품 크롤링
             product_list = prod_item.select('div.spec_list')[0].text.strip()
             product_list = product_list.replace('보안/기능', '보안 및 기능')
             product_detail_list = product_list.split('/')
@@ -83,7 +77,11 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             screen_info_list = product_detail_list[idx_scr:idx_sys]
             screen_info = ''.join(screen_info_list)
             screen_info = screen_info.replace(' 화면정보 ','').replace('  ', '/ ')
-        
+            
+            screen_list = screen_info.split("cm")
+            screen_list = screen_list[0]
+            
+            
             system_list = product_detail_list[idx_sys:idx_conn]
             ram_list = []
             mem_list = []
@@ -142,7 +140,7 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('data-original')
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
-
+        
         mylist = ['phone', product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, bench_mark, img_link]
         
         if mylist[0]:
@@ -155,7 +153,7 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
 options = Options()
 options.add_argument('headless'); # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-#chromedriver_autoinsttraller.install()
+chromedriver_autoinstaller.install()
 driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(5)
 driver.set_window_size(1920,1280)
@@ -197,6 +195,6 @@ prod_detail_total = total
 
 data = pd.DataFrame(prod_detail_total)
 
-data.columns = ['카테고리', '상품명', '모델명', '제조사명', '출시OS', '화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '벤치마크', '이미지']
+data.columns = ['카테고리','상품명', '모델명','제조사명', '출시OS', '화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '벤치마크', '이미지']
 
 data.to_excel('./file/danawa_crawling_product_detail_result_class.xlsx', index =False)
