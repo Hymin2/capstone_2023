@@ -7,6 +7,32 @@
     android:orientation="vertical"
     tools:context=".activity.MyShopActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageButton
+                android:id="@+id/myShop_backButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/myShop_backButton"
+                android:text="사용자 닉네임"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp" >
@@ -44,7 +70,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="판매 중" />
+                    android:text="판매 중"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -62,7 +89,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="판매 완료" />
+                    android:text="판매 완료"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,7 +108,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="팔로워" />
+                    android:text="팔로워"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -95,6 +124,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myShop_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

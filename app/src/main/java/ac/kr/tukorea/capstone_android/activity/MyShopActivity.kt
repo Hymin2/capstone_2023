@@ -14,6 +14,7 @@ class MyShopActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityMyShopBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -46,6 +47,10 @@ class MyShopActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = listManager
             adapter = listAdapter
+        }
+
+        binding.myShopBackButton.setOnClickListener {
+            onBackPressed()
         }
     }
 }
