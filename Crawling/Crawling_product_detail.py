@@ -140,8 +140,8 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('data-original')
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
-        
-        mylist = ['phone', product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, bench_mark, img_link]
+        if product_name:
+            mylist = ['phone', product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, bench_mark, img_link]
         
         if mylist[0]:
             prod_data.append(mylist)
