@@ -84,7 +84,7 @@ class RetrofitProduct{
             })
     }
 
-    fun getProductDetails(id : Long, binding: ActivityDetailBinding) {
+    fun getProductDetails(id : Long, binding: ActivityDetailBinding, activity: DetailActivity) {
         service.getProductDetails(token = App.prefs.getString("access_token", ""), id).enqueue(object : Callback<ProductDetailsResponseBody>{
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onResponse(
@@ -112,32 +112,33 @@ class RetrofitProduct{
                                 "배터리" -> batteryValueTextView.text = item.detailContent
                             }
                         }
-                        //var graphDataArrayList = ArrayList<UsedProductPrice>()
-                        var graphPriceList = ArrayList<Int>()
-                        var graphTimeList = ArrayList<String>()
+                        var graphDataArrayList = ArrayList<UsedProductPrice>()
+                        //var graphPriceList = ArrayList<Int>()
+                        //var graphTimeList = ArrayList<String>()
                         usedPrice.stream().forEach { item ->
-                           //graphDataArrayList.add(item)
-                            graphPriceList.add(item.price)
-                            graphTimeList.add(item.time)
+                           graphDataArrayList.add(item)
+                            //graphPriceList.add(item.price)
+                            //graphTimeList.add(item.time)
                         }
                         //Log.e("아이템","$graphDataArrayList")
                         val graphWeekFragment =graphWeek()
                         var bundle = Bundle()
-                        bundle.putIntegerArrayList("priceList",graphPriceList)
-                        bundle.putStringArrayList("timeList",graphTimeList)
-                        //bundle.putSerializable("UsedProductPrice", graphDataArrayList)
-                        //bundle.putParcelableArrayList("list", graphDataArrayList as ArrayList<out Parcelable?>?)
+                        //bundle.putIntegerArrayList("priceList",graphPriceList)
+                        //bundle.putStringArrayList("timeList",graphTimeList)
+                        bundle.putSerializable("UsedProductPrice", graphDataArrayList)
+                        //putParcelableArrayList("list", graphDataArrayList as ArrayList<out Parcelable?>?)
                         Log.e("번들","$bundle")
                         graphWeekFragment.arguments = bundle
-/*                      val transaction = FragmentManager().beginTransaction()
+
+                        val transaction = activity.supportFragmentManager.beginTransaction()
                         transaction.add(R.id.graph_viewPager, graphWeekFragment)
-                        transaction.commit()*/
+                        transaction.commit()
                     }
 
                 } else{
                     val retrofitRefresh = RetrofitRefresh()
                     retrofitRefresh.refreshToken()
-                    getProductDetails(id, binding)
+                    getProductDetails(id, binding, activity)
                 }
             }
 

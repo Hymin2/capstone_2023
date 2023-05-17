@@ -1,6 +1,7 @@
 package ac.kr.tukorea.capstone_android.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.sql.Date
 
 data class ProductDetailsResponseBody(
@@ -33,5 +34,5 @@ data class UsedProductPrice(
     val time : String,
     @SerializedName("price")
     val price : Int
-)
+) : Serializable
 

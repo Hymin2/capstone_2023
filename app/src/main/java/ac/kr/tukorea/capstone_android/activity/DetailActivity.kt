@@ -54,7 +54,7 @@ class DetailActivity : AppCompatActivity() {
 
         var retrofitProduct = RetrofitProduct()
 
-        retrofitProduct.getProductDetails(productId, binding)
+        retrofitProduct.getProductDetails(productId, binding, this)
         binding.apply {
             detailProductNameTextview.text = productName
 

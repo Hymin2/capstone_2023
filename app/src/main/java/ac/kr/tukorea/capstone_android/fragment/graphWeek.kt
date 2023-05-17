@@ -71,13 +71,13 @@ class graphWeek : Fragment() {
         // return inflater.inflate(R.layout.fragment_graph_week, container, false)
         _binding = FragmentGraphWeekBinding.inflate(inflater, container, false)
 
-/*        var graphDataArrayList : ArrayList<UsedProductPrice>
-        var graphPriceList : ArrayList<Int>?
-        var grpahTimeList : ArrayList<String>
+        var graphDataArrayList : ArrayList<UsedProductPrice>?
+        //var graphPriceList : ArrayList<Int>?
+        //var grpahTimeList : ArrayList<String>
 
-        graphPriceList = arguments?.getSerializable("priceList") as ArrayList<Int>?
-        var a = graphPriceList?.get(0)
-        Log.e("데이터" , "$a")*/
+        graphDataArrayList = arguments?.getSerializable("UsedProductPrice") as ArrayList<UsedProductPrice>?
+        var a = graphDataArrayList
+        Log.e("데이터1" , "$a")
         return binding.root
     }
 
@@ -93,7 +93,7 @@ class graphWeek : Fragment() {
         for (i in graphDataList.indices){
             entries.add(Entry(i.toFloat(),graphDataList[i].price.toFloat()))
             var a= entries[i]
-            Log.e("graphr값","$a")
+          //  Log.e("graphr값","$a")
         }
         val lineDataSet = LineDataSet(entries,"entries")
 /*
@@ -204,7 +204,7 @@ class graphWeek : Fragment() {
 
         // entry를 content의 텍스트에 지정
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
-            tvContent.text = e?.y?.toInt().toString() + "원\n"
+            tvContent.text = e?.y?.toInt().toString() + "원"
             super.refreshContent(e, highlight)
         }
 
