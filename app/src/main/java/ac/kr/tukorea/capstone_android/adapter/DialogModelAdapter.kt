@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class DialogAdapter(private var mList: ArrayList<String>, private val listener: OnItemClickListener)
-    :RecyclerView.Adapter<DialogAdapter.ViewHolder>(){
+class DialogModelAdapter(private var mList: ArrayList<String>, private val listener: OnItemClickListener)
+    : RecyclerView.Adapter<DialogModelAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogModelAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.dialog_list_item, parent, false)
         return ViewHolder(view)
     }
@@ -24,8 +24,8 @@ class DialogAdapter(private var mList: ArrayList<String>, private val listener: 
         return mList.size
     }
 
-    inner class ViewHolder(ItemView: View):RecyclerView.ViewHolder(ItemView),
-    View.OnClickListener{
+    inner class ViewHolder(ItemView: View): RecyclerView.ViewHolder(ItemView),
+        View.OnClickListener{
         val item : TextView = ItemView.findViewById(R.id.dialog_rvItem)
 
         init {

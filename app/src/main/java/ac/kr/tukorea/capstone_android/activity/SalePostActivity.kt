@@ -1,7 +1,7 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.adapter.DialogAdapter
+import ac.kr.tukorea.capstone_android.adapter.DialogCategoryAdapter
 import ac.kr.tukorea.capstone_android.adapter.MultiImageAdapter
 import ac.kr.tukorea.capstone_android.databinding.ActivitySalePostBinding
 import android.content.DialogInterface
@@ -9,32 +9,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.Selection
-import android.text.TextUtils
-import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.databinding.adapters.ImageViewBindingAdapter.setImageUri
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.fragment_my_menu.*
 import java.text.DecimalFormat
 
 
-class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
+class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickListener {
 
     lateinit var binding : ActivitySalePostBinding
     private lateinit var dialog: BottomSheetDialog
-    private lateinit var dialogAdapter: DialogAdapter
+    private lateinit var dialogCategoryAdapter: DialogCategoryAdapter
     private lateinit var dialogRecyclerView: RecyclerView
 
     private val list = ArrayList<String>()
@@ -52,10 +44,10 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.salePostToolBar.title = "판매글 작성"
 
+        list.add("스마트폰")
+        list.add("태블릿")
+        list.add("노트북")
 
-        for (i in 1..20) {
-            list.add("item $i")
-        }
         binding.searchDialogButton.setOnClickListener {
             showBottomSheet()
         }
@@ -133,9 +125,8 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
         dialog = BottomSheetDialog(this, R.style.BottomDialogTheme)
         dialog.setContentView(dialogView)
         dialogRecyclerView = dialogView.findViewById(R.id.dialog_recyclerView)
-        dialogAdapter = DialogAdapter(list, this)
-        dialogRecyclerView.adapter = dialogAdapter
-
+        dialogCategoryAdapter = DialogCategoryAdapter(list, this)
+        dialogRecyclerView.adapter = dialogCategoryAdapter
         // 리사이클러뷰 구분선
         val divderItemDecoration =
             DividerItemDecoration(dialogRecyclerView.context, LinearLayoutManager(this).orientation)
@@ -228,13 +219,14 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
         Toast.makeText(this,"Item $position clicked",Toast.LENGTH_SHORT)
         val clickedItem : String = list[position]
             binding.salePostProductName.text = clickedItem
-        dialogAdapter.notifyItemChanged(position)
+
+        dialogCategoryAdapter.notifyItemChanged(position)
         dialog.dismiss()
     }
 
     private fun toLongFormat(num : Long): String {
         val df = DecimalFormat("###,###")
 
-        return df.format(num)
+        return df.format(num) + "원"
     }
 }
