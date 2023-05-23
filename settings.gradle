@@ -11,6 +11,7 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
+        jcenter()
     }
 }
 rootProject.name = "Capstone_Android"

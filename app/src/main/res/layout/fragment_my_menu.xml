@@ -141,9 +141,26 @@
         android:id="@+id/myShop_testButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="테스트"
+        android:text="내 상점 페이지"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
+    <Button
+        android:id="@+id/myShop_testButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내 피드 목록"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myShop_testButton" />
+
+    <Button
+        android:id="@+id/myShop_testButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="판매글 상세 화면"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myShop_testButton2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

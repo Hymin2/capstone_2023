@@ -1,7 +1,9 @@
 package ac.kr.tukorea.capstone_android.fragment
 
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.activity.FeedListActivity
 import ac.kr.tukorea.capstone_android.activity.MyShopActivity
+import ac.kr.tukorea.capstone_android.activity.SaleDetailActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyMenuBinding
 import android.content.Intent
@@ -27,6 +29,15 @@ class MyMenu : Fragment() {
 
         binding.myShopTestButton.setOnClickListener{
             val intent = Intent(context,MyShopActivity::class.java)
+            startActivity(intent)
+        }
+        binding.myShopTestButton2.setOnClickListener{
+            val intent = Intent(context, FeedListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.myShopTestButton3.setOnClickListener{
+            val intent = Intent(context, SaleDetailActivity::class.java)
             startActivity(intent)
         }
     }
