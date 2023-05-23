@@ -61,10 +61,7 @@ class ProductAdapter(private val productList : ArrayList<ProductList>, val conte
         holder.productPrice.text = item.averagePrice.toString() + "원"
 
         val glideUrl = GlideUrl(
-            item.path.replace("localhost", "10.0.2.2"),
-            LazyHeaders.Builder()
-                .addHeader("Authorization", App.prefs.getString("access_token", ""))
-                .build()
+            item.path.replace("localhost", "10.0.2.2")
         )
 
         Glide.with(context).load(glideUrl)
