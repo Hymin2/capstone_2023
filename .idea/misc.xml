@@ -8,6 +8,7 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/border.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/border2.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/bottom_dialog_style.xml" value="0.2465" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/default_dot.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/edt_id_pw.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.1" />
@@ -24,8 +25,10 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_outline_person_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_outline_remove_red_eye_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_twotone_settings_24.xml" value="0.2455" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/selected_dot.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/square_border.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/styles.xml" value="0.2455" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/tab_selector.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_chat.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_feed_list.xml" value="0.1" />

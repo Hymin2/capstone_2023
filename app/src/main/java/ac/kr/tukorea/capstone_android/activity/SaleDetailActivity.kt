@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_sale_detail.*
 
 class SaleDetailActivity : AppCompatActivity() {
 
@@ -27,6 +29,11 @@ class SaleDetailActivity : AppCompatActivity() {
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
 
+        // 뷰페이저에 TabLayout 적용
+        TabLayoutMediator(binding.tabLayoutViewPager!!, binding.saleDetailProductImageViewPager!!){tab, position ->
+            //something
+            // tab.text = position.toString()
+        }.attach()
     }
     private fun getImage(): ArrayList<Int> {
         return arrayListOf<Int>(
