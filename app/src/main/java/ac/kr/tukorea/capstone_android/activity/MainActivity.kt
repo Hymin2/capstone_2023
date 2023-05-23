@@ -13,7 +13,20 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
 
+    init {
+        instance = this
+    }
+
+    companion object {
+        private var instance: MainActivity? = null
+
+        fun getInstance(): MainActivity? 		{
+            return instance
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         if(App.prefs.getString("refresh_token","") == ""){
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)

@@ -17,4 +17,5 @@ interface RegisterService {
 
     @GET("api/v1/user/register/check/nickname")
     fun checkDuplicateNickname(@Query("nickname") nickname : String) : Call<RegisterResponseBody>
+
 }

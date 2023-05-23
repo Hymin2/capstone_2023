@@ -1,9 +1,14 @@
 package ac.kr.tukorea.capstone_android.retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
+import ac.kr.tukorea.capstone_android.activity.LoginActivity
+import ac.kr.tukorea.capstone_android.activity.MainActivity
 import ac.kr.tukorea.capstone_android.data.RefreshResponseBody
 import ac.kr.tukorea.capstone_android.util.App
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

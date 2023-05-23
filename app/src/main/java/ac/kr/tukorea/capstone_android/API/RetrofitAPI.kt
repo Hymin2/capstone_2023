@@ -1,9 +1,6 @@
 package ac.kr.tukorea.capstone_android.API
 
-import ac.kr.tukorea.capstone_android.Interface.LoginService
-import ac.kr.tukorea.capstone_android.Interface.ProductService
-import ac.kr.tukorea.capstone_android.Interface.RefreshService
-import ac.kr.tukorea.capstone_android.Interface.RegisterService
+import ac.kr.tukorea.capstone_android.Interface.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -43,5 +40,9 @@ object RetrofitAPI {
 
     val refreshService : RefreshService by lazy {
         retrofit.create(RefreshService::class.java)
+    }
+
+    val userService : UserService by lazy {
+        retrofit.create(UserService::class.java)
     }
 }
