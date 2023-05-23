@@ -98,7 +98,7 @@ def search_detail(excepts):
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[6]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[5]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
@@ -285,3 +285,5 @@ for idx in range(len(phone_name)):
     driver.quit()
     product = product.replace(' ', '_')
     wb.save(f'./file/joonggonara_crwling_{product}_price.xlsx')
+
+print('----- Crawling finish! ------')
