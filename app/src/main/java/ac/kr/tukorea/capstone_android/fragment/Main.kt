@@ -42,25 +42,22 @@ class Main : Fragment() {
 
         retrofitProduct.getProductList(null, null, 1L, binding, this)
 
-        binding.lookmoreBtn1.setOnClickListener{
-            val intent = Intent(context,DetailActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.apply {
             searchDeviceTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
                         0 -> {
                             filteringBoxPhone.visibility = View.VISIBLE
-
+                            textTopItem.text = "인기 스마트폰 TOP 10"
                         }
                         1 -> {
                             filteringBoxPhone.visibility = View.GONE
+                            textTopItem.text = "인기 태블릿 TOP 10"
                         }
 
                         2 -> {
                             filteringBoxPhone.visibility = View.GONE
+                            textTopItem.text = "인기 노트북 TOP 10"
                         }
                     }
                 }

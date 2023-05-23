@@ -32,5 +32,7 @@ data class ProductList(
     @SerializedName("path")
     val path : String,
     @SerializedName("averagePrice")
-    val averagePrice : Int
+    val averagePrice : Int,
+    @SerializedName("transactionNum")
+    val transactionNum : Int
 )

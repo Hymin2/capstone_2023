@@ -27,7 +27,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/myShop_backButton"
-                android:text="사용자 닉네임"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dp"
@@ -77,8 +76,7 @@
                 <TextView
                     android:id="@+id/onSale"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,8 +95,7 @@
                 <TextView
                     android:id="@+id/soldOut"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout

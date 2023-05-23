@@ -606,7 +606,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text_rankingSmartPhone"
+                android:id="@+id/text_topItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="인기 스마트폰 TOP 10"
@@ -617,118 +617,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/lookmore_btn1"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="더보기>>"
-                android:textSize="15dp"
-                android:textColor="#858585"
-                android:background="#00ff0000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <HorizontalScrollView
-                android:id="@+id/horizontal_scrollview_rankingSmartPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:scrollbars="none"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_rankingSmartPhone" >
-
                 <LinearLayout
+                    android:id="@+id/top_item_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/text_topItem">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/top_item_rv"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/searchresult_list_item">
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="20dp"
-                        app:cardElevation="10dp"
-                        app:cardCornerRadius="20dp" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical" >
-
-                            <ImageView
-                                android:layout_marginTop="10dp"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:background="@drawable/iphone14pro" />
-
-                            <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="아이폰 14pro" />
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="20dp"
-                        app:cardElevation="10dp"
-                        app:cardCornerRadius="20dp" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:layout_marginTop="10dp"
-                                android:background="@drawable/galaxys23" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="갤럭시 S23" />
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="20dp"
-                        app:cardElevation="10dp"
-                        app:cardCornerRadius="20dp" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical" >
-
-                            <ImageView
-                                android:layout_marginTop="10dp"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:background="@drawable/galaxys23" />
-
-                            <TextView
-                                android:layout_marginTop="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="갤럭시 S23" />
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </androidx.recyclerview.widget.RecyclerView>
 
                 </LinearLayout>
-
-            </HorizontalScrollView>
 
 <!--
             <TextView
@@ -860,7 +766,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/horizontal_scrollview_rankingSmartPhone">
+                app:layout_constraintTop_toBottomOf="@id/top_item_layout">
 
                 <TextView
                     android:id="@+id/text_product_list"
