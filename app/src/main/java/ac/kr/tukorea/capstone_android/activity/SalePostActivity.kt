@@ -2,9 +2,11 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.DialogAdapter
+import ac.kr.tukorea.capstone_android.adapter.MultiImageAdapter
 import ac.kr.tukorea.capstone_android.databinding.ActivitySalePostBinding
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -19,10 +21,12 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.adapters.ImageViewBindingAdapter.setImageUri
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.fragment_my_menu.*
 import java.text.DecimalFormat
 
 
@@ -34,6 +38,9 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
     private lateinit var dialogRecyclerView: RecyclerView
 
     private val list = ArrayList<String>()
+
+    private val imageList = ArrayList<Uri?>()
+    val imageAdapter = MultiImageAdapter(imageList,this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +63,7 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
         // 선택한 이미지 삭제
         // 이미지 선택 시 대화상자 출력
         // 대화상자 확인 선택 시 이미지 삭제
-        binding.salePostImageView1.setOnClickListener {
+/*        binding.salePostImageView1.setOnClickListener {
             if (binding.salePostImageView1.drawable != null) {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("이미지 삭제")
@@ -73,7 +80,7 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
                         })
                 builder.show()
             }
-        }
+        }*/
 
             binding.salePostPrice.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
 
@@ -89,6 +96,35 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
                     binding.salePostPrice.setText(formatPrice)
                 }
             }
+        }
+        imageAdapter.setItemClickListener(object : MultiImageAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                // 클릭 시 이벤트 작성
+                val builder = AlertDialog.Builder(this@SalePostActivity)
+                builder.setTitle("이미지 삭제")
+                    .setMessage("이미지를 삭제하시겠습니까?")
+                    .setPositiveButton("확인",
+                        DialogInterface.OnClickListener { imageDialog, id ->
+                            // 확인 누를 시 이미지 삭제
+                            imageList[position] = null
+                            val filteredList = imageList.filterNotNull()
+                            imageList.clear()
+                            imageList.addAll(filteredList)
+
+                            binding.salePostImageRecyclerView.adapter?.notifyDataSetChanged()
+                        })
+                    .setNegativeButton("취소",
+                        DialogInterface.OnClickListener { imageDialog, id ->
+                            // 취소버튼 누를 시
+                            // 대화상자 꺼짐
+                        })
+                builder.show()
+            }
+        })
+        val layoutmanager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        binding.salePostImageRecyclerView.apply {
+            layoutManager = layoutmanager
+            adapter = imageAdapter
         }
     }
 
@@ -123,7 +159,15 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
             R.id.action_btn_image -> {
                 // 이미지 버튼 눌렀을 때
                 // Toast.makeText(applicationContext, "이미지 업로드", Toast.LENGTH_LONG).show()
-                pickImage()
+               /* pickImage()
+                return super.onOptionsItemSelected(item)*/
+
+                var intent = Intent(Intent.ACTION_PICK)
+                intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.action = Intent.ACTION_GET_CONTENT
+
+                startActivityForResult(intent, 200)
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_btn_write -> {
@@ -145,13 +189,40 @@ class SalePostActivity : AppCompatActivity(),DialogAdapter.OnItemClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+            if (resultCode == RESULT_OK && requestCode == 200) {
+                imageList.clear()
+
+                if (data?.clipData != null) {
+                    val count = data.clipData!!.itemCount
+                    if(count>5) {
+                        Toast.makeText(applicationContext, "사진은 5장까지 선택 가능합니다.", Toast.LENGTH_SHORT)
+                        return
+                    }
+                    for (i in 0 until count) {
+                        val imageUri = data.clipData!!.getItemAt(i).uri
+                        imageList.add(imageUri)
+                    }
+                } else { // 한 장만 선택
+                    data?.data?.let { uri ->
+                        val imageUri : Uri? = data?.data
+                        if(imageUri != null) {
+                            imageList.add(imageUri)
+                        }
+                    }
+                }
+                imageAdapter.notifyDataSetChanged()
+            }
+    }
+/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if(requestCode == 1) {
                 val uri = data?.data
                 binding.salePostImageView1.setImageURI(uri)
             }
         }
-    }
+    }*/
 
     override fun onItemClick(position: Int) {
         Toast.makeText(this,"Item $position clicked",Toast.LENGTH_SHORT)
