@@ -80,7 +80,7 @@ class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickLi
 
             if (hasFocus) {
                 if(price.isNotEmpty()) {
-                    binding.salePostPrice.setText(price.replace(",",""))
+                    binding.salePostPrice.setText(price.replace(",","").replace("원", ""))
                 }
             } else {
                 if(price.isNotEmpty()) {
