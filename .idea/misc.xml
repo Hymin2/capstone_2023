@@ -28,12 +28,14 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/styles.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_chat.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_feed_list.xml" value="0.1" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_my_shop.xml" value="0.2509057971014493" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_my_shop.xml" value="0.1" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_post.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_register.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_sale.xml" value="0.264" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_sale_detail.xml" value="0.264" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_sale_post.xml" value="0.264" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_search_result.xml" value="0.2" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/activity_view_sale_post.xml" value="0.2509057971014493" />
@@ -43,6 +45,7 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/chat_list_item.xml" value="0.1" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/community_list_item.xml" value="0.1" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/dialog_list_item.xml" value="0.1834016393442623" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/feed_list_item.xml" value="0.264" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/fragment_community.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/fragment_graph_month.xml" value="0.2536231884057971" />
@@ -65,6 +68,7 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/product_list_item.xml" value="0.1" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/search_phone_dialog.xml" value="0.24320652173913043" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/searchresult_list_item.xml" value="0.264" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/viewpager_image.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/viewpager_list_item.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/write_toolbar.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/menu/menu.xml" value="0.2953125" />

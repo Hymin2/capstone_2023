@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SaleDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical" >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/saleDetail_userProfileImage"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/profile_image" />
+
+                <TextView
+                    android:id="@+id/saleDetail_userNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="사용자 닉네임"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/saleDetail_productImage_viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/iphone14pro"/>
+
+                <com.rd.PageIndicatorView
+                    android:id="@+id/page_indicator_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="24dp"
+                    app:piv_animationType="worm"
+                    app:piv_dynamicCount="true"
+                    app:piv_interactiveAnimation="true"
+                    app:piv_selectedColor="#b4b4b4"
+                    app:piv_unselectedColor="#3fb4b4b4"
+                    app:piv_viewPager="@id/saleDetail_productImage_viewPager"
+                    app:piv_padding="8dp"
+                    app:piv_radius="4dp" />
+
+            </FrameLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/saleDetail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="판매글 제목"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/likeBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:onClick="onClickButton"
+                    app:lottie_autoPlay="false"
+                    app:lottie_fileName="heart.json"
+                    app:lottie_loop="false" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/saleDetail_productMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="판매글 내용. . . \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n123"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:elevation="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/center_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="3dp"
+            android:text="아이폰14 Pro"
+            android:textSize="20dp" />
+
+        <View
+            android:id="@+id/center_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/saleDetail_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1,000,000 원"
+            android:layout_below="@id/center_line"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:textSize="20dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="채팅하기" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>

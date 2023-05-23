@@ -2,7 +2,6 @@ package ac.kr.tukorea.capstone_android.fragment
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.ChatActivity
-import ac.kr.tukorea.capstone_android.activity.SaleActivity
 import ac.kr.tukorea.capstone_android.adapter.ChatAdapter
 import ac.kr.tukorea.capstone_android.data.ChatList
 import android.content.Intent
