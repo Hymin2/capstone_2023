@@ -4,16 +4,28 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
 import time
 import pandas as pd
+import pyperclip
 
 #xpath가 존재하는지 확인
 def isExistXpath(xpath, implicitly_wait_time=0, old_wait=25):
     driver.implicitly_wait(implicitly_wait_time)
     try:
         driver.find_element(By.XPATH, xpath)
+    except Exception:
+        return False
+    finally:
+        driver.implicitly_wait(old_wait)
+    return True
+
+def isExistCSS(CSS_selector, implicitly_wait_time=0, old_wait=25):
+    driver.implicitly_wait(implicitly_wait_time)
+    try:
+        driver.find_element(By.CSS_SELECTOR, xpath)
     except Exception:
         return False
     finally:
@@ -79,6 +91,11 @@ def set_except(product):
             excepts = excepts + ', 플러스, plus, +'
         if ('울트라' or 'ultra') not in product:
             excepts = excepts + ', 울트라, ultra'
+        if ('플립' or '폴드') in product:
+            if('4') not in product:
+                excepts = excepts + ', 4'
+            if('3') not in product:
+                excepts = excepts + ', 3'
     elif '이폰' in product:
         if ('프로' or 'pro') not in product:
             excepts = excepts + ', 프로, pro'
@@ -98,7 +115,7 @@ def search_detail(excepts):
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[5]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[3]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
@@ -211,6 +228,7 @@ def do_Crawling(num, page):
     
     #게시글 들어가기
     for i in range(len(driver.find_elements(By.CSS_SELECTOR, '.article'))):
+        
         articles = driver.find_elements(By.CSS_SELECTOR, 'a.article')[i]
         articles.click()
         time.sleep(1)
@@ -247,7 +265,10 @@ def do_Crawling(num, page):
 get_product_list()
 
 options = Options()
-options.add_argument('headless'); # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
+#options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
+
+user_id = 'jihoon815'
+user_pw = 'guswlgns3!50'
 
 #핸드폰 크롤링 시작
 for idx in range(len(phone_name)):
@@ -257,6 +278,24 @@ for idx in range(len(phone_name)):
     
     url = 'https://cafe.naver.com/joonggonara.cafe'
     driver.get(url)
+    
+    driver.find_element(By.CSS_SELECTOR, '#gnb_login_button').click()
+    time.sleep(1)
+    
+    na_id = driver.find_element(By.CSS_SELECTOR, '#id')
+    na_id.click()
+    pyperclip.copy(user_id)
+    na_id.send_keys(Keys.CONTROL, 'v')
+    time.sleep(1)
+    
+    na_pw = driver.find_element(By.CSS_SELECTOR, '#pw')
+    na_pw.click()
+    pyperclip.copy(user_pw)
+    na_pw.send_keys(Keys.CONTROL, 'v')
+    time.sleep(1)
+    
+    driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
+    
     
     #시세를 찾을 검색어 설정/검색
     name = phone_name[idx]
@@ -272,7 +311,7 @@ for idx in range(len(phone_name)):
     prod_price_total = wb.active
     prod_price_total.append(['날짜','가격'])
     
-    print('----- Product Name : {} || {}'.format(product, mem), '------')
+    print('----- {} --- Product Name : {} || {}'.format(idx, product, mem), '------')
     
     #상세 검색
     search_detail(excepts)
