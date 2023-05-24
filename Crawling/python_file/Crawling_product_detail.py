@@ -37,7 +37,6 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
 
             release_os = ''
             screen_info = ''
-            screen_size = ''
             system = ''
             ram = ''
             mem = ''
@@ -78,11 +77,6 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
             screen_info_list = product_detail_list[idx_scr:idx_sys]
             screen_info = ''.join(screen_info_list)
             screen_info = screen_info.replace(' 화면정보 ','').replace('  ', '/ ')
-            
-            screen_size = ''.join(screen_info_list[0])
-            screen_size_list = screen_size.split('(')
-            screen_size = ''.join(screen_size_list[1])
-            screen_size = screen_size.replace(') ','')
             
             screen_list = screen_info.split("cm")
             screen_list = screen_list[0]
@@ -147,7 +141,7 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
         if product_name:
-            mylist = ['phone', product_name, model_name, company_name, release_os, screen_size, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, bench_mark, img_link]
+            mylist = ['phone', product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, bench_mark, img_link]
         
         if mylist[0]:
             prod_data.append(mylist)
@@ -201,6 +195,7 @@ prod_detail_total = total
 
 data = pd.DataFrame(prod_detail_total)
 
-data.columns = ['카테고리','상품명', '모델명','제조사명', '출시OS', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '벤치마크', '이미지']
+data.columns = ['카테고리','상품명', '모델명','제조사명', '출시OS', '화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '벤치마크', '이미지']
+data = data.drop_duplicates(subset='상품명',keep='first')
 
 data.to_excel('./file/danawa_crawling_product_detail_result_class.xlsx', index =False)
