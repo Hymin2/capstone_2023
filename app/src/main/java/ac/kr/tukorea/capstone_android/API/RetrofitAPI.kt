@@ -26,6 +26,10 @@ object RetrofitAPI {
             .build()
     }
 
+    fun getInstance() : Retrofit{
+        return retrofit
+    }
+
     val registerService: RegisterService by lazy {
         retrofit.create(RegisterService::class.java)
     }

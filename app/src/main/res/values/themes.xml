@@ -23,4 +23,5 @@
     <style name="ToolbarColoredBackArrow" parent="Theme.Capstone_Android">
         <item name="android:textColorSecondary">@color/white</item>
     </style>
+
 </resources>
