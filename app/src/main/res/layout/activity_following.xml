@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    tools:context=".activity.FollowerActivity"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/feedList_toolBar"
+        android:id="@+id/following_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -15,21 +17,27 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <ImageButton
-            android:id="@+id/feedList_btnBack"
+            android:id="@+id/following_btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="4dp"
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="30dp"
+            android:text="팔로잉"/>
     </androidx.appcompat.widget.Toolbar>
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feedList_recyclerView"
+        android:id="@+id/following_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:layout_below="@+id/feedList_toolBar" />
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

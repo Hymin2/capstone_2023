@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 when(it.itemId){
                     R.id.main -> replaceFragment(Main())
                     R.id.chat -> replaceFragment(Chat())
-                    R.id.my_menu -> replaceFragment(MyMenu())
+                    R.id.my_menu -> replaceFragment(myProfile())
 
                     else -> {
 

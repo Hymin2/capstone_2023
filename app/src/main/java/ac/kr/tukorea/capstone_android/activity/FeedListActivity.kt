@@ -46,7 +46,7 @@ class FeedListActivity : AppCompatActivity() {
 
         getUserData()
 
-        binding.btnBack.setOnClickListener {
+        binding.feedListBtnBack.setOnClickListener {
             onBackPressed()
         }
     }

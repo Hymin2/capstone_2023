@@ -16,6 +16,7 @@ import android.view.ViewGroup
 class MyMenu : Fragment() {
 
     lateinit var binding : FragmentMyMenuBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

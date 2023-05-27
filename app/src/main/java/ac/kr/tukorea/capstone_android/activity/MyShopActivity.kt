@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 
 class MyShopActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityMyShopBinding
+    private lateinit var binding : ActivityMyShopBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
