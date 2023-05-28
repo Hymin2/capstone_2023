@@ -101,14 +101,14 @@ class ProfileEditActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val BASE_URL = "http://example.com/api/" // 서버의 기본 URL 설정
+        private const val BASE_URL = "http://121.143.64.12:8080/"
     }
 }
 
 interface ApiService {
-    // 이미지와 userName 업로드 API 엔드포인트
+    // 이미지와 userName 업로드 API
     @Multipart
-    @POST("upload")
+    @POST("api/v1/user/")
     fun uploadProfileImage(
         @Part image: MultipartBody.Part,
         @Part("userName") userName: RequestBody
