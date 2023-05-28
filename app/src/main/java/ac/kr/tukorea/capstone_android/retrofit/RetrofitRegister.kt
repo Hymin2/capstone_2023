@@ -3,7 +3,7 @@ package ac.kr.tukorea.capstone_android.retrofit
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.activity.RegisterActivity
 import ac.kr.tukorea.capstone_android.data.RegisterRequestBody
-import ac.kr.tukorea.capstone_android.data.RegisterResponseBody
+import ac.kr.tukorea.capstone_android.data.ResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityRegisterBinding
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -51,10 +51,10 @@ class RetrofitRegister {
 
     fun checkDuplicateId(id : String, binding: ActivityRegisterBinding) {
         CoroutineScope(Dispatchers.IO).launch{
-            service.checkDuplicateId(id).enqueue(object: Callback<RegisterResponseBody>{
+            service.checkDuplicateId(id).enqueue(object: Callback<ResponseBody>{
                 override fun onResponse(
-                    call: Call<RegisterResponseBody>,
-                    response: Response<RegisterResponseBody>,
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>,
                 ) {
                     if(response.isSuccessful){
                         Log.d("ID 중복체크", "ID가 중복이 아닐 때")
@@ -69,7 +69,7 @@ class RetrofitRegister {
                     }
                 }
 
-                override fun onFailure(call: Call<RegisterResponseBody>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("ID 중복체크", "서버와 연결이 원할하지 않음")
                 }
 
@@ -80,10 +80,10 @@ class RetrofitRegister {
 
     fun checkDuplicateNickname(nickname: String, binding: ActivityRegisterBinding) {
         CoroutineScope(Dispatchers.IO).launch{
-            service.checkDuplicateNickname(nickname).enqueue(object: Callback<RegisterResponseBody>{
+            service.checkDuplicateNickname(nickname).enqueue(object: Callback<ResponseBody>{
                 override fun onResponse(
-                    call: Call<RegisterResponseBody>,
-                    response: Response<RegisterResponseBody>,
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>,
                 ) {
                     if(response.isSuccessful){
                         Log.d("Nickname 중복체크", "Nickname이 중복이 아닐 때")
@@ -98,7 +98,7 @@ class RetrofitRegister {
                     }
                 }
 
-                override fun onFailure(call: Call<RegisterResponseBody>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.d("Nickname 중복체크", "서버와 연결이 원할하지 않음")
                 }
             })

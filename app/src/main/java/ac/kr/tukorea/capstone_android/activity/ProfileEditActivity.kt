@@ -1,36 +1,40 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.databinding.ActivityProfileEditBinding
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitUser
+import ac.kr.tukorea.capstone_android.util.App
+import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
 import java.io.File
 
-class ProfileEditActivity : AppCompatActivity() {
 
+class ProfileEditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileEditBinding
     private lateinit var selectedImageUri: Uri
+    private val retrofitUser = RetrofitUser()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val bitmap = intent.getParcelableExtra<Bitmap>("image")
+        binding.profileEditProfileImage.setImageBitmap(bitmap)
 
         binding.profileEditBtnBack.setOnClickListener{
             onBackPressed()
@@ -40,14 +44,42 @@ class ProfileEditActivity : AppCompatActivity() {
             openGallery()
         }
 
-        binding.profileEditBtnSave.setOnClickListener {
-            uploadProfileImage()
+        binding.profileEditBtnNickname.setOnClickListener {
+            updateNickname()
         }
     }
 
+    private val REQUEST_EXTERNAL_STORAGE = 1
+    private val PERMISSIONS_STORAGE = arrayOf<String>(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    fun verifyStoragePermissions(activity: Activity?) {
+        val permission = ActivityCompat.checkSelfPermission(activity!!,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                activity,
+                PERMISSIONS_STORAGE,
+                REQUEST_EXTERNAL_STORAGE
+            )
+        }
+    }
+    lateinit var imageFile : File
+    lateinit var requestFile :RequestBody
+    lateinit var imagePart : MultipartBody.Part
+
     private fun openGallery() {
+        verifyStoragePermissions(this)
+
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
         resultLauncher.launch(intent)
+    }
+
+    private fun uploadImage(){
+        retrofitUser.uploadProfileImage(App.prefs.getString("username", ""), imagePart, binding)
     }
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -55,60 +87,35 @@ class ProfileEditActivity : AppCompatActivity() {
             val data: Intent? = result.data
             data?.data?.let { uri ->
                 selectedImageUri = uri
+
+                imageFile = File(absolutelyPath(selectedImageUri, this))
+                requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), imageFile)
+                imagePart = MultipartBody.Part.createFormData("multipartFile", imageFile.name, requestFile)
+
+                uploadImage()
+
                 binding.profileEditProfileImage.setImageURI(uri)
             }
         }
     }
 
-    private fun uploadProfileImage() {
-        val imageFile = File(selectedImageUri.path)
-        val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
-        val imagePart = MultipartBody.Part.createFormData("profile_image", imageFile.name, requestFile)
+    fun absolutelyPath(path: Uri?, context : Context): String {
+        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var c: Cursor? = context.contentResolver.query(path!!, proj, null, null, null)
+        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c?.moveToFirst()
 
-        val userName = binding.profileEditEdtUserName.text.toString()
-        val userNameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userName)
+        var result = c?.getString(index!!)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL) // 서버의 기본 URL 설정
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = retrofit.create(ProfileEditService::class.java)
-        val call = service.uploadProfileImage(imagePart, userNameBody)
-
-        call.enqueue(object : Callback<UploadResponse> {
-            override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
-                // 성공적으로 업로드된 경우의 처리
-                if (response.isSuccessful) {
-                    // 업로드 성공
-
-                    // 이전 액티비티로 돌아가기
-                    setResult(RESULT_OK)
-                    finish()
-                } else {
-                    // 업로드 실패
-                }
-            }
-
-            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
-                // 업로드 실패한 경우의 처리
-            }
-        })
+        return result!!
     }
 
-    companion object {
-        private const val BASE_URL = "http://121.143.64.12:8080/"
+    private fun updateNickname(){
+        var nickname = binding.profileEditEdtNickName.text.toString()
+
+        if(nickname.isEmpty())
+            Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_SHORT)
+        else retrofitUser.updateNickname(App.prefs.getString("username", ""), nickname, binding)
     }
 }
 
-interface ProfileEditService {
-    // 이미지와 userName 업로드 API
-    @Multipart
-    @POST("api/v1/user/{username}")
-    fun uploadProfileImage(
-        @Part image: MultipartBody.Part,
-        @Part("userName") userName: RequestBody
-    ): Call<UploadResponse>
-}
-
-data class UploadResponse(val success: Boolean, val message: String)

@@ -3,18 +3,26 @@ package ac.kr.tukorea.capstone_android.retrofit
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.adapter.MyShopAdapter
 import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.data.ResponseBody
 import ac.kr.tukorea.capstone_android.data.UserInfoResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityOthersProfileBinding
+import ac.kr.tukorea.capstone_android.databinding.ActivityProfileEditBinding
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.util.App
+import android.graphics.Color
+import android.text.Editable
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Multipart
 
 class RetrofitUser {
     private val service = RetrofitAPI.userService
@@ -32,10 +40,11 @@ class RetrofitUser {
                     binding.apply {
                         Log.d("user", body.message.username)
 
-                        this.myProfileUserName.text = body.message.username
+                        this.myProfileUserName.text = body.message.nickname
                         myOnSale.text = body.message.onSale.toString()
                         mySoldOut.text = body.message.soldOut.toString()
                         myFollowerNum.text = body.message.followNum.toString()
+                        myFollowingNum.text = body.message.followingNum.toString()
 
                         if(body.message.image != null) {
                             val glideUrl = GlideUrl(
@@ -43,19 +52,8 @@ class RetrofitUser {
                             )
 
                             Glide.with(binding.root.context).load(glideUrl)
-                                .override(Target.SIZE_ORIGINAL)
+                                .override(100)
                                 .into(myProfileProfileImage)
-                        }
-
-                        if(body.message.posts != null){
-                            var listManager = GridLayoutManager(binding.root.context, 3)
-                            var listAdapter = MyShopAdapter(body.message.posts as ArrayList<PostInfo>, binding.root.context)
-
-/*                            binding.myProfileRecyclerView.apply {
-                                setHasFixedSize(true)
-                                layoutManager = listManager
-                                adapter = listAdapter
-                            }*/
                         }
                     }
                 }else{
@@ -68,6 +66,51 @@ class RetrofitUser {
 
             override fun onFailure(call: Call<UserInfoResponseBody>, t: Throwable) {
                 Log.d("user", t.toString())
+            }
+
+        })
+    }
+
+    fun updateNickname(username: String, nickname: String, binding: ActivityProfileEditBinding){
+        service.updateNickname(token = App.prefs.getString("access_token", ""), username, nickname).enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if(response.isSuccessful){
+                    binding.apply {
+                        profileEditNicknameResult.text = "닉네임이 변경되었습니다."
+                        profileEditNicknameResult.setTextColor(Color.BLUE)
+                        profileEditNicknameResult.visibility = View.VISIBLE
+                    }
+                } else{
+                    binding.apply {
+                        profileEditNicknameResult.text = "이미 사용중인 닉네임입니다."
+                        profileEditNicknameResult.setTextColor(Color.RED)
+                        profileEditNicknameResult.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(binding.root.context, "잠시후에 다시 시도해주세요.", Toast.LENGTH_SHORT)
+            }
+
+        })
+    }
+
+    fun uploadProfileImage(username : String, image : MultipartBody.Part, binding: ActivityProfileEditBinding){
+        Log.d("프로필 이미지 수정","1")
+        service.uploadProfileImage(token = App.prefs.getString("access_token", ""), username, image).enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("프로필 이미지 수정","2")
+                if(response.isSuccessful){
+                    Toast.makeText(binding.root.context, "프로필 이미지가 성공적으로 변경되었습니다.", Toast.LENGTH_SHORT)
+                } else{
+                    Toast.makeText(binding.root.context, "잠시후에 다시 시도해주세요.", Toast.LENGTH_SHORT)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("프로필 이미지 수정",t.toString())
+                Toast.makeText(binding.root.context, "잠시후에 다시 시도해주세요.", Toast.LENGTH_SHORT)
             }
 
         })

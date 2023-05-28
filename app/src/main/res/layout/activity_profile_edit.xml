@@ -50,21 +50,30 @@
         android:text="프로필 사진 변경" />
 
     <EditText
-        android:id="@+id/profileEdit_edtUserName"
+        android:id="@+id/profileEdit_edtNickName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="30dp"
-        android:hint="Name"
+        android:hint="변경할 닉네임"
         android:padding="16dp" />
+
+    <TextView
+        android:id="@+id/profileEdit_nickname_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:visibility="invisible"
+        android:text="이미 사용중인 닉네임입니다."
+        android:textColor="#FF0000"/>
 
 
     <Button
-        android:id="@+id/profileEdit_btnSave"
+        android:id="@+id/profileEdit_btnNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:text="저장" />
+        android:text="닉네임 변경" />
 
 </LinearLayout>

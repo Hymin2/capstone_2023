@@ -7,6 +7,8 @@ data class UserInfo(
     val userId : Long,
     @SerializedName("username")
     val username : String,
+    @SerializedName("nickname")
+    val nickname : String,
     @SerializedName("image")
     val image : String?,
     @SerializedName("soldOut")
@@ -15,6 +17,6 @@ data class UserInfo(
     val onSale : Int,
     @SerializedName("followNum")
     val followNum : Int,
-    @SerializedName("posts")
-    val posts : List<PostInfo>?
+    @SerializedName("followingNum")
+    val followingNum : Int
 )

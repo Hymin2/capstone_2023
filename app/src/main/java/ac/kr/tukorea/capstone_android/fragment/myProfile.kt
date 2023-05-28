@@ -1,5 +1,6 @@
 package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,13 @@ import ac.kr.tukorea.capstone_android.activity.FollowerActivity
 import ac.kr.tukorea.capstone_android.activity.FollowingActivity
 import ac.kr.tukorea.capstone_android.activity.ProfileEditActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitUser
+import ac.kr.tukorea.capstone_android.util.App
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.core.graphics.drawable.toBitmap
+import kotlinx.android.synthetic.main.activity_profile_edit.*
+import kotlinx.android.synthetic.main.fragment_my_profile.*
 
 class myProfile : Fragment() {
 
@@ -51,8 +59,15 @@ class myProfile : Fragment() {
 
         binding.editProfile.setOnClickListener {
             val intent = Intent(context, ProfileEditActivity::class.java)
+            val bitmap : Bitmap = myProfile_profileImage.drawable.toBitmap(150, 150)
+            intent.putExtra("image", bitmap)
+
             startActivity(intent)
         }
+
+        val retrofitUser = RetrofitUser()
+
+        retrofitUser.getUserInfo(App.prefs.getString("username", ""), binding)
     }
 
     private inner class MyPagerAdapter : FragmentStateAdapter(this) {

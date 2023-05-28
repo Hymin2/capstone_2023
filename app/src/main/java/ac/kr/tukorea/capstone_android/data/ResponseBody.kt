@@ -2,7 +2,7 @@ package ac.kr.tukorea.capstone_android.data
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterResponseBody(
+data class ResponseBody(
     @SerializedName("result")
     val result : String?,
     @SerializedName("status")
