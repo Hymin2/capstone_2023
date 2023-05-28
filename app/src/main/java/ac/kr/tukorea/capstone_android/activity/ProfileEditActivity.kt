@@ -36,9 +36,6 @@ class ProfileEditActivity : AppCompatActivity() {
         binding = ActivityProfileEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar: Toolbar = binding.followingToolBar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val changePhotoButton: Button = binding.profileEditBtnChangePhoto
         val profileImage: ImageView = binding.profileEditProfileImage
@@ -89,6 +86,10 @@ class ProfileEditActivity : AppCompatActivity() {
                 // 성공적으로 업로드된 경우의 처리
                 if (response.isSuccessful) {
                     // 업로드 성공
+
+                    // 이전 액티비티로 돌아가기
+                    setResult(RESULT_OK)
+                    finish()
                 } else {
                     // 업로드 실패
                 }
@@ -108,7 +109,7 @@ class ProfileEditActivity : AppCompatActivity() {
 interface ApiService {
     // 이미지와 userName 업로드 API
     @Multipart
-    @POST("api/v1/user/")
+    @POST("api/v1/user/{username}")
     fun uploadProfileImage(
         @Part image: MultipartBody.Part,
         @Part("userName") userName: RequestBody
