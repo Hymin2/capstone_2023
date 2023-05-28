@@ -261,7 +261,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
     }
     interface ApiService {
         @Multipart
-        @POST("upload")
+        @POST("upload") // 이거 수정좀
         fun uploadImage(
             @Part image: MultipartBody.Part,
             @Part("title") title: RequestBody,
