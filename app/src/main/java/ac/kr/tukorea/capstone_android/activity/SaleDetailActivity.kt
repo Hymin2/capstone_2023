@@ -2,17 +2,13 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.SaleDetailViewPagerAdapter
-import ac.kr.tukorea.capstone_android.databinding.ActivityMyShopBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivitySaleDetailBinding
 import android.animation.ValueAnimator
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_sale_detail.*
 
 class SaleDetailActivity : AppCompatActivity() {
 

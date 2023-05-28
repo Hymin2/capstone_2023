@@ -1,6 +1,5 @@
 package ac.kr.tukorea.capstone_android.activity
 
-import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityProfileEditBinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,11 +7,8 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.FileProvider
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,16 +32,15 @@ class ProfileEditActivity : AppCompatActivity() {
         binding = ActivityProfileEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.profileEditBtnBack.setOnClickListener{
+            onBackPressed()
+        }
 
-        val changePhotoButton: Button = binding.profileEditBtnChangePhoto
-        val profileImage: ImageView = binding.profileEditProfileImage
-
-        changePhotoButton.setOnClickListener {
+        binding.profileEditBtnChangePhoto.setOnClickListener {
             openGallery()
         }
 
-        val saveButton: Button = binding.profileEditBtnSave
-        saveButton.setOnClickListener {
+        binding.profileEditBtnSave.setOnClickListener {
             uploadProfileImage()
         }
     }
@@ -78,7 +73,7 @@ class ProfileEditActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val service = retrofit.create(ApiService::class.java)
+        val service = retrofit.create(ProfileEditService::class.java)
         val call = service.uploadProfileImage(imagePart, userNameBody)
 
         call.enqueue(object : Callback<UploadResponse> {
@@ -106,7 +101,7 @@ class ProfileEditActivity : AppCompatActivity() {
     }
 }
 
-interface ApiService {
+interface ProfileEditService {
     // 이미지와 userName 업로드 API
     @Multipart
     @POST("api/v1/user/{username}")

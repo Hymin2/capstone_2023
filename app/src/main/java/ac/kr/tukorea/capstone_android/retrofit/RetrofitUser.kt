@@ -4,7 +4,8 @@ import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.adapter.MyShopAdapter
 import ac.kr.tukorea.capstone_android.data.PostInfo
 import ac.kr.tukorea.capstone_android.data.UserInfoResponseBody
-import ac.kr.tukorea.capstone_android.databinding.ActivityMyShopBinding
+import ac.kr.tukorea.capstone_android.databinding.ActivityOthersProfileBinding
+import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.util.App
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +19,7 @@ import retrofit2.Response
 class RetrofitUser {
     private val service = RetrofitAPI.userService
 
-    fun getUserInfo(username : String, binding : ActivityMyShopBinding){
+    fun getUserInfo(username : String, binding : FragmentMyProfileBinding){
         service.getUserInfo(token = App.prefs.getString("access_token", ""), username).enqueue(object : Callback<UserInfoResponseBody>{
             override fun onResponse(
                 call: Call<UserInfoResponseBody>,
@@ -31,10 +32,10 @@ class RetrofitUser {
                     binding.apply {
                         Log.d("user", body.message.username)
 
-                        this.username.text = body.message.username
-                        onSale.text = body.message.onSale.toString()
-                        soldOut.text = body.message.soldOut.toString()
-                        followNum.text = body.message.followNum.toString()
+                        this.myProfileUserName.text = body.message.username
+                        myOnSale.text = body.message.onSale.toString()
+                        mySoldOut.text = body.message.soldOut.toString()
+                        myFollowerNum.text = body.message.followNum.toString()
 
                         if(body.message.image != null) {
                             val glideUrl = GlideUrl(
@@ -43,14 +44,14 @@ class RetrofitUser {
 
                             Glide.with(binding.root.context).load(glideUrl)
                                 .override(Target.SIZE_ORIGINAL)
-                                .into(myShopProfileImage)
+                                .into(myProfileProfileImage)
                         }
 
                         if(body.message.posts != null){
                             var listManager = GridLayoutManager(binding.root.context, 3)
                             var listAdapter = MyShopAdapter(body.message.posts as ArrayList<PostInfo>, binding.root.context)
 
-                            binding.myShopRecyclerView.apply {
+                            binding.myProfileRecyclerView.apply {
                                 setHasFixedSize(true)
                                 layoutManager = listManager
                                 adapter = listAdapter
