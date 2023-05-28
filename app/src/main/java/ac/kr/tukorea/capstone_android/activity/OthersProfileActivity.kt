@@ -4,28 +4,28 @@ import ac.kr.tukorea.capstone_android.Interface.UserService
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.MyShopAdapter
 import ac.kr.tukorea.capstone_android.data.MyShop
-import ac.kr.tukorea.capstone_android.databinding.ActivityMyShopBinding
+import ac.kr.tukorea.capstone_android.databinding.ActivityOthersProfileBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitUser
 import ac.kr.tukorea.capstone_android.util.App
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 
-class MyShopActivity : AppCompatActivity() {
+class OthersProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMyShopBinding
+    private lateinit var binding : ActivityOthersProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMyShopBinding.inflate(layoutInflater)
+        binding = ActivityOthersProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val retrofit = RetrofitUser()
+        // val retrofit = RetrofitUser()
 
-        retrofit.getUserInfo(App.prefs.getString("username", ""), binding)
+        // retrofit.getUserInfo(App.prefs.getString("username", ""), binding)
 
 
-        binding.myShopBackButton.setOnClickListener {
+        binding.othersBackButton.setOnClickListener {
             onBackPressed()
         }
     }

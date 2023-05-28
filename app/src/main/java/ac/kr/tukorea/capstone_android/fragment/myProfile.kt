@@ -33,12 +33,12 @@ class myProfile : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.followerLinear.setOnClickListener{
+        binding.myFollowerLinear.setOnClickListener{
             val intent = Intent(context,FollowerActivity::class.java)
             startActivity(intent)
         }
 
-        binding.followingLinaer.setOnClickListener{
+        binding.myFollowingLinaer.setOnClickListener{
             val intent = Intent(context,FollowingActivity::class.java)
             startActivity(intent)
         }
