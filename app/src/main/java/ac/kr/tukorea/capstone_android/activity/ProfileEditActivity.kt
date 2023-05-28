@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
@@ -15,6 +16,14 @@ import androidx.core.content.FileProvider
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 import java.io.File
 
 class ProfileEditActivity : AppCompatActivity() {
@@ -27,17 +36,19 @@ class ProfileEditActivity : AppCompatActivity() {
         binding = ActivityProfileEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val toolbar: Toolbar = binding.followingToolBar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val changePhotoButton: Button = binding.profileEditBtnChangePhoto
+        val profileImage: ImageView = binding.profileEditProfileImage
 
-        binding.profileEditBtnBack.setOnClickListener{
-            onBackPressed()
-        }
-
-        binding.profileEditBtnChangePhoto.setOnClickListener {
+        changePhotoButton.setOnClickListener {
             openGallery()
         }
 
-        binding.profileEditBtnSave.setOnClickListener {
+        val saveButton: Button = binding.profileEditBtnSave
+        saveButton.setOnClickListener {
             uploadProfileImage()
         }
     }
@@ -62,6 +73,46 @@ class ProfileEditActivity : AppCompatActivity() {
         val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
         val imagePart = MultipartBody.Part.createFormData("profile_image", imageFile.name, requestFile)
 
-        // TODO: 이미지 업로드 요청 보내기
+        val userName = binding.profileEditEdtUserName.text.toString()
+        val userNameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userName)
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL) // 서버의 기본 URL 설정
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(ApiService::class.java)
+        val call = service.uploadProfileImage(imagePart, userNameBody)
+
+        call.enqueue(object : Callback<UploadResponse> {
+            override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
+                // 성공적으로 업로드된 경우의 처리
+                if (response.isSuccessful) {
+                    // 업로드 성공
+                } else {
+                    // 업로드 실패
+                }
+            }
+
+            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                // 업로드 실패한 경우의 처리
+            }
+        })
+    }
+
+    companion object {
+        private const val BASE_URL = "http://example.com/api/" // 서버의 기본 URL 설정
     }
 }
+
+interface ApiService {
+    // 이미지와 userName 업로드 API 엔드포인트
+    @Multipart
+    @POST("upload")
+    fun uploadProfileImage(
+        @Part image: MultipartBody.Part,
+        @Part("userName") userName: RequestBody
+    ): Call<UploadResponse>
+}
+
+data class UploadResponse(val success: Boolean, val message: String)
