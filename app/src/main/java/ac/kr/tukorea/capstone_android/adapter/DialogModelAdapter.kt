@@ -43,4 +43,9 @@ class DialogModelAdapter(private var mList: ArrayList<String>, private val liste
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
+
+    fun filterList(filteredList: ArrayList<String>) {
+        mList = filteredList
+        notifyDataSetChanged()
+    }
 }

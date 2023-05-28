@@ -2,6 +2,7 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.DialogCategoryAdapter
+import ac.kr.tukorea.capstone_android.adapter.DialogModelAdapter
 import ac.kr.tukorea.capstone_android.adapter.MultiImageAdapter
 import ac.kr.tukorea.capstone_android.databinding.ActivitySalePostBinding
 import android.content.DialogInterface
@@ -30,7 +31,8 @@ class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickLi
     private lateinit var dialogCategoryAdapter: DialogCategoryAdapter
     private lateinit var dialogRecyclerView: RecyclerView
 
-    private val list = ArrayList<String>()
+    private val categoryList = ArrayList<String>()
+    private val modelList = ArrayList<String>()
 
     private val imageList = ArrayList<Uri?>()
 
@@ -46,12 +48,23 @@ class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickLi
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.salePostToolBar.title = "판매글 작성"
 
-        list.add("스마트폰")
-        list.add("태블릿")
-        list.add("노트북")
+        categoryList.add("스마트폰")
+        categoryList.add("태블릿")
+        categoryList.add("노트북")
 
-        binding.searchDialogButton.setOnClickListener {
-            showBottomSheet()
+        modelList.add("1")
+        modelList.add("2")
+        modelList.add("3")
+        modelList.add("4")
+        modelList.add("5")
+        modelList.add("6")
+
+        binding.searchCategoryDialogButton.setOnClickListener {
+            showBottomSheet(categoryList)
+        }
+
+        binding.searchProductDialogButton.setOnClickListener{
+            showBottomSheet(modelList)
         }
 
         // 선택한 이미지 삭제
@@ -120,9 +133,10 @@ class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickLi
             layoutManager = layoutmanager
             adapter = imageAdapter
         }
+
     }
 
-    private fun showBottomSheet() {
+    private fun showBottomSheet(list: ArrayList<String>) {
         val dialogView = layoutInflater.inflate(R.layout.bottom_dialog, null)
         dialog = BottomSheetDialog(this, R.style.BottomDialogTheme)
         dialog.setContentView(dialogView)
@@ -130,9 +144,9 @@ class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickLi
         dialogCategoryAdapter = DialogCategoryAdapter(list, this)
         dialogRecyclerView.adapter = dialogCategoryAdapter
         // 리사이클러뷰 구분선
-        val divderItemDecoration =
+        val dividerItemDecoration =
             DividerItemDecoration(dialogRecyclerView.context, LinearLayoutManager(this).orientation)
-        dialogRecyclerView.addItemDecoration(divderItemDecoration)
+        dialogRecyclerView.addItemDecoration(dividerItemDecoration)
 
         dialog.show()
     }
@@ -219,7 +233,7 @@ class SalePostActivity : AppCompatActivity(),DialogCategoryAdapter.OnItemClickLi
 
     override fun onItemClick(position: Int) {
         Toast.makeText(this,"Item $position clicked",Toast.LENGTH_SHORT)
-        val clickedItem : String = list[position]
+        val clickedItem : String = categoryList[position]
         binding.salePostProductName.text = clickedItem
 
         dialogCategoryAdapter.notifyItemChanged(position)
