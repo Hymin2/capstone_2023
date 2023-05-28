@@ -51,11 +51,11 @@ class RetrofitUser {
                             var listManager = GridLayoutManager(binding.root.context, 3)
                             var listAdapter = MyShopAdapter(body.message.posts as ArrayList<PostInfo>, binding.root.context)
 
-                            binding.myProfileRecyclerView.apply {
+/*                            binding.myProfileRecyclerView.apply {
                                 setHasFixedSize(true)
                                 layoutManager = listManager
                                 adapter = listAdapter
-                            }
+                            }*/
                         }
                     }
                 }else{

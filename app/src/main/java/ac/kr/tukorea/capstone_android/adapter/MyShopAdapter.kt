@@ -2,9 +2,7 @@ package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.PostInfo
-import android.app.Activity
 import android.content.Context
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +17,12 @@ class MyShopAdapter(private val MyShopList:ArrayList<PostInfo>, val context : Co
     RecyclerView.Adapter<MyShopAdapter.MyShopViewHolder>() {
 
     class MyShopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val myShopImage : ImageView = itemView.findViewById(R.id.myShop_recyclerImage)
+        val myShopImage : ImageView = itemView.findViewById(R.id.myProfile_recyclerImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyShopViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.myshop__list_item, parent, false)
+            .inflate(R.layout.myshop_list_item, parent, false)
         return MyShopViewHolder(view)
     }
 
