@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ac.kr.tukorea.capstone_android.R
 
-class FeedListAdapter(private var feedList: ArrayList<FeedList>) :
-    RecyclerView.Adapter<FeedListAdapter.FeedListViewHolder>() {
+class FeedListAdapter(private var feedList: ArrayList<FeedList>
+) : RecyclerView.Adapter<FeedListAdapter.FeedListViewHolder>() {
 
     class FeedListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val feedProfileImage: ImageView = itemView.findViewById(R.id.feedList_userProfileImage)

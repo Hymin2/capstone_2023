@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.FollowerActivity
 import ac.kr.tukorea.capstone_android.activity.FollowingActivity
+import ac.kr.tukorea.capstone_android.activity.ProfileEditActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyMenuBinding
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import android.content.Intent
@@ -39,6 +40,11 @@ class myProfile : Fragment() {
 
         binding.followingLinaer.setOnClickListener{
             val intent = Intent(context,FollowingActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.editProfile.setOnClickListener{
+            val intent = Intent(context,ProfileEditActivity::class.java)
             startActivity(intent)
         }
     }
