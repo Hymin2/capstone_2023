@@ -35,12 +35,12 @@ class DialogCategoryAdapter(private var mList: ArrayList<String>, private val li
         override fun onClick(view: View?) {
             val position : Int = adapterPosition
             if (position != RecyclerView.NO_POSITION){
-                listener.onItemClick(position)
+                listener.onItemClick1(position)
             }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick1(position: Int)
     }
 }

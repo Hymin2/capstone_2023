@@ -37,11 +37,12 @@ import retrofit2.http.Part
 import java.io.File
 import java.text.DecimalFormat
 
-class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickListener {
+class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickListener, DialogModelAdapter.OnItemClickListener {
 
     lateinit var binding: ActivitySalePostBinding
     private lateinit var dialog: BottomSheetDialog
     private lateinit var dialogCategoryAdapter: DialogCategoryAdapter
+    private lateinit var dialogModelAdapter: DialogModelAdapter
     private lateinit var dialogRecyclerView: RecyclerView
 
     private val categoryList = ArrayList<String>()
@@ -84,11 +85,11 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
         modelList.add("6")
 
         binding.searchCategoryDialogButton.setOnClickListener {
-            showBottomSheet(categoryList)
+            showBottomSheet1()
         }
 
         binding.searchProductDialogButton.setOnClickListener {
-            showBottomSheet(modelList)
+            showBottomSheet2()
         }
 
         binding.salePostPrice.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
@@ -208,21 +209,43 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
         return super.onOptionsItemSelected(item)
     }
 
-    fun showBottomSheet(list: ArrayList<String>) {
+    private fun showBottomSheet1() {
         val dialogView = layoutInflater.inflate(R.layout.bottom_dialog, null)
         dialog = BottomSheetDialog(this, R.style.BottomDialogTheme)
         dialog.setContentView(dialogView)
-
-        dialogCategoryAdapter = DialogCategoryAdapter(list, this)
         dialogRecyclerView = dialogView.findViewById(R.id.dialog_recyclerView)
+        dialogCategoryAdapter = DialogCategoryAdapter(categoryList, this)
         dialogRecyclerView.adapter = dialogCategoryAdapter
-        dialogRecyclerView.layoutManager = LinearLayoutManager(this)
+        // 리사이클러뷰 구분선
+        val divderItemDecoration =
+            DividerItemDecoration(dialogRecyclerView.context, LinearLayoutManager(this).orientation)
+        dialogRecyclerView.addItemDecoration(divderItemDecoration)
 
         dialog.show()
     }
 
-    override fun onItemClick(position: Int) {
+    private fun showBottomSheet2() {
+        val dialogView = layoutInflater.inflate(R.layout.bottom_dialog, null)
+        dialog = BottomSheetDialog(this, R.style.BottomDialogTheme)
+        dialog.setContentView(dialogView)
+        dialogRecyclerView = dialogView.findViewById(R.id.dialog_recyclerView)
+        dialogModelAdapter = DialogModelAdapter(modelList, this)
+        dialogRecyclerView.adapter = dialogModelAdapter
+        // 리사이클러뷰 구분선
+        val divderItemDecoration =
+            DividerItemDecoration(dialogRecyclerView.context, LinearLayoutManager(this).orientation)
+        dialogRecyclerView.addItemDecoration(divderItemDecoration)
+
+        dialog.show()
+    }
+
+    override fun onItemClick1(position: Int) {
         binding.salePostCategoryName.text = categoryList[position]
+        dialog.dismiss()
+    }
+
+    override fun onItemClick2(position: Int) {
+        binding.salePostProductName.text = modelList[position]
         dialog.dismiss()
     }
 

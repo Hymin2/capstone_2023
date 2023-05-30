@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class DialogModelAdapter(private var mList: ArrayList<String>, private val listener: OnItemClickListener)
-    : RecyclerView.Adapter<DialogModelAdapter.ViewHolder>(){
+    :RecyclerView.Adapter<DialogModelAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogModelAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.dialog_list_item, parent, false)
@@ -24,7 +24,7 @@ class DialogModelAdapter(private var mList: ArrayList<String>, private val liste
         return mList.size
     }
 
-    inner class ViewHolder(ItemView: View): RecyclerView.ViewHolder(ItemView),
+    inner class ViewHolder(ItemView: View):RecyclerView.ViewHolder(ItemView),
         View.OnClickListener{
         val item : TextView = ItemView.findViewById(R.id.dialog_rvItem)
 
@@ -35,17 +35,12 @@ class DialogModelAdapter(private var mList: ArrayList<String>, private val liste
         override fun onClick(view: View?) {
             val position : Int = adapterPosition
             if (position != RecyclerView.NO_POSITION){
-                listener.onItemClick(position)
+                listener.onItemClick2(position)
             }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
-    }
-
-    fun filterList(filteredList: ArrayList<String>) {
-        mList = filteredList
-        notifyDataSetChanged()
+        fun onItemClick2(position: Int)
     }
 }
