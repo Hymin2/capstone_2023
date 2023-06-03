@@ -267,8 +267,9 @@ get_product_list()
 options = Options()
 #options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-user_id = 'jihoon815'
-user_pw = 'guswlgns3!50'
+#네이버 아이디와 비번 각자 작성
+user_id = '네이버 아이디'
+user_pw = '네이버 비번'
 
 #핸드폰 크롤링 시작
 for idx in range(len(phone_name)):
