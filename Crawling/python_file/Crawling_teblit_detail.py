@@ -1,10 +1,10 @@
 from selenium import webdriver
-#import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+#import chromedriver_autoinstaller
 import time
 import pandas as pd
 
@@ -248,7 +248,7 @@ def get_prod_items(prod_items):
             
         mylist = ['teblit_PC', product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, accessory , battery, size, img_link]
             
-        if mylist[0]:
+        if mylist[1]:
             if '태블릿PC' in product_type:
                 if '중고' not in product_name:
                     if  '키즈' not in product_name:
