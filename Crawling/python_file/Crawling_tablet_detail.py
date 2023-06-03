@@ -1,10 +1,10 @@
 from selenium import webdriver
-#import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+#import chromedriver_autoinstaller
 import time
 import pandas as pd
 
@@ -240,14 +240,22 @@ def get_prod_items(prod_items):
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('data-original')
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
-    
+
+        if model_name in product_name:
+            product_name = product_name.replace(model_name, '')
+        if '램' in product_name:
+            product_name = product_name.replace(ram, '').replace(', 램', '')
+            
         mylist = ['teblit_PC', product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, accessory , battery, size, img_link]
             
-        if mylist[0]:
+        if mylist[1]:
             if '태블릿PC' in product_type:
                 if '중고' not in product_name:
-                    if '키즈' not in product_name:
-                        prod_data.append(mylist)
+                    if  '키즈' not in product_name:
+                        if  '패키지' not in product_name:
+                            if '완납' not in product_name:
+                                if '비즈니스' not in product_name:
+                                    prod_data.append(mylist)
 
     return(prod_data)
 
@@ -309,11 +317,9 @@ driver.close()
 total = []
 for temp in prod_detail_total:
     total += temp
-prod_detail_total_total = total
+prod_detail_total = total
 
-data = pd.DataFrame(prod_detail_total_total)
-
+data = pd.DataFrame(prod_detail_total)
 data.columns = ['카테고리', '상품명', '모델명', '제조사명', '출시OS', '화면정보', '프로세서', '램', '내장메모리', '통신', '카메라', '사운드', '악세서리', '배터리', '규격', '이미지']
-
 
 data.to_excel('./file/danawa_crawling_tablit_detail_result_class.xlsx', index =False)

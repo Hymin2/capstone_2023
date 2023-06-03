@@ -1,7 +1,7 @@
 package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
-import ac.kr.tukorea.capstone_android.fragment.graphWeek
+import ac.kr.tukorea.capstone_android.fragment.graph1Month
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

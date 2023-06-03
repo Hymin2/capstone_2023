@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.graphMonth">
+    tools:context=".fragment.graph3Month">
 
     <HorizontalScrollView
-        android:id="@+id/graphMonth_scrollview"
+        android:id="@+id/graphThreeMonth_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/monthLineChart"
+                android:id="@+id/threeMonthLineChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

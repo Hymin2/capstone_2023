@@ -8,24 +8,17 @@ import ac.kr.tukorea.capstone_android.adapter.TopItemAdapter
 import ac.kr.tukorea.capstone_android.data.*
 import ac.kr.tukorea.capstone_android.databinding.*
 import ac.kr.tukorea.capstone_android.fragment.Main
-import ac.kr.tukorea.capstone_android.fragment.graphWeek
+import ac.kr.tukorea.capstone_android.fragment.graph1Month
 import ac.kr.tukorea.capstone_android.util.App
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
-import android.view.ContextThemeWrapper
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.Collator
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
@@ -152,17 +145,17 @@ class RetrofitProduct{
                             //graphTimeList.add(item.time)
                         }
                         //Log.e("아이템","$graphDataArrayList")
-                        val graphWeekFragment =graphWeek()
+                        val graph1MonthFragment =graph1Month()
                         var bundle = Bundle()
                         //bundle.putIntegerArrayList("priceList",graphPriceList)
                         //bundle.putStringArrayList("timeList",graphTimeList)
                         bundle.putSerializable("UsedProductPrice", graphDataArrayList)
                         //putParcelableArrayList("list", graphDataArrayList as ArrayList<out Parcelable?>?)
                         Log.e("번들","$bundle")
-                        graphWeekFragment.arguments = bundle
+                        graph1MonthFragment.arguments = bundle
 
                         val transaction = activity.supportFragmentManager.beginTransaction()
-                        transaction.add(R.id.graph_viewPager, graphWeekFragment)
+                        transaction.add(R.id.graph_FrameLayout, graph1MonthFragment)
                         transaction.commit()
                     }
 
