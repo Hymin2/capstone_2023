@@ -19,8 +19,4 @@ interface ProductService {
     @GET("api/v1/product/{id}")
     fun getProductDetails(@Header("Authorization") token: String,
                           @Path("id") productId : Long) : Call<ProductDetailsResponseBody>
-
-    @GET("api/v1/product")
-    fun getProductNameList(@Header("Authorization") token : String,
-                           @Query("category") category : Long) : Call<ProductNameListResponseBody>
 }

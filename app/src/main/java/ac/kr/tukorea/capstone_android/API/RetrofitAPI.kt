@@ -1,6 +1,7 @@
 package ac.kr.tukorea.capstone_android.API
 
 import ac.kr.tukorea.capstone_android.Interface.*
+import ac.kr.tukorea.capstone_android.util.ServerInfo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object RetrofitAPI {
-    private const val BASE_URL = "http://10.0.2.2:8080/"
+    private val BASE_URL = ServerInfo.SERVER_URL.url
 
     private val okHttpClient : OkHttpClient by lazy {
         OkHttpClient.Builder()

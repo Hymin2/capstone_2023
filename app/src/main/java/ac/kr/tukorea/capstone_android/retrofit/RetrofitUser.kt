@@ -9,6 +9,7 @@ import ac.kr.tukorea.capstone_android.databinding.ActivityOthersProfileBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivityProfileEditBinding
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.util.App
+import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.graphics.Color
 import android.text.Editable
 import android.util.Log
@@ -48,7 +49,7 @@ class RetrofitUser {
 
                         if(body.message.image != null) {
                             val glideUrl = GlideUrl(
-                                body.message.image.replace("localhost", "10.0.2.2")
+                                ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + body.message.image
                             )
 
                             Glide.with(binding.root.context).load(glideUrl)

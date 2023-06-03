@@ -10,6 +10,7 @@ import ac.kr.tukorea.capstone_android.fragment.graphWeek
 import ac.kr.tukorea.capstone_android.fragment.graphYear
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import ac.kr.tukorea.capstone_android.util.App
+import ac.kr.tukorea.capstone_android.util.ServerInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -59,7 +60,7 @@ class DetailActivity : AppCompatActivity() {
             detailProductNameTextview.text = productName
 
             val glideUrl = GlideUrl(
-                productPath!!.replace("localhost", "10.0.2.2"),
+                ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + productPath!!,
                 LazyHeaders.Builder()
                     .addHeader("Authorization", App.prefs.getString("access_token", ""))
                     .build()

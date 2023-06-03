@@ -66,6 +66,7 @@ class ProfileEditActivity : AppCompatActivity() {
             )
         }
     }
+
     lateinit var imageFile : File
     lateinit var requestFile :RequestBody
     lateinit var imagePart : MultipartBody.Part

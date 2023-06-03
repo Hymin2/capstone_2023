@@ -1,13 +1,23 @@
 package ac.kr.tukorea.capstone_android.activity
 
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI.productService
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.DialogCategoryAdapter
 import ac.kr.tukorea.capstone_android.adapter.DialogModelAdapter
 import ac.kr.tukorea.capstone_android.adapter.MultiImageAdapter
+import ac.kr.tukorea.capstone_android.data.ProductList
+import ac.kr.tukorea.capstone_android.data.ProductListResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivitySalePostBinding
-import android.content.DialogInterface
+import ac.kr.tukorea.capstone_android.util.App
+import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -15,29 +25,30 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_sale_post.*
+import com.google.gson.JsonObject
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import java.io.File
 import java.text.DecimalFormat
+import java.util.stream.Collectors
 
 class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickListener, DialogModelAdapter.OnItemClickListener {
 
@@ -48,27 +59,18 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
     private lateinit var dialogRecyclerView: RecyclerView
 
     private val categoryList = ArrayList<String>()
-    private val modelList = ArrayList<String>()
-
+    private var modelList = ArrayList<String>()
+    private var productIdList = ArrayList<Long>()
     private val imageList = ArrayList<Uri?>()
 
     val imageAdapter = MultiImageAdapter(imageList, this)
-
-    private lateinit var apiService: ApiService
+    private val postService = RetrofitAPI.postService
+    var productId : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySalePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Retrofit 초기화
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")  // 실제 API 엔드포인트 URL로 대체해야 합니다.
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        // API 서비스 인스턴스 생성
-        apiService = retrofit.create(ApiService::class.java)
 
         setSupportActionBar(binding.salePostToolBar) //커스텀한 toolbar를 액션바로 사용
         supportActionBar?.setDisplayShowTitleEnabled(false) //액션바에 표시되는 제목의 표시유무를 설정합니다. false로 해야 custom한 툴바의 이름이 화면에 보이게 됩니다.
@@ -79,19 +81,18 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
         categoryList.add("태블릿")
         categoryList.add("노트북")
 
-        modelList.add("1")
-        modelList.add("2")
-        modelList.add("3")
-        modelList.add("4")
-        modelList.add("5")
-        modelList.add("6")
+        verifyStoragePermissions(this)
 
         binding.searchCategoryDialogButton.setOnClickListener {
             showBottomSheet1()
         }
 
         binding.searchProductDialogButton.setOnClickListener {
-            showBottomSheet2()
+            if(categoryList.contains(binding.salePostCategoryName.text)) {
+                showBottomSheet2()
+            } else{
+                Toast.makeText(this, "카테고리를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.salePostPrice.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
@@ -160,56 +161,47 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
                 val model = binding.salePostProductName.text.toString()
                 val content = binding.salePostContent.text.toString()
 
-
                 val imageParts = ArrayList<MultipartBody.Part>()
                 for (imageUri in imageList) {
                     imageUri?.let { uri ->
-                        val file = File(uri.path)
-                        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-                        val imagePart =
-                            MultipartBody.Part.createFormData("images", file.name, requestBody)
+                        val file = File(absolutelyPath(uri, this))
+                        val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+                        val imagePart = MultipartBody.Part.createFormData("multipartFiles", file.name, requestBody)
                         imageParts.add(imagePart)
                     }
                 }
 
-                Log.e("post_title","$title")
-                Log.e("post_category","$category")
-                Log.e("post_model","$model")
-                Log.e("post_price","$priceToInt")
-                Log.e("post_content","$content")
-                //Log.e("post_image","${imageParts[0]}")
-
                 if (priceToInt != null && title != null && !(category.equals("")) &&
-                    !(model.equals("")) && content != null && imageParts[0] != null) {
+                    !(model.equals("")) && content != null && imageParts.isNotEmpty()) {
 
-                    val titleBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val categoryBody =
-                        category.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val modelBody = model.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val priceBody = price.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val contentBody =
-                        content.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val username = App.prefs.getString("username", " ")
 
+                    Log.d("판매글 등록", productId.toString())
                     // Retrofit을 사용하여 업로드 작업 수행
-                    val call = apiService.uploadImage(imageParts, titleBody, categoryBody, modelBody,priceBody,contentBody)
-                    call.enqueue(object : Callback<ResponseBody> {
+                    postService.registerPost(App.prefs.getString("access_token", ""), productId, username.toRequestBody("text/plain".toMediaTypeOrNull()), title.toRequestBody("text/plain".toMediaTypeOrNull()), content.toRequestBody("text/plain".toMediaTypeOrNull()), priceToInt, imageParts).enqueue(object : Callback<ac.kr.tukorea.capstone_android.data.ResponseBody>{
                         override fun onResponse(
-                            call: Call<ResponseBody>,
-                            response: Response<ResponseBody>
+                            call: Call<ac.kr.tukorea.capstone_android.data.ResponseBody>,
+                            response: Response<ac.kr.tukorea.capstone_android.data.ResponseBody>,
                         ) {
-                            // 업로드 성공 처리
-                            Toast.makeText(applicationContext, "이미지 업로드 성공", Toast.LENGTH_SHORT).show()
+                            if(response.isSuccessful){
+                                Toast.makeText(this@SalePostActivity, "판매글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else{
+                                Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            }
                         }
 
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            // 업로드 실패 처리
-                            Toast.makeText(applicationContext, "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
+                        override fun onFailure(
+                            call: Call<ac.kr.tukorea.capstone_android.data.ResponseBody>,
+                            t: Throwable,
+                        ) {
+                            Log.d("판매글 등록", t.toString())
+                            Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         }
+
                     })
-
-                    Toast.makeText(applicationContext, "글 작성 완료", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(applicationContext, "모든 내용을 입력하세요", Toast.LENGTH_LONG).show()
+                } else{
+                    Toast.makeText(this@SalePostActivity, "모든 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
                 return true
             }
@@ -254,11 +246,39 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
 
     override fun onItemClick1(position: Int) {
         binding.salePostCategoryName.text = categoryList[position]
+
+        var category : Long = 0
+        when(binding.salePostCategoryName.text){
+            "스마트폰" -> category = 1
+            "태블릿" -> category = 2
+            "노트북" -> category = 3
+        }
+        productService.getProductList(App.prefs.getString("access_token", ""), null, null, category).enqueue(object: Callback<ProductListResponseBody>{
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onResponse(
+                call: Call<ProductListResponseBody>,
+                response: Response<ProductListResponseBody>,
+            ) {
+                if(response.isSuccessful){
+                    modelList = response.body()!!.message.productList.stream().map(ProductList::productName).collect(Collectors.toList()) as ArrayList<String>
+                    productIdList = response.body()!!.message.productList.stream().map(ProductList::id).collect(Collectors.toList()) as ArrayList<Long>
+                } else{
+
+                }
+            }
+
+            override fun onFailure(call: Call<ProductListResponseBody>, t: Throwable) {
+                Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
         dialog.dismiss()
     }
 
     override fun onItemClick2(position: Int) {
         binding.salePostProductName.text = modelList[position]
+        productId = productIdList[position]
+
         dialog.dismiss()
     }
 
@@ -295,16 +315,33 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
             imageAdapter.notifyDataSetChanged()
         }
     }
-    interface ApiService {
-        @Multipart
-        @POST("upload") // 이거 수정좀
-        fun uploadImage(
-            @Part image: List<MultipartBody.Part>,
-            @Part("title") title: RequestBody,
-            @Part("category") category: RequestBody,
-            @Part("model") model: RequestBody,
-            @Part("content") content: RequestBody,
-            @Part("price") price: RequestBody
-        ): Call<ResponseBody>
+
+    fun absolutelyPath(path: Uri?, context : Context): String {
+        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var c: Cursor? = context.contentResolver.query(path!!, proj, null, null, null)
+        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c?.moveToFirst()
+
+        var result = c?.getString(index!!)
+
+        return result!!
+    }
+
+    private val REQUEST_EXTERNAL_STORAGE = 1
+    private val PERMISSIONS_STORAGE = arrayOf<String>(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    fun verifyStoragePermissions(activity: Activity?) {
+        val permission = ActivityCompat.checkSelfPermission(activity!!,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                activity,
+                PERMISSIONS_STORAGE,
+                REQUEST_EXTERNAL_STORAGE
+            )
+        }
     }
 }

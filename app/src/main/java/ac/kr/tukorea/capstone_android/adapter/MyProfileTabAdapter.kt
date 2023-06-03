@@ -7,15 +7,24 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 
 
 class MyProfileTabAdapter(val items : List<PostInfo>, val context : Context) : RecyclerView.Adapter<MyProfileTabAdapter.ViewHolder>() {
+    private lateinit var mListener : onItemClickListener
+
+    interface onItemClickListener{
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        mListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.myshop_list_item, parent, false)
 
@@ -28,14 +37,14 @@ class MyProfileTabAdapter(val items : List<PostInfo>, val context : Context) : R
         layoutParams.height = itemWidth
         view.layoutParams = layoutParams
 
-        return ViewHolder(view)
+        return ViewHolder(view, mListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
         val glideUrl = GlideUrl(
-            item.postImages[0].replace("localhost", "10.0.2.2")
+            ServerInfo.SERVER_URL.url + ServerInfo.POST_IMAGE_URI.url + item.postImages[0]
         )
 
         Glide.with(context).load(glideUrl)
@@ -47,8 +56,14 @@ class MyProfileTabAdapter(val items : List<PostInfo>, val context : Context) : R
         return items.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.myProfile_recyclerImage)
+
+        init {
+            itemView.setOnClickListener{
+                listener.onItemClick(adapterPosition)
+            }
+        }
     }
 }
 

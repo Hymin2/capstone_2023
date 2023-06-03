@@ -2,13 +2,19 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.SaleDetailViewPagerAdapter
+import ac.kr.tukorea.capstone_android.data.PostInfo
 import ac.kr.tukorea.capstone_android.databinding.ActivitySaleDetailBinding
+import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayoutMediator
+import java.text.DecimalFormat
 
 class SaleDetailActivity : AppCompatActivity() {
 
@@ -20,8 +26,27 @@ class SaleDetailActivity : AppCompatActivity() {
         binding = ActivitySaleDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val intent = intent
+        val detail = intent.getSerializableExtra("detail") as PostInfo
+
+        binding.apply {
+            saleDetailUserNickName.text = detail.nickname
+            saleDetailTitle.text = detail.postTitle
+            saleDetailContent.text = detail.postContent
+            saleDetailProductPrice.text = toLongFormat(detail.price)
+            saleDetailProductName.text = detail.productName
+
+            val glideUrl = GlideUrl(
+                ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + detail.userImage
+            )
+
+            Glide.with(this@SaleDetailActivity).load(glideUrl)
+                .override(Target.SIZE_ORIGINAL)
+                .into(saleDetailUserProfileImage)
+        }
+
         binding.saleDetailProductImageViewPager.apply {
-            adapter = SaleDetailViewPagerAdapter(getImage())
+            adapter = SaleDetailViewPagerAdapter(detail.postImages, this@SaleDetailActivity)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
 
@@ -31,6 +56,12 @@ class SaleDetailActivity : AppCompatActivity() {
             // tab.text = position.toString()
         }.attach()
     }
+
+    private fun toLongFormat(price: Int): String {
+        val formatter = DecimalFormat("###,###")
+        return formatter.format(price) + "원"
+    }
+
     private fun getImage(): ArrayList<Int> {
         return arrayListOf<Int>(
             R.drawable.iphone14pro,

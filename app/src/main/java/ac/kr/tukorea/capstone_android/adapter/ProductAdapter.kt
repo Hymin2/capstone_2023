@@ -3,6 +3,7 @@ package ac.kr.tukorea.capstone_android.adapter
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.ProductList
 import ac.kr.tukorea.capstone_android.util.App
+import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -61,11 +62,11 @@ class ProductAdapter(private val productList : ArrayList<ProductList>, val conte
         holder.productPrice.text = item.averagePrice.toString() + "원"
 
         val glideUrl = GlideUrl(
-            item.path.replace("localhost", "10.0.2.2")
+            ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + item.path
         )
 
         Glide.with(context).load(glideUrl)
-            .override(Target.SIZE_ORIGINAL)
+            .override(150)
             .into(holder.productImage)
     }
 

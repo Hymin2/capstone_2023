@@ -38,14 +38,9 @@
                     android:textSize="20dp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:background="@android:color/darker_gray"/>
-
             <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="350dp" >
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/saleDetail_productImage_viewPager"
@@ -64,10 +59,6 @@
                     app:tabGravity="center"
                     app:tabIndicatorHeight="0dp" />
             </FrameLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:background="@android:color/darker_gray"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -98,7 +89,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/saleDetail_productMain"
+                android:id="@+id/saleDetail_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
@@ -116,6 +107,7 @@
         android:elevation="30dp">
 
         <TextView
+            android:id="@+id/saleDetail_productName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/center_line"

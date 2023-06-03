@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.activity.SaleDetailActivity
 import ac.kr.tukorea.capstone_android.adapter.MyProfileTabAdapter
 import ac.kr.tukorea.capstone_android.data.PostResponseBody
 import ac.kr.tukorea.capstone_android.util.App
+import android.content.Intent
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +48,15 @@ class onSale(val username : String) : Fragment() {
                 if(response.isSuccessful){
                     val posts = response.body()?.message
                     val adapter = MyProfileTabAdapter(posts!!, context!!)
+                    adapter.setOnItemClickListener(object : MyProfileTabAdapter.onItemClickListener{
+                        override fun onItemClick(position: Int) {
+                            val intent = Intent(context, SaleDetailActivity::class.java)
+                            intent.putExtra("detail", posts[position])
+
+                            activity!!.startActivity(intent)
+                        }
+
+                    })
                     recyclerView.adapter = adapter
                 }else{
                     Toast.makeText(context, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
