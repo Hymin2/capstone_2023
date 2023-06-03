@@ -79,9 +79,9 @@ class myProfile : Fragment() {
         override fun createFragment(position: Int): Fragment {
             // 해당 탭에 대한 프래그먼트 반환
             return when (position) {
-                0 -> onSale()
-                1 -> SoldOut()
-                2 -> Like()
+                0 -> onSale(App.prefs.getString("username", ""))
+                1 -> SoldOut(App.prefs.getString("username", ""))
+                2 -> Like(App.prefs.getString("username", ""))
                 else -> throw IllegalArgumentException("Invalid tab position: $position")
             }
         }

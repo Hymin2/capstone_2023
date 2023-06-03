@@ -34,47 +34,34 @@ def isExistCSS(CSS_selector, implicitly_wait_time=0, old_wait=25):
 
 #상품명 리스트 뽑기
 def get_product_list():
-    phone_df = pd.read_excel('./file/danawa_crawling_product_detail_result_class.xlsx')
-    phone_df = phone_df.astype('string')
-    global phone_name
-    global phone_mem
-    phone_name = []
-    phone_mem = []
+    teblit_df = pd.read_excel('./file/danawa_crawling_tablit_detail_result_class.xlsx')
+    teblit_df = teblit_df.astype('string')
+    global teblit_name
+    global teblit_mem
+    teblit_name = []
+    teblit_mem = []
     
-    phone_name_list = phone_df['상품명']
-    phone_mem_list = phone_df['내장메모리']
-    for n in phone_name_list:
-        phone_name_single = n.split()
-        for word in phone_name_single:
+    teblit_name_list = teblit_df['상품명']
+    teblit_df['내장메모리'] = teblit_df['내장메모리'].fillna('0')
+    teblit_mem_list = teblit_df['내장메모리']
+    
+    for n in teblit_name_list:
+        teblit_name_single = n.split()
+        for word in teblit_name_single:
             if 'GB' in word:
-                phone_name_single.remove(word)
-            if '엘로' in word:
-                phone_name_single.remove(word)
-            if '그린' in word:
-                phone_name_single.remove(word)
-            if '퍼플' in word:
-                phone_name_single.remove(word)
-            if '블루' in word:
-                phone_name_single.remove(word)
-            if '레드' in word:
-                phone_name_single.remove(word)
-            if '블랙' in word:
-                phone_name_single.remove(word)
-            if '화이트' in word:
-                phone_name_single.remove(word)
-            if '로즈' in word:
-                phone_name_single.remove(word)
-            if '알파인' in word:
-                phone_name_single.remove(word)
-            
-        phone_name_single = ''.join(phone_name_single)
-        phone_name.append(phone_name_single)
+                teblit_name_single.remove(word)
+            if 'TB' in word:
+                teblit_name_single.remove(word)
+            if 'with S펜' in word:
+                teblit_name_single.remove(word)
+                
+        teblit_name_single = ' '.join(teblit_name_single)
+        teblit_name.append(teblit_name_single)
 
-    for m in phone_mem_list:
-        phone_mem_single = m.replace("GB", "")
-        phone_mem.append(phone_mem_single)
+    for m in teblit_mem_list:
+        teblit_mem.append(m)
     
-    print('----- 상품 갯수 : {}'.format(len(phone_name)), '------')
+    print('----- 상품 갯수 : {}'.format(len(teblit_name)), '------')
 
 #검색
 def search_name(product):
@@ -84,27 +71,26 @@ def search_name(product):
 
 #except 설정
 def set_except(product):
-    excepts = '삽니다, 매입, 구매, 구입, 교환'
+    excepts = '삽니다, 매입, 구매, 구입, 교환, 구합니다, 구함'
     
-    if '럭시' in product:
-        if ('플러스' or 'plus') not in product:
-            excepts = excepts + ', 플러스, plus, +'
-        if ('울트라' or 'ultra') not in product:
-            excepts = excepts + ', 울트라, ultra'
-        if ('플립' or '폴드') in product:
-            if('4') not in product:
-                excepts = excepts + ', 4'
-            if('3') not in product:
-                excepts = excepts + ', 3'
-    elif '이폰' in product:
-        if ('프로' or 'pro') not in product:
-            excepts = excepts + ', 프로, pro'
-        if ('맥스' or 'max') not in product:
-            excepts = excepts + ', 맥스, max'
-        if ('미니' or 'mini') not in product:
-            excepts = excepts + ', 미니, mini'
-        if ('플러스' or 'plus') not in product:
-            excepts = excepts + ', 플러스, plus'
+    if ('플러스' or 'plus') not in product:
+        excepts = excepts + ', 플러스, plus, +'
+    if ('울트라' or 'ultra') not in product:
+        excepts = excepts + ', 울트라, ultra'
+    if ('프로' or 'pro') not in product:
+        excepts = excepts + ', 프로, pro'
+    if ('맥스' or 'max') not in product:
+        excepts = excepts + ', 맥스, max'
+    if ('미니' or 'mini') not in product:
+        excepts = excepts + ', 미니, mini'
+    if ('플러스' or 'plus') not in product:
+        excepts = excepts + ', 플러스, plus'
+    if ('라이트' or 'lite') not in product:
+        excepts = excepts + ', 라이트, lite'
+    if 'FE' not in product:
+        excepts = excepts + ', 라이트, lite'
+    if ('에어' or 'air') not in product:
+        excepts = excepts + ', 에어, air'
     
     return excepts
 
@@ -119,7 +105,7 @@ def search_detail(excepts):
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[21]').click()
+    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[23]').click()
     time.sleep(1)
 
     #상세 설정
@@ -134,7 +120,6 @@ def search_detail(excepts):
     time.sleep(1)
     driver.find_element(By.XPATH,'//*[@id="searchOptionSelectDiv"]/ul/li[1]/a').click()
     time.sleep(1)
-    
     driver.find_element(By.XPATH, '//*[@id="listSizeSelectDiv"]/a').click()
     time.sleep(1)
     driver.find_element(By.XPATH,'//*[@id="listSizeSelectDiv"]/ul/li[7]/a').click()
@@ -182,7 +167,7 @@ def go_back(total_next_page):
     driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
 
 #전체 크롤링
-def Crawling_all():
+def Crawling_all(product):
     total_page = chech_total_page()
     total_next_page = total_page // 10
     last_page = total_page - total_next_page * 10
@@ -195,7 +180,7 @@ def Crawling_all():
     if total_next_page == 0:
         for page in range(total_page):
             print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-            do_Crawling(0, cur_page)
+            do_Crawling(0, cur_page, product)
             cur_page += 1
         
     else:
@@ -203,19 +188,19 @@ def Crawling_all():
             if n == 0:
                 for page in range(10):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(0, cur_page)
+                    do_Crawling(0, cur_page, product)
                     cur_page += 1
             
             elif n > 0 and n != total_next_page:
                 for page in range(10):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(1, cur_page)
+                    do_Crawling(1, cur_page, product)
                     cur_page += 1
             
             elif n == total_next_page:
                 for page in range(last_page):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(1, cur_page)
+                    do_Crawling(1, cur_page, product)
                     cur_page += 1
     
     if cur_page > total_page:
@@ -223,7 +208,7 @@ def Crawling_all():
 
 
 #한 페이지 크롤링
-def do_Crawling(num, page):
+def do_Crawling(num, page, product):
     with_before = 0
     
     #게시글 들어가기
@@ -250,7 +235,7 @@ def do_Crawling(num, page):
         except:
             product_price = ''
         
-        prod_price_total.append([product_date, product_price])
+        prod_price_total.append([product, product_price, product_date])
         
         #뒤로 가기
         driver.back()
@@ -267,11 +252,11 @@ get_product_list()
 options = Options()
 #options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-user_id = 'jihoon815'
-user_pw = 'guswlgns3!50'
+user_id = '네이버 아이디'
+user_pw = '네이버 비밀번호'
 
 #핸드폰 크롤링 시작
-for idx in range(len(phone_name)):
+for idx in range(len(teblit_name)):
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(5)
     driver.set_window_size(1920,1280)
@@ -298,18 +283,18 @@ for idx in range(len(phone_name)):
     
     
     #시세를 찾을 검색어 설정/검색
-    name = phone_name[idx]
-    mem = phone_mem[idx]
+    name = teblit_name[idx]
+    mem = teblit_mem[idx]
     product = name + ' ' + mem
     excepts =  set_except(product) # 1개라도 포함되면 안됨
     search_name(product)
-    #print(product + ', ' + mem + ', ' + excepts)
+    
     
     #엑셀
     wb = Workbook()
     wb.create_sheet('{}'.format(product), 0)
     prod_price_total = wb.active
-    prod_price_total.append(['날짜','가격'])
+    prod_price_total.append(['제품','가격','날짜'])
     
     print('----- {} --- Product Name : {} || {}'.format(idx, product, mem), '------')
     
@@ -318,7 +303,7 @@ for idx in range(len(phone_name)):
     
     if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
         #크롤링
-        Crawling_all()
+        Crawling_all(product)
     
     #크롤링 종료
     driver.quit()

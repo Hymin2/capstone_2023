@@ -49,4 +49,8 @@ object RetrofitAPI {
     val userService : UserService by lazy {
         retrofit.create(UserService::class.java)
     }
+
+    val postService : PostService by lazy {
+        retrofit.create(PostService::class.java)
+    }
 }

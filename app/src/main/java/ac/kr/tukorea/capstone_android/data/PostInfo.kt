@@ -7,6 +7,8 @@ data class PostInfo(
     val postId : Long,
     @SerializedName("username")
     val username : String,
+    @SerializedName("nickname")
+    val nickname : String,
     @SerializedName("userImage")
     val userImage : String,
     @SerializedName("postTitle")
