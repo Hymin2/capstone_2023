@@ -39,45 +39,35 @@ class graphWeek : Fragment() {
 
     //private val service = RetrofitAPI.productService
 
-    val graphDataList: List<UsedProductPrice> = listOf(
-        UsedProductPrice("2023-03-19",890000),
-        UsedProductPrice("2023-03-20",900000),
-        UsedProductPrice("2023-03-24",900000),
-        UsedProductPrice("2023-03-30",915000),
-        UsedProductPrice("2023-03-31",899000),
-        UsedProductPrice("2023-04-03",890000),
-        UsedProductPrice("2023-04-07",780000),
-        UsedProductPrice("2023-04-09",890000),
-        UsedProductPrice("2023-04-10",1080000),
-        UsedProductPrice("2023-04-11",840000),
-        UsedProductPrice("2023-04-12",810000),
-        UsedProductPrice("2023-04-13",806667),
-        UsedProductPrice("2023-04-14",890000),
-        UsedProductPrice("2023-04-15",890000),
-        UsedProductPrice("2023-04-17",780000),
-        UsedProductPrice("2023-04-18",815000),
-        UsedProductPrice("2023-04-19",878000),
-        UsedProductPrice("2023-04-20",830000),
-        UsedProductPrice("2023-04-23",780000),
-        UsedProductPrice("2023-04-24",823750),
-        UsedProductPrice("2023-04-25",870000),
-    )
+    val graphDataList: MutableList<UsedProductPrice> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         // return inflater.inflate(R.layout.fragment_graph_week, container, false)
         _binding = FragmentGraphWeekBinding.inflate(inflater, container, false)
 
         var graphDataArrayList : ArrayList<UsedProductPrice>?
-        //var graphPriceList : ArrayList<Int>?
-        //var grpahTimeList : ArrayList<String>
+        var graphPriceList : ArrayList<Int>?
+        var grpahTimeList : ArrayList<String>
 
         graphDataArrayList = arguments?.getSerializable("UsedProductPrice") as ArrayList<UsedProductPrice>?
         var a = graphDataArrayList
+        val times = graphDataArrayList?.map { it.time }
+        val prices = graphDataArrayList?.map { it.price }
+
         Log.e("데이터1" , "$a")
+        Log.e("날짜","${times}")
+        Log.e("가격","${prices}")
+
+        if (times != null && prices != null) {
+            for (i in times.indices) {
+                val usedProductPrice = UsedProductPrice(times.reversed()[i], prices.reversed()[i])
+                graphDataList.add(usedProductPrice)
+            }
+        }
+
         return binding.root
     }
 

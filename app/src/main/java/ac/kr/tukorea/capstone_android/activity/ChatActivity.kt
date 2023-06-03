@@ -15,12 +15,15 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.chatToolbar) //커스텀한 toolbar를 액션바로 사용
-        supportActionBar?.setDisplayShowTitleEnabled(false) //액션바에 표시되는 제목의 표시유무를 설정합니다. false로 해야 custom한 툴바의 이름이 화면에 보이게 됩니다.
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val bundle : Bundle? = intent.extras
         val oppoentName = bundle!!.getString("chatOpponentName")
-        binding.chatToolbar.title = oppoentName
+        binding.chatOpponentName.text = oppoentName
+
+        binding.chatBtnBack.setOnClickListener{
+            onBackPressed()
+        }
+
+
     }
 }
