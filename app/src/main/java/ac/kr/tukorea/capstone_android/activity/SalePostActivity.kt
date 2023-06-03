@@ -10,6 +10,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.activity_sale_post.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -61,7 +63,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
 
         // Retrofit 초기화
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://your-api-url/")  // 실제 API 엔드포인트 URL로 대체해야 합니다.
+            .baseUrl("http://10.0.2.2:8080/")  // 실제 API 엔드포인트 URL로 대체해야 합니다.
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -107,6 +109,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
                 }
             }
         }
+
         imageAdapter.setItemClickListener(object : MultiImageAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 // 클릭 시 이벤트 작성
@@ -132,7 +135,6 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
             )
         )
         binding.salePostImageRecyclerView.setHasFixedSize(true)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -151,34 +153,45 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
                 return true
             }
             R.id.action_btn_write -> {
-                val price = binding.salePostPrice.text.toString().toIntOrNull()
-                if (price != null) {
-                    val title = binding.salePostTitle.text.toString()
-                    val category = binding.salePostCategoryName.text.toString()
-                    val model = binding.salePostCategoryName.text.toString()
-                    val content = binding.salePostContent.text.toString()
+                val price = binding.salePostPrice.text.toString()
+                val priceToInt = price.replace("[^\\d]".toRegex(), "").toIntOrNull()
+                val title = binding.salePostTitle.text.toString()
+                val category = binding.salePostCategoryName.text.toString()
+                val model = binding.salePostProductName.text.toString()
+                val content = binding.salePostContent.text.toString()
 
-                    val imageParts = ArrayList<MultipartBody.Part>()
-                    for (imageUri in imageList) {
-                        imageUri?.let { uri ->
-                            val file = File(uri.path)
-                            val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-                            val imagePart =
-                                MultipartBody.Part.createFormData("images", file.name, requestBody)
-                            imageParts.add(imagePart)
-                        }
+
+                val imageParts = ArrayList<MultipartBody.Part>()
+                for (imageUri in imageList) {
+                    imageUri?.let { uri ->
+                        val file = File(uri.path)
+                        val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+                        val imagePart =
+                            MultipartBody.Part.createFormData("images", file.name, requestBody)
+                        imageParts.add(imagePart)
                     }
+                }
+
+                Log.e("post_title","$title")
+                Log.e("post_category","$category")
+                Log.e("post_model","$model")
+                Log.e("post_price","$priceToInt")
+                Log.e("post_content","$content")
+                //Log.e("post_image","${imageParts[0]}")
+
+                if (priceToInt != null && title != null && !(category.equals("")) &&
+                    !(model.equals("")) && content != null && imageParts[0] != null) {
 
                     val titleBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
                     val categoryBody =
                         category.toRequestBody("text/plain".toMediaTypeOrNull())
                     val modelBody = model.toRequestBody("text/plain".toMediaTypeOrNull())
-                    val priceBody = price.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                    val priceBody = price.toRequestBody("text/plain".toMediaTypeOrNull())
                     val contentBody =
                         content.toRequestBody("text/plain".toMediaTypeOrNull())
 
                     // Retrofit을 사용하여 업로드 작업 수행
-                    val call = apiService.uploadImage(imageParts[0], titleBody, categoryBody, modelBody,priceBody,contentBody)
+                    val call = apiService.uploadImage(imageParts, titleBody, categoryBody, modelBody,priceBody,contentBody)
                     call.enqueue(object : Callback<ResponseBody> {
                         override fun onResponse(
                             call: Call<ResponseBody>,
@@ -196,7 +209,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
 
                     Toast.makeText(applicationContext, "글 작성 완료", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(applicationContext, "유효한 가격을 입력하세요", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "모든 내용을 입력하세요", Toast.LENGTH_LONG).show()
                 }
                 return true
             }
@@ -286,7 +299,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
         @Multipart
         @POST("upload") // 이거 수정좀
         fun uploadImage(
-            @Part image: MultipartBody.Part,
+            @Part image: List<MultipartBody.Part>,
             @Part("title") title: RequestBody,
             @Part("category") category: RequestBody,
             @Part("model") model: RequestBody,
