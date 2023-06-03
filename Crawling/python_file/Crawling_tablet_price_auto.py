@@ -59,9 +59,7 @@ def get_product_list():
         teblit_name.append(teblit_name_single)
 
     for m in teblit_mem_list:
-        if m :
-            teblit_mem_single = m.replace("GB", "")
-        teblit_mem.append(teblit_mem_single)
+        teblit_mem.append(m)
     
     print('----- 상품 갯수 : {}'.format(len(teblit_name)), '------')
 
@@ -169,7 +167,7 @@ def go_back(total_next_page):
     driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
 
 #전체 크롤링
-def Crawling_all():
+def Crawling_all(product):
     total_page = chech_total_page()
     total_next_page = total_page // 10
     last_page = total_page - total_next_page * 10
@@ -182,7 +180,7 @@ def Crawling_all():
     if total_next_page == 0:
         for page in range(total_page):
             print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-            do_Crawling(0, cur_page)
+            do_Crawling(0, cur_page, product)
             cur_page += 1
         
     else:
@@ -190,19 +188,19 @@ def Crawling_all():
             if n == 0:
                 for page in range(10):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(0, cur_page)
+                    do_Crawling(0, cur_page, product)
                     cur_page += 1
             
             elif n > 0 and n != total_next_page:
                 for page in range(10):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(1, cur_page)
+                    do_Crawling(1, cur_page, product)
                     cur_page += 1
             
             elif n == total_next_page:
                 for page in range(last_page):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(1, cur_page)
+                    do_Crawling(1, cur_page, product)
                     cur_page += 1
     
     if cur_page > total_page:
@@ -210,7 +208,7 @@ def Crawling_all():
 
 
 #한 페이지 크롤링
-def do_Crawling(num, page):
+def do_Crawling(num, page, product):
     with_before = 0
     
     #게시글 들어가기
@@ -237,7 +235,7 @@ def do_Crawling(num, page):
         except:
             product_price = ''
         
-        prod_price_total.append([product_date, product_price])
+        prod_price_total.append([product, product_price, product_date])
         
         #뒤로 가기
         driver.back()
@@ -290,13 +288,13 @@ for idx in range(len(teblit_name)):
     product = name + ' ' + mem
     excepts =  set_except(product) # 1개라도 포함되면 안됨
     search_name(product)
-    #print(product + ', ' + mem + ', ' + excepts)
+    
     
     #엑셀
     wb = Workbook()
     wb.create_sheet('{}'.format(product), 0)
     prod_price_total = wb.active
-    prod_price_total.append(['날짜','가격'])
+    prod_price_total.append(['제품','가격','날짜'])
     
     print('----- {} --- Product Name : {} || {}'.format(idx, product, mem), '------')
     
@@ -305,7 +303,7 @@ for idx in range(len(teblit_name)):
     
     if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
         #크롤링
-        Crawling_all()
+        Crawling_all(product)
     
     #크롤링 종료
     driver.quit()
