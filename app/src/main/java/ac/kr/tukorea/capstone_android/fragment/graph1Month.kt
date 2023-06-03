@@ -4,11 +4,12 @@ import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.GraphData
 import ac.kr.tukorea.capstone_android.data.UsedProductPrice
-import ac.kr.tukorea.capstone_android.databinding.FragmentGraphWeekBinding
+import ac.kr.tukorea.capstone_android.databinding.FragmentGraph1monthBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import android.content.Context
 import android.content.Intent.getIntent
 import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -28,38 +29,59 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
-import kotlinx.android.synthetic.main.fragment_graph_week.*
+import kotlinx.android.synthetic.main.fragment_graph_1month.*
 import java.lang.Long.getLong
 
 
-class graphWeek : Fragment() {
+class graph1Month : Fragment() {
 
-    private var _binding: FragmentGraphWeekBinding? = null
+    private var _binding: FragmentGraph1monthBinding? = null
     private val binding get() = _binding!!
 
-    //private val service = RetrofitAPI.productService
+    private val graphDataList: MutableList<UsedProductPrice> = mutableListOf()
 
-    val graphDataList: MutableList<UsedProductPrice> = mutableListOf()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.e("생명주기","Create")
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        Log.e("생명주기","Resume")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.e("생명주기","Pause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.e("생명주기","Stop")
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
+        Log.e("생명주기","DestroyView")
+        super.onDestroyView()
+    }
+    override fun onDestroy() {
+        Log.e("생명주기","Destroy")
+        super.onDestroy()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // return inflater.inflate(R.layout.fragment_graph_week, container, false)
-        _binding = FragmentGraphWeekBinding.inflate(inflater, container, false)
+
+        Log.e("생명주기","onCreateView")
+        _binding = FragmentGraph1monthBinding.inflate(inflater, container, false)
 
         var graphDataArrayList : ArrayList<UsedProductPrice>?
-        var graphPriceList : ArrayList<Int>?
-        var grpahTimeList : ArrayList<String>
 
         graphDataArrayList = arguments?.getSerializable("UsedProductPrice") as ArrayList<UsedProductPrice>?
-        var a = graphDataArrayList
         val times = graphDataArrayList?.map { it.time }
         val prices = graphDataArrayList?.map { it.price }
-
-        Log.e("데이터1" , "$a")
-        Log.e("날짜","${times}")
-        Log.e("가격","${prices}")
 
         if (times != null && prices != null) {
             for (i in times.indices) {
@@ -76,30 +98,17 @@ class graphWeek : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val xAxis = binding.weekLineChart.xAxis
+        Log.e("생명주기","onViewCreated")
+
+        val xAxis = binding.oneMonthLineChart.xAxis
 
         // y축
         val entries : MutableList<Entry> = mutableListOf()
         for (i in graphDataList.indices){
             entries.add(Entry(i.toFloat(),graphDataList[i].price.toFloat()))
-            var a= entries[i]
-          //  Log.e("graphr값","$a")
         }
         val lineDataSet = LineDataSet(entries,"entries")
-/*
 
-        var graphDataArrayList : ArrayList<UsedProductPrice>
-        var graphPriceList : ArrayList<Int>?
-        var grpahTimeList : ArrayList<String>
-
-        graphPriceList = arguments?.getIntegerArrayList("priceList")
-        Log.e("데이터" , "$graphPriceList")
-        val a = arguments?.getSerializable("UsedProductPrice")
-        Log.e("데이터" , "$a")
-        var retrofitProduct = RetrofitProduct()
-        retrofitProduct.getProductUsedPrice(productId,binding)
-
-*/
 
         lineDataSet.apply {
             color = resources.getColor(android.R.color.holo_red_dark,null)
@@ -116,8 +125,8 @@ class graphWeek : Fragment() {
             valueTextSize = 10f
         }
 
-        binding.weekLineChart.apply {
-            axisRight.isEnabled = true   //y축 사용여부
+        binding.oneMonthLineChart.apply {
+            axisRight.isEnabled = false   //y축 사용여부
             axisLeft.isEnabled = false
             axisRight.setDrawGridLines(false)
             legend.isEnabled = false    //legend 사용여부
@@ -125,48 +134,46 @@ class graphWeek : Fragment() {
             isDragXEnabled = true   // x 축 드래그 여부
             isScaleYEnabled = false //y축 줌 사용여부
             isScaleXEnabled = false //x축 줌 사용여부
-            setDrawMarkers(true)
+
+            // 커스텀 마커뷰 설정
             val customMarkerView = CustomMarkerView(context, layoutResource = R.layout.graphmarker)
             marker = customMarkerView
-        }
 
-        xAxis.apply {
-            setDrawGridLines(false)
-            setDrawAxisLine(true)
-            setDrawLabels(false)
-            position = XAxis.XAxisPosition.BOTTOM
-            valueFormatter = XAxisCustomFormatter(changeDateText(graphDataList))
-            textColor = resources.getColor(R.color.black, null)
-            textSize = 10f
-            labelRotationAngle = 0f
-            setLabelCount(100, true)
-        }
-        val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graphWeek_scrollview)
-        horizontalScrollView.post{
-            horizontalScrollView.scrollTo(
-                weekLineChart.width,
-                0
-            )
-        }
+            // 커스텀 마커뷰 크기 설정
+            customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            customMarkerView.layout(0, 0, customMarkerView.measuredWidth, customMarkerView.measuredHeight)
 
-        binding.weekLineChart.apply {
+            xAxis.apply {
+                setDrawGridLines(false)
+                setDrawAxisLine(true)
+                setDrawLabels(true)
+                position = XAxis.XAxisPosition.BOTTOM
+                valueFormatter = XAxisCustomFormatter(changeDateText(graphDataList))
+                textColor = resources.getColor(R.color.black, null)
+                textSize = 10f
+                labelRotationAngle = 0f
+                setLabelCount(5, true) // 레이블 개수와 간격 설정
+            }
+            val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graphOneMonth_scrollview)
+            horizontalScrollView.post{
+                horizontalScrollView.scrollTo(
+                    oneMonthLineChart.width,
+                    0
+                )
+            }
+
             data = LineData(lineDataSet)
             notifyDataSetChanged() //데이터 갱신
             invalidate() // view갱신
         }
-        binding.weekLineChart
     }
 
     fun changeDateText(dataList: List<UsedProductPrice>): List<String> {
         val dataTextList = ArrayList<String>()
         for (i in dataList.indices) {
             val textSize = dataList[i].time.length
-            val dateText = dataList[i].time.substring(textSize - 2, textSize)
-            if (dateText == "01") {
-                dataTextList.add(dataList[i].time)
-            } else {
-                dataTextList.add(dateText)
-            }
+            val dateText = dataList[i].time.substring(textSize - 5, textSize) // 월-일만 추출
+            dataTextList.add(dateText)
         }
         return dataTextList
     }
@@ -181,6 +188,7 @@ class graphWeek : Fragment() {
 
     class CustomMarkerView : MarkerView {
         private var tvContent: TextView
+
         // marker
         constructor(context: Context?, layoutResource: Int) : super(context, layoutResource) {
             tvContent = findViewById(R.id.tvContent)
@@ -195,8 +203,8 @@ class graphWeek : Fragment() {
         // entry를 content의 텍스트에 지정
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
             tvContent.text = e?.y?.toInt().toString() + "원"
+            tvContent.setTextColor(Color.BLACK)
             super.refreshContent(e, highlight)
         }
-
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent" >
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/feedList_toolBar"
+        android:id="@+id/saleProductList_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
@@ -15,7 +15,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <ImageButton
-            android:id="@+id/feedList_btnBack"
+            android:id="@+id/saleProductList_btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -25,11 +25,29 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feedList_recyclerView"
+    <LinearLayout
+        android:id="@+id/checkbox_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/feedList_toolBar"
+        android:layout_below="@+id/saleProductList_toolBar">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="판매 중" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="판매 완료" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/saleProductList_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkbox_linearLayout"
         android:paddingTop="8dp" />
 
 </RelativeLayout>

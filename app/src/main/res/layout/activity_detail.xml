@@ -6,22 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".activity.DetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/detail_AppBar"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detail_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/detail_toolBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ToolbarColoredBackArrow"
-            app:titleTextColor="@color/white"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        <ImageButton
+            android:id="@+id/detail_btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_AppBar">
+        app:layout_constraintTop_toBottomOf="@+id/detail_toolBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -343,8 +348,9 @@
                     android:text="6-month"/>
             </com.google.android.material.tabs.TabLayout>
 
+
             <FrameLayout
-                android:id="@+id/graph_viewPager"
+                android:id="@+id/graph_FrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -359,7 +365,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:background="@color/black"
-                app:layout_constraintTop_toBottomOf="@+id/graph_viewPager" />
+                app:layout_constraintTop_toBottomOf="@+id/graph_FrameLayout" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -374,6 +380,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/detail_line4" />
 
             <Button
+                android:id="@+id/toSaleProductList_Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="더보기 >>"
