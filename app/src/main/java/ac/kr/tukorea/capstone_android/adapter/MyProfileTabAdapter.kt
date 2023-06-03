@@ -6,19 +6,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.data.PostInfo
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.request.target.Target
 
 
-class MyProfileTabAdapter : RecyclerView.Adapter<MyProfileTabAdapter.ViewHolder>() {
-    private var imageResources: List<Int> = emptyList()
-
-    // 이미지 리소스 설정
-    fun setImageResources(resources: List<Int>) {
-        imageResources = resources
-        notifyDataSetChanged()
-    }
-
+class MyProfileTabAdapter(val items : List<PostInfo>, val context : Context) : RecyclerView.Adapter<MyProfileTabAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.myshop_list_item, parent, false)
 
@@ -35,12 +32,19 @@ class MyProfileTabAdapter : RecyclerView.Adapter<MyProfileTabAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val imageResource = imageResources[position]
-        holder.imageView.setImageResource(imageResource)
+        val item = items[position]
+
+        val glideUrl = GlideUrl(
+            item.postImages[0].replace("localhost", "10.0.2.2")
+        )
+
+        Glide.with(context).load(glideUrl)
+            .override(Target.SIZE_ORIGINAL)
+            .into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
-        return imageResources.size
+        return items.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
