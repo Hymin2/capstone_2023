@@ -8,6 +8,7 @@ import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -28,6 +29,8 @@ class SaleDetailActivity : AppCompatActivity() {
 
         val intent = intent
         val detail = intent.getSerializableExtra("detail") as PostInfo
+        var isLike = detail.isLike
+
 
         binding.apply {
             saleDetailUserNickName.text = detail.nickname
@@ -35,6 +38,29 @@ class SaleDetailActivity : AppCompatActivity() {
             saleDetailContent.text = detail.postContent
             saleDetailProductPrice.text = toLongFormat(detail.price)
             saleDetailProductName.text = detail.productName
+
+            if(isLike){
+                likeBtn.progress = 1f
+            }
+
+
+            likeBtn.setOnClickListener {
+                val animator : ValueAnimator
+                if(isLike){
+                    isLike = false
+                    animator = ValueAnimator.ofFloat(1f, 0f).setDuration(500L)
+                }else{
+                    isLike = true
+                    animator = ValueAnimator.ofFloat(0f, 1f).setDuration(500L)
+                }
+
+                Log.d("좋아요 버튼", isLike.toString())
+                animator.addUpdateListener { animation : ValueAnimator ->
+                    likeBtn.progress = animation.animatedValue as Float
+                }
+
+                animator.start()
+            }
 
             val glideUrl = GlideUrl(
                 ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + detail.userImage

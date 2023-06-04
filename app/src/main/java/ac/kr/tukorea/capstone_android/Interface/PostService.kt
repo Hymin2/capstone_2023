@@ -1,12 +1,10 @@
 package ac.kr.tukorea.capstone_android.Interface
 
-import ac.kr.tukorea.capstone_android.data.PostRegisterRequestBody
-import ac.kr.tukorea.capstone_android.data.PostResponseBody
-import ac.kr.tukorea.capstone_android.data.ProductDetailsResponseBody
-import ac.kr.tukorea.capstone_android.data.ResponseBody
+import ac.kr.tukorea.capstone_android.data.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface PostService {
@@ -33,4 +31,13 @@ interface PostService {
     @GET("/api/v1/post/like")
     fun getLikePostList(@Header("Authorization") token: String,
                         @Query("username") username : String) : Call<PostResponseBody>
+
+    @POST("/api/v1/post/like")
+    fun registerLikePost(@Header("Authorization") token: String,
+                         @Body likePostRegisterRequestBody: LikePostRegisterRequestBody) : Call<ResponseBody>
+
+    @DELETE("/api/v1/post/like")
+    fun deleteLikePost(@Header("Authorization") token: String,
+                       @Query("postId") postId : Long,
+                       @Query("username") username : String)
 }

@@ -5,18 +5,20 @@ import ac.kr.tukorea.capstone_android.adapter.GraphTabAdapter
 import ac.kr.tukorea.capstone_android.adapter.ViewPagerAdapter
 import ac.kr.tukorea.capstone_android.databinding.ActivityDetailBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivityMainBinding
-import ac.kr.tukorea.capstone_android.fragment.graphMonth
-import ac.kr.tukorea.capstone_android.fragment.graphWeek
-import ac.kr.tukorea.capstone_android.fragment.graphYear
+import ac.kr.tukorea.capstone_android.fragment.graph1Month
+import ac.kr.tukorea.capstone_android.fragment.graph3Month
+import ac.kr.tukorea.capstone_android.fragment.graph6Month
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -39,6 +41,7 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var graphTab : TabLayout
     private lateinit var graphViewPager : ViewPager2
+    lateinit var transaction: FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,18 +74,22 @@ class DetailActivity : AppCompatActivity() {
                 .into(productImage)
         }
 
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.graph_viewPager,graphWeek()).commit()
-        binding.graphTab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+        transaction = supportFragmentManager.beginTransaction()
+
+        binding.toSaleProductListBtn.setOnClickListener{
+            val intent = Intent(this,SaleProductListActivity::class.java)
+            startActivity(intent)
+        }
+        binding.graphTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             // 탭 버튼을 선택할 때 이벤트
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val transaction = supportFragmentManager.beginTransaction()
                 // var bundle = Bundle()
                 when(tab?.text) {
-                    "1-month" -> transaction.replace(R.id.graph_viewPager, graphWeek() )
-                    "3-month" -> transaction.replace(R.id.graph_viewPager, graphMonth() )
-                    "6-month" -> transaction.replace(R.id.graph_viewPager, graphYear() )
+                    "1-month" -> transaction.replace(R.id.graph_FrameLayout, graph1Month())
+                    "3-month" -> transaction.replace(R.id.graph_FrameLayout, graph3Month())
+                    "6-month" -> transaction.replace(R.id.graph_FrameLayout, graph6Month())
                 }
                 transaction.commit()
             }
