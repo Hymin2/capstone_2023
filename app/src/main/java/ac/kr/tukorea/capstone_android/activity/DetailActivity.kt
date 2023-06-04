@@ -83,6 +83,10 @@ class DetailActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+        binding.detailBtnBack.setOnClickListener{
+            onBackPressed()
+        }
         binding.graphTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             // 탭 버튼을 선택할 때 이벤트

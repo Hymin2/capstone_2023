@@ -15,18 +15,15 @@ class SaleProductAdapter(private var saleProductList: ArrayList<FeedList>) :
     RecyclerView.Adapter<SaleProductAdapter.saleProductViewHolder>() {
 
     class saleProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val saleProductProfileImage: ImageView =
-            itemView.findViewById(R.id.feedList_userProfileImage)
-        val saleProductUserNickName: TextView =
-            itemView.findViewById(R.id.feedList_userNickName)
-        val saleProductProductImage: ImageView =
-            itemView.findViewById(R.id.feedList_productImage)
-        val saleProductProductModel: TextView =
-            itemView.findViewById(R.id.feedList_title)
-        val saleProductProductPrice: TextView =
-            itemView.findViewById(R.id.feedList_productPrice)
-        val saleProductProductMain: TextView =
-            itemView.findViewById(R.id.feedList_content)
+        val saleProductProfileImage: ImageView = itemView.findViewById(R.id.feedList_userProfileImage)
+        val saleProductUserNickName: TextView = itemView.findViewById(R.id.feedList_userNickName)
+        //val saleProductProductImage: ImageView = itemView.findViewById(R.id.feedList_productImage)
+        val saleProductProductModel: TextView = itemView.findViewById(R.id.feedList_title)
+        val saleProductProductPrice: TextView = itemView.findViewById(R.id.feedList_productPrice)
+        val saleProductProductMain: TextView = itemView.findViewById(R.id.feedList_content)
+        val onSaleTextView: TextView = itemView.findViewById(R.id.onSale_textView)
+        val soldOutTranslucent: ImageView = itemView.findViewById(R.id.soldOut_translucent)
+        val soldOutTextView: TextView = itemView.findViewById(R.id.soldOut_textView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): saleProductViewHolder {
@@ -39,7 +36,7 @@ class SaleProductAdapter(private var saleProductList: ArrayList<FeedList>) :
         val saleProduct = saleProductList[position]
         holder.saleProductProfileImage.setImageResource(saleProduct.feedProfileImage)
         holder.saleProductUserNickName.text = saleProduct.feedUserNickName
-        holder.saleProductProductImage.setImageResource(saleProduct.feedProductImage)
+        //holder.saleProductProductImage.setImageResource(saleProduct.feedProductImage)
         holder.saleProductProductModel.text = saleProduct.feedProductModel
         holder.saleProductProductPrice.text = "${saleProduct.feedProductPrice} 원"
         holder.saleProductProductMain.text = saleProduct.feedProductMain

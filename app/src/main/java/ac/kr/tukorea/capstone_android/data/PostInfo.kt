@@ -27,5 +27,8 @@ data class PostInfo(
     @SerializedName("postImages")
     val postImages : List<String>,
     @SerializedName("like")
-    val isLike : Boolean
-) : Serializable
+    val isLike : Boolean,
+    @SerializedName("onSale")
+    val onSale: Boolean
+) : Serializable {
+}
