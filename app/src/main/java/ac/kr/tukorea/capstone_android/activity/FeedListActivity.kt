@@ -1,8 +1,11 @@
 package ac.kr.tukorea.capstone_android.activity
 
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.FeedListAdapter
 import ac.kr.tukorea.capstone_android.data.FeedList
+import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.data.PostResponseBody
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import ac.kr.tukorea.capstone_android.databinding.ActivityFeedListBinding
+import ac.kr.tukorea.capstone_android.util.App
+import android.widget.Toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.Locale.filter
 
 class FeedListActivity : AppCompatActivity() {
 
@@ -26,6 +35,7 @@ class FeedListActivity : AppCompatActivity() {
     lateinit var feedProductPrice : Array<Int>
     lateinit var feedProductMain : Array<String>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeedListBinding.inflate(layoutInflater)
@@ -34,22 +44,21 @@ class FeedListActivity : AppCompatActivity() {
         setSupportActionBar(binding.feedListToolBar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        dataInitialize()
+
         val recyclerLayoutManager = LinearLayoutManager(this)
         binding.feedListRecyclerView.apply {
             layoutManager = recyclerLayoutManager
             setHasFixedSize(true)
         }
 
-        adapter = FeedListAdapter(feedArrayList) // 어댑터 초기화
-        binding.feedListRecyclerView.adapter = adapter
 
-        getUserData()
+
 
         binding.feedListBtnBack.setOnClickListener {
             onBackPressed()
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -65,90 +74,11 @@ class FeedListActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                filter(newText) // 입력된 텍스트로 검색 결과 필터링
                 return true
             }
         })
 
         return true
-    }
-
-    private fun dataInitialize() {
-        feedArrayList = arrayListOf<FeedList>()
-
-        feedProfileImage = arrayOf(
-            R.drawable.profile_image,
-            R.drawable.profile_image,
-            R.drawable.profile_image,
-        )
-
-        feedUserNickName = arrayOf(
-            "asd",
-            "123",
-            "qwe",
-        )
-
-        feedProductImage = arrayOf(
-            R.drawable.galaxys23,
-            R.drawable.iphone14pro,
-            R.drawable.galaxys23
-        )
-
-        feedProductModel = arrayOf(
-            "갤럭시 S23",
-            "아이폰 14 Pro",
-            "갤럭시 S23"
-        )
-
-        feedProductPrice = arrayOf(
-            123,
-            456,
-            789,
-        )
-        feedProductMain = arrayOf(
-            "판매글 내용1",
-            "판매글 내용2",
-            "판매글 내용3"
-        )
-
-
-        filteredList = ArrayList(feedArrayList) // 검색 결과 리스트 초기화
-    }
-
-    private fun getUserData() {
-        for(i in feedProfileImage.indices){
-            val feed = FeedList(
-                feedProfileImage[i],
-                feedUserNickName[i],
-                feedProductImage[i],
-                feedProductModel[i],
-                feedProductPrice[i],
-                feedProductMain[i]
-            )
-            feedArrayList.add(feed)
-        }
-    }
-
-    private fun filter(query: String) {
-        filteredList.clear() // 검색 결과 리스트 초기화
-
-        if (query.isNotEmpty()) {
-            val searchQuery = query.lowercase()
-
-            for (item in feedArrayList) {
-                // 검색어가 닉네임, 제품 모델, 제품 메인 내용 중 하나와 일치하는지 확인
-                if (item.feedUserNickName.lowercase().contains(searchQuery) ||
-                    item.feedProductModel.lowercase().contains(searchQuery) ||
-                    item.feedProductMain.lowercase().contains(searchQuery)
-                ) {
-                    filteredList.add(item)
-                }
-            }
-        } else {
-            filteredList.addAll(feedArrayList) // 검색어가 없으면 모든 아이템 추가
-        }
-
-        adapter.updateList(filteredList) // 어댑터의 데이터 업데이트
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

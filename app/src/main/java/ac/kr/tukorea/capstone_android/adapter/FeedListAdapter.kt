@@ -8,17 +8,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.util.ServerInfo
+import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.request.target.Target
+import java.text.DecimalFormat
 
-class FeedListAdapter(private var feedList: ArrayList<FeedList>
-) : RecyclerView.Adapter<FeedListAdapter.FeedListViewHolder>() {
+class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Context) : RecyclerView.Adapter<FeedListAdapter.FeedListViewHolder>() {
 
     class FeedListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val feedProfileImage: ImageView = itemView.findViewById(R.id.feedList_userProfileImage)
-        val feedUserNickName: TextView = itemView.findViewById(R.id.feedList_userNickName)
-        val feedProductImage: ImageView = itemView.findViewById(R.id.feedList_productImage)
-        val feedProductModel: TextView = itemView.findViewById(R.id.feedList_productModel)
-        val feedProductPrice: TextView = itemView.findViewById(R.id.feedList_productPrice)
-        val feedProductMain: TextView = itemView.findViewById(R.id.feedList_productMain)
+        val userProfileImage: ImageView = itemView.findViewById(R.id.feedList_userProfileImage)
+        val userNickname: TextView = itemView.findViewById(R.id.feedList_userNickName)
+        val images: ImageView = itemView.findViewById(R.id.feedList_productImage)
+        val title: TextView = itemView.findViewById(R.id.feedList_title)
+        val price : TextView = itemView.findViewById(R.id.feedList_productPrice)
+        val content: TextView = itemView.findViewById(R.id.feedList_content)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedListViewHolder {
@@ -28,21 +34,29 @@ class FeedListAdapter(private var feedList: ArrayList<FeedList>
     }
 
     override fun onBindViewHolder(holder: FeedListViewHolder, position: Int) {
-        val feed = feedList[position]
-        holder.feedProfileImage.setImageResource(feed.feedProfileImage)
-        holder.feedUserNickName.text = feed.feedUserNickName
-        holder.feedProductImage.setImageResource(feed.feedProductImage)
-        holder.feedProductModel.text = feed.feedProductModel
-        holder.feedProductPrice.text = "${feed.feedProductPrice} 원"
-        holder.feedProductMain.text = feed.feedProductMain
+        val item = items[position]
+        holder.userNickname.text = item.nickname
+
+        if(item.userImage != null) {
+            val glideUrl = GlideUrl(
+                ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + item.userImage
+            )
+
+            Glide.with(context).load(glideUrl)
+                .override(Target.SIZE_ORIGINAL)
+                .into(holder.userProfileImage)
+        }
+        holder.title.text = item.postTitle
+        holder.content.text = item.postContent
+        holder.price.text = toLongFormat(item.price)
+    }
+
+    private fun toLongFormat(price: Int): String {
+        val formatter = DecimalFormat("###,###")
+        return formatter.format(price) + "원"
     }
 
     override fun getItemCount(): Int {
-        return feedList.size
-    }
-
-    fun updateList(list: ArrayList<FeedList>) {
-        feedList = list
-        notifyDataSetChanged()
+        return items.size
     }
 }

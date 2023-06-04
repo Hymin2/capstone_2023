@@ -78,6 +78,9 @@ class DetailActivity : AppCompatActivity() {
 
         binding.toSaleProductListBtn.setOnClickListener{
             val intent = Intent(this,SaleProductListActivity::class.java)
+            intent.putExtra("productId", productId)
+            intent.putExtra("productName", productName)
+
             startActivity(intent)
         }
         binding.graphTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

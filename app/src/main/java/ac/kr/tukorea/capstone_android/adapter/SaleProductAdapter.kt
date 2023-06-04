@@ -22,11 +22,11 @@ class SaleProductAdapter(private var saleProductList: ArrayList<FeedList>) :
         val saleProductProductImage: ImageView =
             itemView.findViewById(R.id.feedList_productImage)
         val saleProductProductModel: TextView =
-            itemView.findViewById(R.id.feedList_productModel)
+            itemView.findViewById(R.id.feedList_title)
         val saleProductProductPrice: TextView =
             itemView.findViewById(R.id.feedList_productPrice)
         val saleProductProductMain: TextView =
-            itemView.findViewById(R.id.feedList_productMain)
+            itemView.findViewById(R.id.feedList_content)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): saleProductViewHolder {

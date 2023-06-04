@@ -39,5 +39,5 @@ interface PostService {
     @DELETE("/api/v1/post/like")
     fun deleteLikePost(@Header("Authorization") token: String,
                        @Query("postId") postId : Long,
-                       @Query("username") username : String)
+                       @Query("username") username : String) : Call<Unit>
 }

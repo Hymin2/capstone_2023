@@ -1,26 +1,36 @@
 package ac.kr.tukorea.capstone_android.activity
 
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.SaleDetailViewPagerAdapter
+import ac.kr.tukorea.capstone_android.data.LikePostRegisterRequestBody
 import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.data.ResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivitySaleDetailBinding
+import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_sale_detail.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DecimalFormat
 
 class SaleDetailActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySaleDetailBinding
     private var isHearting: Boolean = false
+    private val service = RetrofitAPI.postService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +41,17 @@ class SaleDetailActivity : AppCompatActivity() {
         val detail = intent.getSerializableExtra("detail") as PostInfo
         var isLike = detail.isLike
 
+        Log.d("좋아요", isLike.toString())
+        if(isLike){
+            var animator : ValueAnimator
+            animator = ValueAnimator.ofFloat(0f, 1f).setDuration(500L)
+
+            animator.addUpdateListener { animation : ValueAnimator ->
+                binding.likeBtn.progress = animation.animatedValue as Float
+            }
+
+            animator.start()
+        }
 
         binding.apply {
             saleDetailUserNickName.text = detail.nickname
@@ -39,17 +60,47 @@ class SaleDetailActivity : AppCompatActivity() {
             saleDetailProductPrice.text = toLongFormat(detail.price)
             saleDetailProductName.text = detail.productName
 
-            if(isLike){
-                likeBtn.progress = 1f
-            }
-
 
             likeBtn.setOnClickListener {
                 val animator : ValueAnimator
+                val username = App.prefs.getString("username", "")
+                val postId = detail.postId
+
                 if(isLike){
+                    service.deleteLikePost(App.prefs.getString("access_token", ""), postId, username).enqueue(object :Callback<Unit>{
+                        override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                            if(!response.isSuccessful){
+                                Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Unit>, t: Throwable) {
+                            Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+
                     isLike = false
                     animator = ValueAnimator.ofFloat(1f, 0f).setDuration(500L)
                 }else{
+                    val requestBody = LikePostRegisterRequestBody(postId, username)
+
+                    service.registerLikePost(App.prefs.getString("access_token", ""), requestBody).enqueue(object: Callback<ResponseBody>{
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>,
+                        ) {
+                            if(!response.isSuccessful){
+                                Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+
                     isLike = true
                     animator = ValueAnimator.ofFloat(0f, 1f).setDuration(500L)
                 }
