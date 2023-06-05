@@ -21,8 +21,17 @@ import com.google.android.material.tabs.TabLayoutMediator
 import java.text.DecimalFormat
 
 class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Context) : RecyclerView.Adapter<FeedListAdapter.FeedListViewHolder>() {
+    private lateinit var mListener : FeedListAdapter.onItemClickListener
 
-    class FeedListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface onItemClickListener{
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        mListener = listener
+    }
+
+    class FeedListViewHolder(itemView: View, listener: FeedListAdapter.onItemClickListener) : RecyclerView.ViewHolder(itemView) {
         val userProfileImage: ImageView = itemView.findViewById(R.id.feedList_userProfileImage)
         val userNickname: TextView = itemView.findViewById(R.id.feedList_userNickName)
         val title: TextView = itemView.findViewById(R.id.feedList_title)
@@ -34,12 +43,18 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
         val soldOutTextView: TextView = itemView.findViewById(R.id.soldOut_textView)
 
         val productImageViewPager: ViewPager2 = itemView.findViewById(R.id.saleProductList_productImage_viewPager)
+
+        init {
+            itemView.setOnClickListener{
+                listener.onItemClick(adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedListViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.feed_list_item, parent, false)
-        return FeedListViewHolder(view)
+        return FeedListViewHolder(view, mListener)
     }
 
     override fun onBindViewHolder(holder: FeedListViewHolder, position: Int) {

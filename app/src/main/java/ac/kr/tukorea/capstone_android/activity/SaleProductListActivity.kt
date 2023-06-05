@@ -10,6 +10,7 @@ import ac.kr.tukorea.capstone_android.data.PostResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityFeedListBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivitySaleProductListBinding
 import ac.kr.tukorea.capstone_android.util.App
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -48,7 +49,6 @@ class SaleProductListActivity : AppCompatActivity() {
 
         searchPost()
 
-        Log.d("판매글 더보기", productId.toString())
         val recyclerLayoutManager = LinearLayoutManager(this)
         binding.saleProductListRecyclerView.apply {
             layoutManager = recyclerLayoutManager
@@ -70,6 +70,14 @@ class SaleProductListActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val body = response.body()
                     adapter = FeedListAdapter(body!!.message as ArrayList<PostInfo>, this@SaleProductListActivity) // 어댑터 초기화
+                    adapter.setOnItemClickListener(object : FeedListAdapter.onItemClickListener{
+                        override fun onItemClick(position: Int) {
+                            val intent = Intent(this@SaleProductListActivity, SaleDetailActivity::class.java)
+                            intent.putExtra("detail", body.message[position])
+                            startActivity(intent)
+                        }
+
+                    })
                     binding.saleProductListRecyclerView.adapter = adapter
                 }else{
                     Toast.makeText(this@SaleProductListActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -93,10 +101,16 @@ class SaleProductListActivity : AppCompatActivity() {
         // SearchView 리스너 설정
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                searchString = query
+                searchPost()
+
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                searchString = newText
+                searchPost()
+
                 return true
             }
         })

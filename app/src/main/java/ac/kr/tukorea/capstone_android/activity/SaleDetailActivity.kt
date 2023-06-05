@@ -62,64 +62,77 @@ class SaleDetailActivity : AppCompatActivity() {
 
 
             likeBtn.setOnClickListener {
-                val animator : ValueAnimator
+                val animator: ValueAnimator
                 val username = App.prefs.getString("username", "")
                 val postId = detail.postId
 
-                if(isLike){
-                    service.deleteLikePost(App.prefs.getString("access_token", ""), postId, username).enqueue(object :Callback<Unit>{
+                if (isLike) {
+                    service.deleteLikePost(App.prefs.getString("access_token", ""),
+                        postId,
+                        username).enqueue(object : Callback<Unit> {
                         override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                            if(!response.isSuccessful){
-                                Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            if (!response.isSuccessful) {
+                                Toast.makeText(this@SaleDetailActivity,
+                                    "잠시 후에 다시 시도해주세요.",
+                                    Toast.LENGTH_SHORT).show()
                             }
                         }
 
                         override fun onFailure(call: Call<Unit>, t: Throwable) {
-                            Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SaleDetailActivity,
+                                "잠시 후에 다시 시도해주세요.",
+                                Toast.LENGTH_SHORT).show()
                         }
 
                     })
 
                     isLike = false
                     animator = ValueAnimator.ofFloat(1f, 0f).setDuration(500L)
-                }else{
+                } else {
                     val requestBody = LikePostRegisterRequestBody(postId, username)
 
-                    service.registerLikePost(App.prefs.getString("access_token", ""), requestBody).enqueue(object: Callback<ResponseBody>{
-                        override fun onResponse(
-                            call: Call<ResponseBody>,
-                            response: Response<ResponseBody>,
-                        ) {
-                            if(!response.isSuccessful){
-                                Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    service.registerLikePost(App.prefs.getString("access_token", ""), requestBody)
+                        .enqueue(object : Callback<ResponseBody> {
+                            override fun onResponse(
+                                call: Call<ResponseBody>,
+                                response: Response<ResponseBody>,
+                            ) {
+                                if (!response.isSuccessful) {
+                                    Toast.makeText(this@SaleDetailActivity,
+                                        "잠시 후에 다시 시도해주세요.",
+                                        Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
 
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            Toast.makeText(this@SaleDetailActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                        }
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                Toast.makeText(this@SaleDetailActivity,
+                                    "잠시 후에 다시 시도해주세요.",
+                                    Toast.LENGTH_SHORT).show()
+                            }
 
-                    })
+                        })
 
                     isLike = true
                     animator = ValueAnimator.ofFloat(0f, 1f).setDuration(500L)
                 }
 
                 Log.d("좋아요 버튼", isLike.toString())
-                animator.addUpdateListener { animation : ValueAnimator ->
+                animator.addUpdateListener { animation: ValueAnimator ->
                     likeBtn.progress = animation.animatedValue as Float
                 }
 
                 animator.start()
             }
 
-            val glideUrl = GlideUrl(
-                ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + detail.userImage
-            )
+            if (detail.userImage != null) {
+                val glideUrl = GlideUrl(
+                    ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + detail.userImage
+                )
 
-            Glide.with(this@SaleDetailActivity).load(glideUrl)
-                .override(Target.SIZE_ORIGINAL)
-                .into(saleDetailUserProfileImage)
+                Glide.with(this@SaleDetailActivity).load(glideUrl)
+                    .override(Target.SIZE_ORIGINAL)
+                    .into(saleDetailUserProfileImage)
+            }
         }
 
         binding.saleDetailProductImageViewPager.apply {
@@ -137,13 +150,6 @@ class SaleDetailActivity : AppCompatActivity() {
     private fun toLongFormat(price: Int): String {
         val formatter = DecimalFormat("###,###")
         return formatter.format(price) + "원"
-    }
-
-    private fun getImage(): ArrayList<Int> {
-        return arrayListOf<Int>(
-            R.drawable.iphone14pro,
-            R.drawable.galaxys23,
-            R.drawable.profile_image,)
     }
 
     fun onClickButton(view: View) {
@@ -167,5 +173,4 @@ class SaleDetailActivity : AppCompatActivity() {
             isHearting = false // 다시 false로 된다.
         }
     }
-
 }
