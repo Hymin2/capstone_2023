@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
+import java.text.DecimalFormat
 
 class TopItemAdapter(private val productList : ArrayList<ProductList>, val context : Context)
     : RecyclerView.Adapter<TopItemAdapter.MyViewHolder>(){
@@ -42,15 +43,20 @@ class TopItemAdapter(private val productList : ArrayList<ProductList>, val conte
         val item = productList[position]
 
         holder.productName.text = item.productName
-        holder.productPrice.text = item.averagePrice.toString() + "원"
+        holder.productPrice.text = toLongFormat(item.averagePrice)
 
         val glideUrl = GlideUrl(
-            ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + item.path
+            ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + item.images[0]
         )
 
         Glide.with(context).load(glideUrl)
             .override(Target.SIZE_ORIGINAL)
             .into(holder.productImage)
+    }
+
+    private fun toLongFormat(price: Int): String {
+        val formatter = DecimalFormat("###,###")
+        return formatter.format(price) + "원"
     }
 
     override fun getItemCount(): Int {

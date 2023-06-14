@@ -39,8 +39,8 @@ class Main : Fragment() {
         var filter = ""
         var name = ""
 
-
-        retrofitProduct.getProductList(null, null, 1L, binding, this)
+        retrofitProduct.getProductList(null, null, 1L, binding, this@Main)
+        retrofitProduct.getTopProductList(1L, binding, this@Main)
 
         binding.apply {
             searchDeviceTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -49,6 +49,9 @@ class Main : Fragment() {
                         0 -> {
                             filteringBoxPhone.visibility = View.VISIBLE
                             textTopItem.text = "인기 스마트폰 TOP 10"
+
+                            retrofitProduct.getProductList(null, null, 1L, binding, this@Main)
+                            retrofitProduct.getTopProductList(1L, binding, this@Main)
                         }
                         1 -> {
                             filteringBoxPhone.visibility = View.GONE

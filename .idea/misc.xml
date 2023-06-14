@@ -31,28 +31,39 @@
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_login.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_main.xml" value="0.19630192502532928" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_my_shop.xml" value="0.21302083333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_others_profile.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_profile_edit.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_register.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_sale_detail.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_sale_post.xml" value="0.4" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_sale_product_list.xml" value="0.19630192502532928" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_search_result.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_view_sale_post.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/bottom_dialog.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/chat_list_item.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/dialog_list_item.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/feed_list_item.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/follow_list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_chat.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_graph_3month.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_graph_6month.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_graph_month.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_graph_week.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_graph_year.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_like.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_main.xml" value="0.2995747970622342" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_my_menu.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_my_profile.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_on_sale.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_search_phone.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_search_tablet.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/fragment_sold_out.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/graphmarker.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/item_loading.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/multi_image_item.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/myshop__list_item.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/myshop_list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/post_image_box_list_item.xml" value="0.21197916666666666" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/product_list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/searchresult_list_item.xml" value="0.4036458333333333" />

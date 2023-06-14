@@ -17,6 +17,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.target.Target
 import com.github.mikephil.charting.utils.Utils.init
+import java.text.DecimalFormat
 
 class ProductAdapter(private val productList : ArrayList<ProductList>, val context : Context)
     : RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
@@ -55,14 +56,19 @@ class ProductAdapter(private val productList : ArrayList<ProductList>, val conte
         return MyViewHolder(itemView, mListener)
     }
 
+    private fun toLongFormat(price: Int): String {
+        val formatter = DecimalFormat("###,###")
+        return formatter.format(price) + "원"
+    }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = productList[position]
 
         holder.productName.text = item.productName
-        holder.productPrice.text = item.averagePrice.toString() + "원"
+        holder.productPrice.text = toLongFormat(item.averagePrice)
 
         val glideUrl = GlideUrl(
-            ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + item.path
+            ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + item.images[0]
         )
 
         Glide.with(context).load(glideUrl)

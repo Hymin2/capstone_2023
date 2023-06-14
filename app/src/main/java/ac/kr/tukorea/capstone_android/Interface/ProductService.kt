@@ -16,6 +16,10 @@ interface ProductService {
                        @Query("filter") filter : String?,
                        @Query("category") category : Long) : Call<ProductListResponseBody>
 
+    @GET("api/v1/product/top")
+    fun getTopProductList(@Header("Authorization") token : String,
+                          @Query("category") category : Long) : Call<ProductListResponseBody>
+
     @GET("api/v1/product/{id}")
     fun getProductDetails(@Header("Authorization") token: String,
                           @Path("id") productId : Long) : Call<ProductDetailsResponseBody>

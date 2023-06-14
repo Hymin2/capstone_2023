@@ -29,8 +29,8 @@ data class ProductList(
     val modelName : String,
     @SerializedName("companyName")
     val companyName : String,
-    @SerializedName("path")
-    val path : String,
+    @SerializedName("images")
+    val images : List<String>,
     @SerializedName("averagePrice")
     val averagePrice : Int,
     @SerializedName("transactionNum")
