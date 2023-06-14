@@ -42,24 +42,40 @@ def get_product_list():
     teblit_mem = []
     
     teblit_name_list = teblit_df['상품명']
-    teblit_df['내장메모리'] = teblit_df['내장메모리'].fillna('0')
     teblit_mem_list = teblit_df['내장메모리']
-    
+    teblit_model_list = teblit_df['모델명']
     for n in teblit_name_list:
         teblit_name_single = n.split()
         for word in teblit_name_single:
             if 'GB' in word:
                 teblit_name_single.remove(word)
-            if 'TB' in word:
+            if '엘로' in word:
                 teblit_name_single.remove(word)
-            if 'with S펜' in word:
+            if '그린' in word:
                 teblit_name_single.remove(word)
-                
-        teblit_name_single = ' '.join(teblit_name_single)
+            if '퍼플' in word:
+                teblit_name_single.remove(word)
+            if '블루' in word:
+                teblit_name_single.remove(word)
+            if '레드' in word:
+                teblit_name_single.remove(word)
+            if '블랙' in word:
+                teblit_name_single.remove(word)
+            if '화이트' in word:
+                teblit_name_single.remove(word)
+            if '로즈' in word:
+                teblit_name_single.remove(word)
+            if '알파인' in word:
+                teblit_name_single.remove(word)
+            if teblit_model_list in word:
+                teblit_name_single.remove(word)
+            
+        teblit_name_single = ''.join(teblit_name_single)
         teblit_name.append(teblit_name_single)
 
     for m in teblit_mem_list:
-        teblit_mem.append(m)
+        teblit_mem_single = m.replace("GB", "").replace("TB", "")
+        teblit_mem.append(teblit_mem_single)
     
     print('----- 상품 갯수 : {}'.format(len(teblit_name)), '------')
 
@@ -71,26 +87,27 @@ def search_name(product):
 
 #except 설정
 def set_except(product):
-    excepts = '삽니다, 매입, 구매, 구입, 교환, 구합니다, 구함'
+    excepts = '삽니다, 매입, 구매, 구입, 교환'
     
-    if ('플러스' or 'plus') not in product:
-        excepts = excepts + ', 플러스, plus, +'
-    if ('울트라' or 'ultra') not in product:
-        excepts = excepts + ', 울트라, ultra'
-    if ('프로' or 'pro') not in product:
-        excepts = excepts + ', 프로, pro'
-    if ('맥스' or 'max') not in product:
-        excepts = excepts + ', 맥스, max'
-    if ('미니' or 'mini') not in product:
-        excepts = excepts + ', 미니, mini'
-    if ('플러스' or 'plus') not in product:
-        excepts = excepts + ', 플러스, plus'
-    if ('라이트' or 'lite') not in product:
-        excepts = excepts + ', 라이트, lite'
-    if 'FE' not in product:
-        excepts = excepts + ', 라이트, lite'
-    if ('에어' or 'air') not in product:
-        excepts = excepts + ', 에어, air'
+    if '럭시' in product:
+        if ('플러스' or 'plus') not in product:
+            excepts = excepts + ', 플러스, plus, +'
+        if ('울트라' or 'ultra') not in product:
+            excepts = excepts + ', 울트라, ultra'
+        if ('라이트' or 'lite') in product:
+            excepts = excepts + ', 라이트, lite'
+        if 'FE' in product:
+            excepts = excepts + ', FE'
+        
+    elif '이폰' in product:
+        if ('프로' or 'pro') not in product:
+            excepts = excepts + ', 프로, pro'
+        if ('에어' or 'air') not in product:
+            excepts = excepts + ', 에어, air'
+        if ('미니' or 'mini') not in product:
+            excepts = excepts + ', 미니, mini'
+        if ('플러스' or 'plus') not in product:
+            excepts = excepts + ', 플러스, plus'
     
     return excepts
 
@@ -105,7 +122,7 @@ def search_detail(excepts):
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[23]').click()
+    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[21]').click()
     time.sleep(1)
 
     #상세 설정
@@ -120,6 +137,7 @@ def search_detail(excepts):
     time.sleep(1)
     driver.find_element(By.XPATH,'//*[@id="searchOptionSelectDiv"]/ul/li[1]/a').click()
     time.sleep(1)
+    
     driver.find_element(By.XPATH, '//*[@id="listSizeSelectDiv"]/a').click()
     time.sleep(1)
     driver.find_element(By.XPATH,'//*[@id="listSizeSelectDiv"]/ul/li[7]/a').click()
@@ -167,7 +185,7 @@ def go_back(total_next_page):
     driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
 
 #전체 크롤링
-def Crawling_all(product):
+def Crawling_all():
     total_page = chech_total_page()
     total_next_page = total_page // 10
     last_page = total_page - total_next_page * 10
@@ -180,7 +198,7 @@ def Crawling_all(product):
     if total_next_page == 0:
         for page in range(total_page):
             print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-            do_Crawling(0, cur_page, product)
+            do_Crawling(0, cur_page)
             cur_page += 1
         
     else:
@@ -188,19 +206,19 @@ def Crawling_all(product):
             if n == 0:
                 for page in range(10):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(0, cur_page, product)
+                    do_Crawling(0, cur_page)
                     cur_page += 1
             
             elif n > 0 and n != total_next_page:
                 for page in range(10):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(1, cur_page, product)
+                    do_Crawling(1, cur_page)
                     cur_page += 1
             
             elif n == total_next_page:
                 for page in range(last_page):
                     print('--------------    Current Page : {}'.format(cur_page), '   --------------')
-                    do_Crawling(1, cur_page, product)
+                    do_Crawling(1, cur_page)
                     cur_page += 1
     
     if cur_page > total_page:
@@ -208,7 +226,7 @@ def Crawling_all(product):
 
 
 #한 페이지 크롤링
-def do_Crawling(num, page, product):
+def do_Crawling(num, page):
     with_before = 0
     
     #게시글 들어가기
@@ -235,7 +253,7 @@ def do_Crawling(num, page, product):
         except:
             product_price = ''
         
-        prod_price_total.append([product, product_price, product_date])
+        prod_price_total.append([product_date, product_price])
         
         #뒤로 가기
         driver.back()
@@ -252,8 +270,8 @@ get_product_list()
 options = Options()
 #options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-user_id = '네이버 아이디'
-user_pw = '네이버 비밀번호'
+user_id = 'jihoon815'
+user_pw = 'guswlgns3!50'
 
 #핸드폰 크롤링 시작
 for idx in range(len(teblit_name)):
@@ -288,13 +306,13 @@ for idx in range(len(teblit_name)):
     product = name + ' ' + mem
     excepts =  set_except(product) # 1개라도 포함되면 안됨
     search_name(product)
-    
+    #print(product + ', ' + mem + ', ' + excepts)
     
     #엑셀
     wb = Workbook()
     wb.create_sheet('{}'.format(product), 0)
     prod_price_total = wb.active
-    prod_price_total.append(['제품','가격','날짜'])
+    prod_price_total.append(['날짜','가격'])
     
     print('----- {} --- Product Name : {} || {}'.format(idx, product, mem), '------')
     
@@ -303,7 +321,7 @@ for idx in range(len(teblit_name)):
     
     if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
         #크롤링
-        Crawling_all(product)
+        Crawling_all()
     
     #크롤링 종료
     driver.quit()
