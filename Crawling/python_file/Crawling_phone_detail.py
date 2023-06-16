@@ -201,6 +201,6 @@ prod_detail_total = total
 
 data = pd.DataFrame(prod_detail_total)
 
-data.columns = ['Category','Product_ID','Product_name', 'model_name','제조사명', 'company_name', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '이미지']
+data.columns = ['Category','Product_ID','Product_name', 'model_name','company_name', '출시OS', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '이미지']
 
 data.to_excel('./file/danawa_crawling_phone_detail_result_class.xlsx', index =False)
