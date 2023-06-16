@@ -10,6 +10,7 @@ import pandas as pd
 
 def get_prod_items(pro_items):    #크롤링 할 컨텐츠
     prod_data = []
+    global pid
     
     for prod_item in prod_items:
         try:  #상품명, 기업명 크롤링
@@ -142,10 +143,11 @@ def get_prod_items(pro_items):    #크롤링 할 컨텐츠
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
         if product_name:
-            mylist = ['phone', product_name, model_name, company_name, release_os, screen_size, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, img_link]
-        
+            mylist = ['phone', pid, product_name, model_name, company_name, release_os, screen_size, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, img_link]
+            
         if mylist[0]:
             prod_data.append(mylist)
+            pid += 1
 
     return(prod_data)
 
@@ -163,6 +165,9 @@ url = 'https://prod.danawa.com/list/?cate=12215709'  #핸드폰 자급제
 driver.get(url)
 curPage = 1  #시작 페이지
 totalPage = 6  #총 페이지
+global pid  #product_id
+
+pid = 1
 
 prod_detail_total = []
 
@@ -196,6 +201,6 @@ prod_detail_total = total
 
 data = pd.DataFrame(prod_detail_total)
 
-data.columns = ['카테고리','상품명', '모델명','제조사명', '출시OS', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '이미지']
+data.columns = ['Category','Product_ID','Product_name', 'model_name','제조사명', 'company_name', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '이미지']
 
-data.to_excel('./file/danawa_crawling_product_detail_result_class.xlsx', index =False)
+data.to_excel('./file/danawa_crawling_phone_detail_result_class.xlsx', index =False)
