@@ -1,26 +1,21 @@
 package ac.kr.tukorea.capstone_android.fragment
 
-import ac.kr.tukorea.capstone_android.R
-import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import ac.kr.tukorea.capstone_android.activity.FollowerActivity
 import ac.kr.tukorea.capstone_android.activity.FollowingActivity
 import ac.kr.tukorea.capstone_android.activity.ProfileEditActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitUser
 import ac.kr.tukorea.capstone_android.util.App
+import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
-import kotlinx.android.synthetic.main.activity_profile_edit.*
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_my_profile.*
 
 class myProfile : Fragment() {

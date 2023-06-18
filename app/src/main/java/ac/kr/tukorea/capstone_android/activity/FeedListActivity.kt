@@ -1,11 +1,9 @@
 package ac.kr.tukorea.capstone_android.activity
 
-import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.FeedListAdapter
 import ac.kr.tukorea.capstone_android.data.FeedList
-import ac.kr.tukorea.capstone_android.data.PostInfo
-import ac.kr.tukorea.capstone_android.data.PostResponseBody
+import ac.kr.tukorea.capstone_android.databinding.ActivityFeedListBinding
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,13 +11,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import ac.kr.tukorea.capstone_android.databinding.ActivityFeedListBinding
-import ac.kr.tukorea.capstone_android.util.App
-import android.widget.Toast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.Locale.filter
 
 class FeedListActivity : AppCompatActivity() {
 

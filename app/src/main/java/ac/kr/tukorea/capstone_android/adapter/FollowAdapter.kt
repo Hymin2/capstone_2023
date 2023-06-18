@@ -2,7 +2,6 @@ package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.Follow
-import ac.kr.tukorea.capstone_android.data.FollowList
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
 import android.view.LayoutInflater

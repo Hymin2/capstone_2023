@@ -1,22 +1,14 @@
 package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.activity.DetailActivity
-import ac.kr.tukorea.capstone_android.activity.MainActivity
-import ac.kr.tukorea.capstone_android.activity.SearchResultActivity
-import ac.kr.tukorea.capstone_android.adapter.ProductAdapter
-import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
-import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
-import android.content.Intent
-import android.util.Log
-import android.widget.CheckBox
 import android.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 
 class Main : Fragment() {
@@ -50,17 +42,27 @@ class Main : Fragment() {
                             filteringBoxPhone.visibility = View.VISIBLE
                             textTopItem.text = "인기 스마트폰 TOP 10"
 
+                            textProductList.text = "스마트폰 리스트"
+
                             retrofitProduct.getProductList(null, null, 1L, binding, this@Main)
                             retrofitProduct.getTopProductList(1L, binding, this@Main)
                         }
                         1 -> {
                             filteringBoxPhone.visibility = View.GONE
                             textTopItem.text = "인기 태블릿 TOP 10"
+
+
+                            textProductList.text = "태블릿 리스트"
+
+                            retrofitProduct.getProductList(null, null, 2L, binding, this@Main)
+                            retrofitProduct.getTopProductList(2L, binding, this@Main)
                         }
 
                         2 -> {
                             filteringBoxPhone.visibility = View.GONE
                             textTopItem.text = "인기 노트북 TOP 10"
+
+                            textProductList.text = "노트북 리스트"
                         }
                     }
                 }

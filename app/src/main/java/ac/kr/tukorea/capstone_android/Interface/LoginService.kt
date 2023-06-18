@@ -3,7 +3,6 @@ package ac.kr.tukorea.capstone_android.Interface
 import ac.kr.tukorea.capstone_android.data.LoginRequestBody
 import ac.kr.tukorea.capstone_android.data.LoginResponseBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST

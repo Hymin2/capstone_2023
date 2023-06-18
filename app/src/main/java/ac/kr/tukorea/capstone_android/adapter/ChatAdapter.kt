@@ -2,14 +2,12 @@ package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.ChatList
-import ac.kr.tukorea.capstone_android.fragment.Chat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
 
 class ChatAdapter(private val chatList : ArrayList<ChatList>) :
     RecyclerView.Adapter<ChatAdapter.MyViewHolder>() {

@@ -1,22 +1,23 @@
 package ac.kr.tukorea.capstone_android.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.data.GraphData
 import ac.kr.tukorea.capstone_android.data.UsedProductPrice
+import ac.kr.tukorea.capstone_android.data.UsedProductPriceResponseBody
 import ac.kr.tukorea.capstone_android.databinding.FragmentGraph6monthBinding
+import ac.kr.tukorea.capstone_android.util.App
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.github.mikephil.charting.charts.LineChart
+import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -25,28 +26,19 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
-import kotlinx.android.synthetic.main.fragment_graph_1month.*
 import kotlinx.android.synthetic.main.fragment_graph_6month.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-class graph6Month : Fragment() {
+class graph6Month(val productId : Long) : Fragment() {
 
     lateinit var _binding : FragmentGraph6monthBinding
     private val binding get() = _binding!!
+    private val service = RetrofitAPI.productService
 
-    private val graphDataList: MutableList<UsedProductPrice> = mutableListOf(
-/*        UsedProductPrice("22-05",1),
-        UsedProductPrice("22-06",1),
-        UsedProductPrice("22-07",2),
-        UsedProductPrice("22-08",3),
-        UsedProductPrice("22-09",2),
-        UsedProductPrice("22-10",4),
-        UsedProductPrice("22-11",6),
-        UsedProductPrice("22-12",5),
-        UsedProductPrice("23-01",2),
-        UsedProductPrice("23-02",1),
-        UsedProductPrice("23-03",7),
-        UsedProductPrice("23-04",6),*/
+    private var graphDataList: MutableList<UsedProductPrice> = mutableListOf(
     )
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,22 +46,6 @@ class graph6Month : Fragment() {
     ): View? {
         _binding = FragmentGraph6monthBinding.inflate(inflater, container, false)
 
-        val times : List<String> = listOf(
-            "2023-04-25",
-            "2023-04-25",
-            "2023-04-25",
-            "2023-04-25",
-            "2023-04-25",
-            "2023-04-25",
-            "2023-04-25",)
-        val prices : List<Int> = listOf(1,2,3,4,5,6,7)
-
-        if (times != null && prices != null) {
-            for (i in times.indices) {
-                val usedProductPrice = UsedProductPrice(times[i], prices.reversed()[i])
-                graphDataList.add(usedProductPrice)
-            }
-        }
         return binding.root
     }
 
@@ -77,6 +53,28 @@ class graph6Month : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        service.getUsedProductPrice(App.prefs.getString("access_token", ""), productId, 6).enqueue(object :
+            Callback<UsedProductPriceResponseBody> {
+            override fun onResponse(
+                call: Call<UsedProductPriceResponseBody>,
+                response: Response<UsedProductPriceResponseBody>,
+            ) {
+                if(response.isSuccessful){
+                    graphDataList = response.body()!!.message.usedProductPrices as MutableList<UsedProductPrice>
+                    createGraph(view)
+
+                }
+            }
+
+            override fun onFailure(call: Call<UsedProductPriceResponseBody>, t: Throwable) {
+
+            }
+
+        })
+
+    }
+
+    fun createGraph(view : View){
         val xAxis = binding.sixMonthLineChart.xAxis
 
         // y축
@@ -129,7 +127,7 @@ class graph6Month : Fragment() {
                 textColor = resources.getColor(R.color.black, null)
                 textSize = 10f
                 labelRotationAngle = 0f
-                setLabelCount(5, true) // 레이블 개수와 간격 설정
+                setLabelCount(7, true) // 레이블 개수와 간격 설정
             }
             val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graphSixMonth_scrollview)
             horizontalScrollView.post{

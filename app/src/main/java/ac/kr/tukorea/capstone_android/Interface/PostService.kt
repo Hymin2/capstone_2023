@@ -1,10 +1,11 @@
 package ac.kr.tukorea.capstone_android.Interface
 
-import ac.kr.tukorea.capstone_android.data.*
+import ac.kr.tukorea.capstone_android.data.LikePostRegisterRequestBody
+import ac.kr.tukorea.capstone_android.data.PostResponseBody
+import ac.kr.tukorea.capstone_android.data.ResponseBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface PostService {

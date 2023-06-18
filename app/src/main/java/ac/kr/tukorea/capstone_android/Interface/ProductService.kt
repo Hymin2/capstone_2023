@@ -2,7 +2,7 @@ package ac.kr.tukorea.capstone_android.Interface
 
 import ac.kr.tukorea.capstone_android.data.ProductDetailsResponseBody
 import ac.kr.tukorea.capstone_android.data.ProductListResponseBody
-import ac.kr.tukorea.capstone_android.data.ProductNameListResponseBody
+import ac.kr.tukorea.capstone_android.data.UsedProductPriceResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -23,4 +23,9 @@ interface ProductService {
     @GET("api/v1/product/{id}")
     fun getProductDetails(@Header("Authorization") token: String,
                           @Path("id") productId : Long) : Call<ProductDetailsResponseBody>
+
+    @GET("api/v1/product/used-price")
+    fun getUsedProductPrice(@Header("Authorization") token: String,
+                            @Query("product") productId : Long,
+                            @Query("month") month : Int) : Call<UsedProductPriceResponseBody>
 }

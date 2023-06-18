@@ -1,27 +1,24 @@
 package ac.kr.tukorea.capstone_android.retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
-import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
 import ac.kr.tukorea.capstone_android.adapter.ProductAdapter
 import ac.kr.tukorea.capstone_android.adapter.TopItemAdapter
-import ac.kr.tukorea.capstone_android.data.*
-import ac.kr.tukorea.capstone_android.databinding.*
+import ac.kr.tukorea.capstone_android.data.ProductDetailsResponseBody
+import ac.kr.tukorea.capstone_android.data.ProductList
+import ac.kr.tukorea.capstone_android.data.ProductListResponseBody
+import ac.kr.tukorea.capstone_android.databinding.ActivityDetailBinding
+import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
 import ac.kr.tukorea.capstone_android.fragment.Main
-import ac.kr.tukorea.capstone_android.fragment.graph1Month
 import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import java.util.stream.Collectors
-import kotlin.collections.ArrayList
 
 
 class RetrofitProduct{
@@ -140,8 +137,6 @@ class RetrofitProduct{
             ) {
                 if(response.isSuccessful) {
                     var details = response.body()!!.message.productDetails
-                    var usedPrice = response.body()!!.message.usedProductPrices
-
                     binding.apply {
                         details.stream().forEach { item ->
                             when (item.detailName) {
@@ -159,27 +154,6 @@ class RetrofitProduct{
                                 "배터리" -> batteryValueTextView.text = item.detailContent
                             }
                         }
-                        var graphDataArrayList = ArrayList<UsedProductPrice>()
-                        //var graphPriceList = ArrayList<Int>()
-                        //var graphTimeList = ArrayList<String>()
-                        usedPrice.stream().forEach { item ->
-                           graphDataArrayList.add(item)
-                            //graphPriceList.add(item.price)
-                            //graphTimeList.add(item.time)
-                        }
-                        //Log.e("아이템","$graphDataArrayList")
-                        val graph1MonthFragment =graph1Month()
-                        var bundle = Bundle()
-                        //bundle.putIntegerArrayList("priceList",graphPriceList)
-                        //bundle.putStringArrayList("timeList",graphTimeList)
-                        bundle.putSerializable("UsedProductPrice", graphDataArrayList)
-                        //putParcelableArrayList("list", graphDataArrayList as ArrayList<out Parcelable?>?)
-                        Log.e("번들","$bundle")
-                        graph1MonthFragment.arguments = bundle
-
-                        val transaction = activity.supportFragmentManager.beginTransaction()
-                        transaction.add(R.id.graph_FrameLayout, graph1MonthFragment)
-                        transaction.commit()
                     }
 
                 } else{

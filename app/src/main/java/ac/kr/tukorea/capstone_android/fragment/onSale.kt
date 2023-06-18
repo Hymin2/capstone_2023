@@ -1,18 +1,18 @@
 package ac.kr.tukorea.capstone_android.fragment
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.SaleDetailActivity
 import ac.kr.tukorea.capstone_android.adapter.MyProfileTabAdapter
 import ac.kr.tukorea.capstone_android.data.PostResponseBody
 import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call

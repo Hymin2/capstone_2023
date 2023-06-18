@@ -3,13 +3,11 @@ package ac.kr.tukorea.capstone_android.adapter
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 
 class SaleDetailViewPagerAdapter (var images: List<String>, val context : Context) :
     RecyclerView.Adapter<SaleDetailViewPagerAdapter.PagerViewHolder>() {

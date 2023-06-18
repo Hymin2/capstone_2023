@@ -1,7 +1,6 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
-import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.SaleDetailViewPagerAdapter
 import ac.kr.tukorea.capstone_android.data.LikePostRegisterRequestBody
 import ac.kr.tukorea.capstone_android.data.PostInfo
@@ -10,17 +9,16 @@ import ac.kr.tukorea.capstone_android.databinding.ActivitySaleDetailBinding
 import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.animation.ValueAnimator
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_sale_detail.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

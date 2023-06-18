@@ -2,8 +2,8 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityChatBinding
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class ChatActivity : AppCompatActivity() {
 

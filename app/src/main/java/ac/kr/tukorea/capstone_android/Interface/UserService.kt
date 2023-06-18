@@ -1,6 +1,9 @@
 package ac.kr.tukorea.capstone_android.Interface
 
-import ac.kr.tukorea.capstone_android.data.*
+import ac.kr.tukorea.capstone_android.data.FollowRegisterRequestBody
+import ac.kr.tukorea.capstone_android.data.FollowResponseBody
+import ac.kr.tukorea.capstone_android.data.ResponseBody
+import ac.kr.tukorea.capstone_android.data.UserInfoResponseBody
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*

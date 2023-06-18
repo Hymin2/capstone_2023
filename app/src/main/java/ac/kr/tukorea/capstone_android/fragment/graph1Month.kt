@@ -2,12 +2,11 @@ package ac.kr.tukorea.capstone_android.fragment
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.data.GraphData
 import ac.kr.tukorea.capstone_android.data.UsedProductPrice
+import ac.kr.tukorea.capstone_android.data.UsedProductPriceResponseBody
 import ac.kr.tukorea.capstone_android.databinding.FragmentGraph1monthBinding
-import ac.kr.tukorea.capstone_android.retrofit.RetrofitProduct
+import ac.kr.tukorea.capstone_android.util.App
 import android.content.Context
-import android.content.Intent.getIntent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Build
@@ -20,7 +19,6 @@ import android.widget.HorizontalScrollView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -30,44 +28,18 @@ import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import kotlinx.android.synthetic.main.fragment_graph_1month.*
-import java.lang.Long.getLong
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-class graph1Month : Fragment() {
+class graph1Month(val productId : Long) : Fragment() {
 
     private var _binding: FragmentGraph1monthBinding? = null
     private val binding get() = _binding!!
 
-    private val graphDataList: MutableList<UsedProductPrice> = mutableListOf()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("생명주기","Create")
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onResume() {
-        Log.e("생명주기","Resume")
-        super.onResume()
-    }
-
-    override fun onPause() {
-        Log.e("생명주기","Pause")
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.e("생명주기","Stop")
-        super.onStop()
-    }
-
-    override fun onDestroyView() {
-        Log.e("생명주기","DestroyView")
-        super.onDestroyView()
-    }
-    override fun onDestroy() {
-        Log.e("생명주기","Destroy")
-        super.onDestroy()
-    }
+    private var graphDataList: MutableList<UsedProductPrice> = mutableListOf()
+    private val service = RetrofitAPI.productService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,19 +48,6 @@ class graph1Month : Fragment() {
 
         Log.e("생명주기","onCreateView")
         _binding = FragmentGraph1monthBinding.inflate(inflater, container, false)
-
-        var graphDataArrayList : ArrayList<UsedProductPrice>?
-
-        graphDataArrayList = arguments?.getSerializable("UsedProductPrice") as ArrayList<UsedProductPrice>?
-        val times = graphDataArrayList?.map { it.time }
-        val prices = graphDataArrayList?.map { it.price }
-
-        if (times != null && prices != null) {
-            for (i in times.indices) {
-                val usedProductPrice = UsedProductPrice(times.reversed()[i], prices.reversed()[i])
-                graphDataList.add(usedProductPrice)
-            }
-        }
 
         return binding.root
     }
@@ -100,9 +59,32 @@ class graph1Month : Fragment() {
 
         Log.e("생명주기","onViewCreated")
 
+
+        service.getUsedProductPrice(App.prefs.getString("access_token", ""), productId, 1).enqueue(object : Callback<UsedProductPriceResponseBody>{
+            override fun onResponse(
+                call: Call<UsedProductPriceResponseBody>,
+                response: Response<UsedProductPriceResponseBody>,
+            ) {
+                if(response.isSuccessful){
+                    graphDataList = response.body()!!.message.usedProductPrices as MutableList<UsedProductPrice>
+                    createGraph(view)
+
+                }
+            }
+
+            override fun onFailure(call: Call<UsedProductPriceResponseBody>, t: Throwable) {
+
+            }
+
+        })
+
+    }
+
+    fun createGraph(view: View){
+        // y축
+
         val xAxis = binding.oneMonthLineChart.xAxis
 
-        // y축
         val entries : MutableList<Entry> = mutableListOf()
         for (i in graphDataList.indices){
             entries.add(Entry(i.toFloat(),graphDataList[i].price.toFloat()))
@@ -181,6 +163,9 @@ class graph1Month : Fragment() {
     class XAxisCustomFormatter(val xAxisData: List<String>) : ValueFormatter() {
 
         override fun getFormattedValue(value: Float): String {
+            Log.d("Value", value.toString())
+            Log.d("list", xAxisData.toString())
+            Log.d("xAxisData", xAxisData[(value).toInt()])
             return xAxisData[(value).toInt()]
         }
 

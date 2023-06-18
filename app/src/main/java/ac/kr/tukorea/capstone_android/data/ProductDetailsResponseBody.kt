@@ -1,8 +1,6 @@
 package ac.kr.tukorea.capstone_android.data
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
-import java.sql.Date
 
 data class ProductDetailsResponseBody(
     @SerializedName("result")
@@ -17,9 +15,7 @@ data class MessageProductDetails(
     @SerializedName("id")
     val id : Long,
     @SerializedName("productDetails")
-    val productDetails : List<ProductDetails>,
-    @SerializedName("usedProductPrices")
-    val usedProductPrices : List<UsedProductPrice>
+    val productDetails : List<ProductDetails>
 )
 
 data class ProductDetails(
@@ -28,11 +24,3 @@ data class ProductDetails(
     @SerializedName("detailContent")
     val detailContent : String
 )
-
-data class UsedProductPrice(
-    @SerializedName("time")
-    val time : String,
-    @SerializedName("price")
-    val price : Int
-) : Serializable
-

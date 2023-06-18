@@ -2,11 +2,13 @@ package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityMainBinding
-import ac.kr.tukorea.capstone_android.fragment.*
+import ac.kr.tukorea.capstone_android.fragment.Chat
+import ac.kr.tukorea.capstone_android.fragment.Main
+import ac.kr.tukorea.capstone_android.fragment.myProfile
 import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {

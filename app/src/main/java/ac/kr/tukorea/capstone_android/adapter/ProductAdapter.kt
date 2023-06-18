@@ -2,21 +2,16 @@ package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.ProductList
-import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
-import com.bumptech.glide.request.target.Target
-import com.github.mikephil.charting.utils.Utils.init
 import java.text.DecimalFormat
 
 class ProductAdapter(private val productList : ArrayList<ProductList>, val context : Context)

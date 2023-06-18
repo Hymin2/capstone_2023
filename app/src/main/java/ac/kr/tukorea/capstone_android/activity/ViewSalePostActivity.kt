@@ -1,12 +1,9 @@
 package ac.kr.tukorea.capstone_android.activity
 
-import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.databinding.ActivityViewSalePostBinding
-import ac.kr.tukorea.capstone_android.databinding.FragmentMainBinding
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class ViewSalePostActivity : AppCompatActivity() {
 

@@ -1,6 +1,5 @@
 package ac.kr.tukorea.capstone_android.Interface
 
-import ac.kr.tukorea.capstone_android.data.ProductListResponseBody
 import ac.kr.tukorea.capstone_android.data.RefreshResponseBody
 import retrofit2.Call
 import retrofit2.http.GET

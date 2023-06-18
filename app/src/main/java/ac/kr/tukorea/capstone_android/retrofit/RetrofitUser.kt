@@ -1,29 +1,22 @@
 package ac.kr.tukorea.capstone_android.retrofit
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
-import ac.kr.tukorea.capstone_android.adapter.MyShopAdapter
-import ac.kr.tukorea.capstone_android.data.PostInfo
 import ac.kr.tukorea.capstone_android.data.ResponseBody
 import ac.kr.tukorea.capstone_android.data.UserInfoResponseBody
-import ac.kr.tukorea.capstone_android.databinding.ActivityOthersProfileBinding
 import ac.kr.tukorea.capstone_android.databinding.ActivityProfileEditBinding
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.graphics.Color
-import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.request.target.Target
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Multipart
 
 class RetrofitUser {
     private val service = RetrofitAPI.userService

@@ -4,13 +4,10 @@ import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import java.nio.file.Files.size
 
 class ImagePagerAdapter(private val context: Context, private val imageList: List<String>) : RecyclerView.Adapter<ImagePagerAdapter.ImageViewHolder>() {
 

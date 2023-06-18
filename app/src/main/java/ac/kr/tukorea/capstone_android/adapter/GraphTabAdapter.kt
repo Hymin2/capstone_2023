@@ -1,11 +1,7 @@
 package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
-import ac.kr.tukorea.capstone_android.fragment.graph1Month
-import android.content.Context
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class GraphTabAdapter(fragmentActivity: DetailActivity) : FragmentStateAdapter(fragmentActivity) {

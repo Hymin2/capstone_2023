@@ -5,8 +5,8 @@ import ac.kr.tukorea.capstone_android.adapter.SearchResultAdapter
 import ac.kr.tukorea.capstone_android.data.SearchResult
 import ac.kr.tukorea.capstone_android.fragment.searchPhone
 import ac.kr.tukorea.capstone_android.fragment.searchTablet
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

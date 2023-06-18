@@ -1,13 +1,13 @@
 package ac.kr.tukorea.capstone_android.activity
 
-import ac.kr.tukorea.capstone_android.retrofit.RetrofitLogin
 import ac.kr.tukorea.capstone_android.data.LoginRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityLoginBinding
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitLogin
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
 

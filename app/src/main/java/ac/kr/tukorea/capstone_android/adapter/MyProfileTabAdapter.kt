@@ -1,14 +1,14 @@
 package ac.kr.tukorea.capstone_android.adapter
 
+import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.util.ServerInfo
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.data.PostInfo
-import ac.kr.tukorea.capstone_android.util.ServerInfo
-import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target

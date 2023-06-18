@@ -3,14 +3,12 @@ package ac.kr.tukorea.capstone_android.adapter
 import ac.kr.tukorea.capstone_android.R
 import android.content.Context
 import android.net.Uri
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import okhttp3.MultipartBody
 
 class MultiImageAdapter(private val items: ArrayList<Uri?>, val context: Context):
     RecyclerView.Adapter<MultiImageAdapter.ViewHolder>() {

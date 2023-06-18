@@ -1,23 +1,19 @@
 package ac.kr.tukorea.capstone_android.adapter
 
-import ac.kr.tukorea.capstone_android.data.FeedList
+import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.data.PostInfo
+import ac.kr.tukorea.capstone_android.util.ServerInfo
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.data.PostInfo
-import ac.kr.tukorea.capstone_android.util.ServerInfo
-import android.content.Context
-import android.widget.Adapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import java.text.DecimalFormat
 
 class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Context) : RecyclerView.Adapter<FeedListAdapter.FeedListViewHolder>() {

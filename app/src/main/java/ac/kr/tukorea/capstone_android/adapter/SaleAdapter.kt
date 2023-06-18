@@ -1,7 +1,7 @@
 package ac.kr.tukorea.capstone_android.adapter
 
-import ac.kr.tukorea.capstone_android.data.Products
 import ac.kr.tukorea.capstone_android.R
+import ac.kr.tukorea.capstone_android.data.Products
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

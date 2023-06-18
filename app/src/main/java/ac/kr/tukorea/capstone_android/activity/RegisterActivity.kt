@@ -1,17 +1,17 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.retrofit.RetrofitRegister
 import ac.kr.tukorea.capstone_android.data.RegisterRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityRegisterBinding
+import ac.kr.tukorea.capstone_android.retrofit.RetrofitRegister
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
