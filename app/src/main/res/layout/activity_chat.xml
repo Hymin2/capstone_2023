@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ChatActivity">
+    tools:context=".activity.ChatActivity"
+    android:orientation="vertical">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -14,7 +15,8 @@
         android:background="@color/white"
         android:elevation="5dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints">
 
         <ImageButton
             android:id="@+id/chat_btnBack"
@@ -29,123 +31,55 @@
             android:id="@+id/chat_opponentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             android:layout_marginLeft="30dp"
-            android:text="팔로잉"/>
+            android:text="팔로잉"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="15dp"
+            android:background="@drawable/ic_baseline_check_circle_outline_24" />
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
-        android:background="@drawable/profile_image"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatting_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/chat_toolbar"
         app:layout_constraintTop_toBottomOf="@+id/chat_toolbar" />
 
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="16dp"
-        android:background="@drawable/border"
-        android:padding="13dp"
-        android:text="거래 가능할까요?"
-        app:layout_constraintStart_toEndOf="@+id/shapeableImageView2"
-        app:layout_constraintTop_toBottomOf="@+id/chat_toolbar" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="40dp"
-        android:text="17:42"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/chat_toolbar" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/border2"
-        android:padding="13dp"
-        android:text="아니요 팔렸습니다."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="35dp"
-        android:layout_marginHorizontal="5dp"
-        android:text="17:44"
-        android:textSize="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginVertical="60dp"
-        android:layout_marginHorizontal="15dp"
-        android:background="@drawable/profile_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shapeableImageView1" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/border"
-        android:padding="13dp"
-        android:text="네 알겠습니다"
-        app:layout_constraintStart_toEndOf="@+id/shapeableImageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="35dp"
-        android:text="17:45"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_alignParentBottom="true" >
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-            android:padding="10dp"
-            android:layout_marginHorizontal="3dp"
-            android:layout_weight="3"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="전송" />
+            <EditText
+                android:id="@+id/message_edtText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/all_font"
+                android:hint="메시지를 입력하세요"
+                android:textSize="25dp" />
 
+            <ImageButton
+                android:id="@+id/btn_sendMessage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_toRightOf="@+id/message_edtText"
+                android:layout_weight="0.2"
+                android:background="@drawable/sendbtn_background"
+                android:src="@drawable/ic_baseline_send_24" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</RelativeLayout>

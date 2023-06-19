@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ChatAdapter(private val chatList : ArrayList<ChatList>) :
-    RecyclerView.Adapter<ChatAdapter.MyViewHolder>() {
+class ChatListAdapter(private val chatList : ArrayList<ChatList>) :
+    RecyclerView.Adapter<ChatListAdapter.MyViewHolder>() {
 
     private lateinit var chatListener : onItemClickListener
 

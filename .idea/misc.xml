@@ -85,10 +85,14 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_baseline_people_alt_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_baseline_phone_android_24.xml" value="0.2455" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.247" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_outline_person_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_outline_remove_red_eye_24.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/ic_twotone_settings_24.xml" value="0.2455" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/my_chat.xml" value="0.247" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/opponent_chat.xml" value="0.247" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/sendbtn_background.xml" value="0.247" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/square_border.xml" value="0.2465" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/styles.xml" value="0.2455" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/drawable/textviewbackground.xml" value="0.247" />
@@ -135,6 +139,8 @@
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/fragment_write_post.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/graphmarker.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/item_loading.xml" value="0.24320652173913043" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/item_my_chat.xml" value="0.2513586956521739" />
+        <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/item_opponent_chat.xml" value="0.2513586956521739" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/list_item.xml" value="0.4" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/multi_image_item.xml" value="0.2509057971014493" />
         <entry key="..\:/Users/scott/AndroidStudioProjects/capstone_android_2023/app/src/main/res/layout/myshop_list_item.xml" value="0.2509057971014493" />

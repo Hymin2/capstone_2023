@@ -66,10 +66,19 @@ class SaleProductListActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val body = response.body()
                     adapter = FeedListAdapter(body!!.message as ArrayList<PostInfo>, this@SaleProductListActivity) // 어댑터 초기화
-                    adapter.setOnItemClickListener(object : FeedListAdapter.onItemClickListener{
+                    adapter.setOnItemClickListener(object : FeedListAdapter.onItemClickListener {
                         override fun onItemClick(position: Int) {
                             val intent = Intent(this@SaleProductListActivity, SaleDetailActivity::class.java)
                             intent.putExtra("detail", body.message[position])
+                            startActivity(intent)
+                        }
+
+                        override fun onUserProfileImageClick(position: Int) {   // 유저 프로필 사진 클릭 시 해당 유저 프로필로 이동
+                            val intent = Intent(this@SaleProductListActivity, OthersProfileActivity::class.java)
+                            startActivity(intent)
+                        }
+                        override fun onUserNicknameClick(position: Int) {   // 유저 닉네임 클릭 시 해당 유저 프로필로 이동
+                            val intent = Intent(this@SaleProductListActivity, OthersProfileActivity::class.java)
                             startActivity(intent)
                         }
 

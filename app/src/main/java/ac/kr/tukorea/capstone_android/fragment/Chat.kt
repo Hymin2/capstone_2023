@@ -2,7 +2,7 @@ package ac.kr.tukorea.capstone_android.fragment
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.ChatActivity
-import ac.kr.tukorea.capstone_android.adapter.ChatAdapter
+import ac.kr.tukorea.capstone_android.adapter.ChatListAdapter
 import ac.kr.tukorea.capstone_android.data.ChatList
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class Chat : Fragment() {
-    private lateinit var adapter : ChatAdapter
+    private lateinit var adapter : ChatListAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var chatArrayList : ArrayList<ChatList>
 
@@ -37,13 +37,13 @@ class Chat : Fragment() {
 
         dataInitialize()
         val layoutManager = LinearLayoutManager(context)
-        recyclerView = view.findViewById(R.id.chat_recycler_view)
+        recyclerView = view.findViewById(R.id.chatList_recyclerView)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(DividerItemDecoration(view.context, 1))
 
 
-        adapter = ChatAdapter(chatArrayList)
+        adapter = ChatListAdapter(chatArrayList)
         recyclerView.adapter = adapter
 
         getUserData()
@@ -81,9 +81,9 @@ class Chat : Fragment() {
             )
             chatArrayList.add(chat)
         }
-        var adapter = ChatAdapter(chatArrayList)
+        var adapter = ChatListAdapter(chatArrayList)
         recyclerView.adapter = adapter
-        adapter.setOnItemClickListener(object : ChatAdapter.onItemClickListener{
+        adapter.setOnItemClickListener(object : ChatListAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
 
                 val intent = Intent(context, ChatActivity::class.java)

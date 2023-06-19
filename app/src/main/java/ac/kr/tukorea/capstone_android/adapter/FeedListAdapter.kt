@@ -21,6 +21,9 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
 
     interface onItemClickListener{
         fun onItemClick(position: Int)
+
+        fun onUserProfileImageClick(position: Int)
+        fun onUserNicknameClick(position: Int)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
@@ -43,6 +46,13 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
         init {
             itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
+            }
+            userProfileImage.setOnClickListener {
+                listener.onUserProfileImageClick(adapterPosition)
+            }
+
+            userNickname.setOnClickListener {
+                listener.onUserNicknameClick(adapterPosition)
             }
         }
     }
