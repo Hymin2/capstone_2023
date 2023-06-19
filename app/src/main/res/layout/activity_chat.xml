@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/chat_toolbar"
         android:layout_width="match_parent"
@@ -37,24 +38,22 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="15dp"
-            android:background="@drawable/ic_baseline_check_circle_outline_24" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatting_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/putMessageBar"
         android:layout_below="@+id/chat_toolbar"
         app:layout_constraintTop_toBottomOf="@+id/chat_toolbar" />
 
     <RelativeLayout
+        android:id="@+id/putMessageBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:elevation="20dp"
         android:layout_alignParentBottom="true" >
 
         <LinearLayout
@@ -67,8 +66,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/all_font"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
                 android:hint="메시지를 입력하세요"
-                android:textSize="25dp" />
+                android:textSize="20dp" />
 
             <ImageButton
                 android:id="@+id/btn_sendMessage"
@@ -77,6 +78,7 @@
                 android:layout_margin="3dp"
                 android:layout_toRightOf="@+id/message_edtText"
                 android:layout_weight="0.2"
+                android:elevation="10dp"
                 android:background="@drawable/sendbtn_background"
                 android:src="@drawable/ic_baseline_send_24" />
         </LinearLayout>
