@@ -1,6 +1,7 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
+import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.SaleDetailViewPagerAdapter
 import ac.kr.tukorea.capstone_android.data.LikePostRegisterRequestBody
 import ac.kr.tukorea.capstone_android.data.PostInfo
@@ -11,8 +12,11 @@ import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -39,6 +43,9 @@ class SaleDetailActivity : AppCompatActivity() {
         val detail = intent.getSerializableExtra("detail") as PostInfo
         var isLike = detail.isLike
 
+        setSupportActionBar(binding.saleDetailToolBar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         Log.d("좋아요", isLike.toString())
         if(isLike){
             var animator : ValueAnimator
@@ -58,6 +65,9 @@ class SaleDetailActivity : AppCompatActivity() {
             saleDetailProductPrice.text = toLongFormat(detail.price)
             saleDetailProductName.text = detail.productName
 
+            saleDetailBtnBack.setOnClickListener{
+                onBackPressed()
+            }
 
             likeBtn.setOnClickListener {
                 val animator: ValueAnimator
@@ -169,6 +179,45 @@ class SaleDetailActivity : AppCompatActivity() {
             }
             animator.start()
             isHearting = false // 다시 false로 된다.
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sale_detail_menu, menu)
+
+        // 글 작성자의 아이디와 사용자의 아이디 비교
+        val postAuthorId = "작성자 ID" // 작성자의 아이디를 가져와서 설정해주세요
+        val currentUserId = App.prefs.getString("username", "") // 사용자의 아이디를 가져와서 설정해주세요
+
+        if (postAuthorId == currentUserId) {
+            // 글 작성자와 사용자의 아이디가 일치하는 경우에만 메뉴를 표시
+            for (i in 0 until menu?.size()!!) {
+                menu.getItem(i).isVisible = true
+            }
+        } else {
+            // 일치하지 않는 경우 메뉴를 숨김
+            for (i in 0 until menu?.size()!!) {
+                menu.getItem(i).isVisible = false
+            }
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete_post -> {
+                AlertDialog.Builder(this)
+                    .setTitle("게시글 삭제")
+                    .setMessage("판매글을 삭제하시겠습니까?")
+                    .setPositiveButton("예") { dialog, which ->
+                        // 게시글 삭제 로직
+                    }
+                    .setNegativeButton("아니오", null)
+                    .show()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 }
