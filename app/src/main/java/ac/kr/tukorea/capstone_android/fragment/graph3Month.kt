@@ -81,6 +81,7 @@ class graph3Month(val productId : Long) : Fragment() {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun createGraph(view :View){
 
         val xAxis = binding.threeMonthLineChart.xAxis
@@ -95,12 +96,9 @@ class graph3Month(val productId : Long) : Fragment() {
 
         lineDataSet.apply {
             color = resources.getColor(android.R.color.holo_red_dark,null)
-            setDrawCircles(true)
-            circleRadius = 2f
+            setDrawCircles(false)
             lineWidth = 1f
-            setCircleColor(resources.getColor(android.R.color.holo_red_dark, null))
-            circleHoleColor = resources.getColor(R.color.white, null)
-            setDrawHighlightIndicators(true)
+            setDrawHighlightIndicators(false)
             highLightColor = resources.getColor(android.R.color.holo_red_dark, null)
             setDrawValues(false) // 숫자표시
             valueTextColor = resources.getColor(R.color.black, null)
@@ -110,13 +108,16 @@ class graph3Month(val productId : Long) : Fragment() {
 
         binding.threeMonthLineChart.apply {
             axisRight.isEnabled = false   //y축 사용여부
-            axisLeft.isEnabled = false
-            axisRight.setDrawGridLines(false)
+            axisLeft.isEnabled = true
+            axisLeft.setDrawGridLines(false)
+            axisLeft.setDrawAxisLine(true)
             legend.isEnabled = false    //legend 사용여부
             description.isEnabled = false //주석
             isDragXEnabled = true   // x 축 드래그 여부
             isScaleYEnabled = false //y축 줌 사용여부
             isScaleXEnabled = false //x축 줌 사용여부
+
+/*
 
             // 커스텀 마커뷰 설정
             val customMarkerView = CustomMarkerView(context, layoutResource = R.layout.graphmarker)
@@ -125,6 +126,8 @@ class graph3Month(val productId : Long) : Fragment() {
             // 커스텀 마커뷰 크기 설정
             customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             customMarkerView.layout(0, 0, customMarkerView.measuredWidth, customMarkerView.measuredHeight)
+*/
+
 
             xAxis.apply {
                 setDrawGridLines(false)
@@ -169,6 +172,7 @@ class graph3Month(val productId : Long) : Fragment() {
 
     }
 
+/*
     class CustomMarkerView : MarkerView {
         private var tvContent: TextView
 
@@ -190,4 +194,5 @@ class graph3Month(val productId : Long) : Fragment() {
             super.refreshContent(e, highlight)
         }
     }
+    */
 }
