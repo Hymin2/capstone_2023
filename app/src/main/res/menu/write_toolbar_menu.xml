@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_btn_image"
+        android:id="@+id/salePost_btnImage"
         android:title="사진 추가"
         android:icon="@drawable/ic_baseline_image_24"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_btn_write"
+        android:id="@+id/salePost_btnWrite"
         android:title="작성 완료"
         android:icon="@drawable/ic_baseline_check_circle_outline_24"
         android:iconTint="@color/white"

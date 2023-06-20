@@ -36,7 +36,7 @@ class ProfileEditActivity : AppCompatActivity() {
         val bitmap = intent.getParcelableExtra<Bitmap>("image")
         binding.profileEditProfileImage.setImageBitmap(bitmap)
 
-        binding.profileEditBtnBack.setOnClickListener{
+        binding.profileEditBtnBack.setOnClickListener {
             onBackPressed()
         }
 

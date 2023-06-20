@@ -53,11 +53,15 @@ class myProfile : Fragment() {
         }
 
         binding.editProfile.setOnClickListener {
-            val intent = Intent(context, ProfileEditActivity::class.java)
-            val bitmap : Bitmap = myProfile_profileImage.drawable.toBitmap(150, 150)
-            intent.putExtra("image", bitmap)
-
-            startActivity(intent)
+            if (myProfile_profileImage.drawable != null) {
+                val intent = Intent(context, ProfileEditActivity::class.java)
+                val bitmap: Bitmap = myProfile_profileImage.drawable.toBitmap(150, 150)
+                intent.putExtra("image", bitmap)
+                startActivity(intent)
+            } else {
+                val intent = Intent(context, ProfileEditActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         val retrofitUser = RetrofitUser()

@@ -66,10 +66,6 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
         binding = ActivitySalePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.salePostToolBar) //커스텀한 toolbar를 액션바로 사용
-        supportActionBar?.setDisplayShowTitleEnabled(false) //액션바에 표시되는 제목의 표시유무를 설정합니다. false로 해야 custom한 툴바의 이름이 화면에 보이게 됩니다.
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.salePostToolBar.title = "판매글 작성"
 
         categoryList.add("스마트폰")
         categoryList.add("태블릿")
@@ -80,6 +76,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
         binding.searchCategoryDialogButton.setOnClickListener {
             showBottomSheet1()
         }
+
 
         binding.searchProductDialogButton.setOnClickListener {
             if(categoryList.contains(binding.salePostCategoryName.text)) {
@@ -120,6 +117,69 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
             }
         })
 
+        binding.salePostBtnBack.setOnClickListener{
+            onBackPressed()
+        }
+
+        binding.salePostBtnImage.setOnClickListener{
+            val galleryIntent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResult(galleryIntent, 1)
+        }
+
+        binding.salePostBtnWrite.setOnClickListener{
+            val price = binding.salePostPrice.text.toString()
+            val priceToInt = price.replace("[^\\d]".toRegex(), "").toIntOrNull()
+            val title = binding.salePostTitle.text.toString()
+            val category = binding.salePostCategoryName.text.toString()
+            val model = binding.salePostProductName.text.toString()
+            val content = binding.salePostContent.text.toString()
+
+            val imageParts = ArrayList<MultipartBody.Part>()
+            for (imageUri in imageList) {
+                imageUri?.let { uri ->
+                    val file = File(absolutelyPath(uri, this))
+                    val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+                    val imagePart = MultipartBody.Part.createFormData("multipartFiles", file.name, requestBody)
+                    imageParts.add(imagePart)
+                }
+            }
+
+            if (priceToInt != null && title != null && !(category.equals("")) &&
+                !(model.equals("")) && content != null && imageParts.isNotEmpty()) {
+
+                val username = App.prefs.getString("username", " ")
+
+                Log.d("판매글 등록", productId.toString())
+                // Retrofit을 사용하여 업로드 작업 수행
+                postService.registerPost(App.prefs.getString("access_token", ""), productId, username.toRequestBody("text/plain".toMediaTypeOrNull()), title.toRequestBody("text/plain".toMediaTypeOrNull()), content.toRequestBody("text/plain".toMediaTypeOrNull()), priceToInt, imageParts).enqueue(object : Callback<ac.kr.tukorea.capstone_android.data.ResponseBody>{
+                    override fun onResponse(
+                        call: Call<ac.kr.tukorea.capstone_android.data.ResponseBody>,
+                        response: Response<ac.kr.tukorea.capstone_android.data.ResponseBody>,
+                    ) {
+                        if(response.isSuccessful){
+                            Toast.makeText(this@SalePostActivity, "판매글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                            finish()
+                        } else{
+                            Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<ac.kr.tukorea.capstone_android.data.ResponseBody>,
+                        t: Throwable,
+                    ) {
+                        Log.d("판매글 등록", t.toString())
+                        Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+            } else{
+                Toast.makeText(this@SalePostActivity, "모든 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.salePostImageRecyclerView.adapter = imageAdapter
         binding.salePostImageRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -130,82 +190,6 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
             )
         )
         binding.salePostImageRecyclerView.setHasFixedSize(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.write_toolbar_menu, menu)
-        return true
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            R.id.action_btn_image -> {
-                val galleryIntent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                startActivityForResult(galleryIntent, 1)
-                return true
-            }
-            R.id.action_btn_write -> {
-                val price = binding.salePostPrice.text.toString()
-                val priceToInt = price.replace("[^\\d]".toRegex(), "").toIntOrNull()
-                val title = binding.salePostTitle.text.toString()
-                val category = binding.salePostCategoryName.text.toString()
-                val model = binding.salePostProductName.text.toString()
-                val content = binding.salePostContent.text.toString()
-
-                val imageParts = ArrayList<MultipartBody.Part>()
-                for (imageUri in imageList) {
-                    imageUri?.let { uri ->
-                        val file = File(absolutelyPath(uri, this))
-                        val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
-                        val imagePart = MultipartBody.Part.createFormData("multipartFiles", file.name, requestBody)
-                        imageParts.add(imagePart)
-                    }
-                }
-
-                if (priceToInt != null && title != null && !(category.equals("")) &&
-                    !(model.equals("")) && content != null && imageParts.isNotEmpty()) {
-
-                    val username = App.prefs.getString("username", " ")
-
-                    Log.d("판매글 등록", productId.toString())
-                    // Retrofit을 사용하여 업로드 작업 수행
-                    postService.registerPost(App.prefs.getString("access_token", ""), productId, username.toRequestBody("text/plain".toMediaTypeOrNull()), title.toRequestBody("text/plain".toMediaTypeOrNull()), content.toRequestBody("text/plain".toMediaTypeOrNull()), priceToInt, imageParts).enqueue(object : Callback<ac.kr.tukorea.capstone_android.data.ResponseBody>{
-                        override fun onResponse(
-                            call: Call<ac.kr.tukorea.capstone_android.data.ResponseBody>,
-                            response: Response<ac.kr.tukorea.capstone_android.data.ResponseBody>,
-                        ) {
-                            if(response.isSuccessful){
-                                Toast.makeText(this@SalePostActivity, "판매글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
-                                finish()
-                            } else{
-                                Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-
-                        override fun onFailure(
-                            call: Call<ac.kr.tukorea.capstone_android.data.ResponseBody>,
-                            t: Throwable,
-                        ) {
-                            Log.d("판매글 등록", t.toString())
-                            Toast.makeText(this@SalePostActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                        }
-
-                    })
-                } else{
-                    Toast.makeText(this@SalePostActivity, "모든 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                }
-                return true
-            }
-
-            android.R.id.home -> {
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showBottomSheet1() {
