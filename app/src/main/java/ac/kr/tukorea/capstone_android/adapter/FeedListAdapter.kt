@@ -84,7 +84,7 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
         holder.content.text = item.postContent
         holder.price.text = toLongFormat(item.price)
 
-/*        if (item.onSale) { // 판매 중인 상태
+        if (item.isOnSale == "Y") { // 판매 중인 상태
             holder.onSaleTextView.visibility = View.VISIBLE
             holder.soldOutTranslucent.visibility = View.INVISIBLE
             holder.soldOutTextView.visibility = View.INVISIBLE
@@ -92,7 +92,7 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
             holder.onSaleTextView.visibility = View.INVISIBLE
             holder.soldOutTranslucent.visibility = View.VISIBLE
             holder.soldOutTextView.visibility = View.VISIBLE
-        }*/
+        }
     }
 
     private fun toLongFormat(price: Int): String {

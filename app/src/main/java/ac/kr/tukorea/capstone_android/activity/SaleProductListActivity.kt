@@ -54,6 +54,16 @@ class SaleProductListActivity : AppCompatActivity() {
         binding.saleProductListBtnBack.setOnClickListener{
             onBackPressed()
         }
+
+        binding.saleProductListBtnIsOnSale.setOnCheckedChangeListener { compoundButton, b ->
+            if(b){
+                isOnSale = "Y"
+                searchPost()
+            } else{
+                isOnSale = "ALL"
+                searchPost()
+            }
+        }
     }
 
     fun searchPost(){
@@ -74,12 +84,32 @@ class SaleProductListActivity : AppCompatActivity() {
                         }
 
                         override fun onUserProfileImageClick(position: Int) {   // 유저 프로필 사진 클릭 시 해당 유저 프로필로 이동
-                            val intent = Intent(this@SaleProductListActivity, OthersProfileActivity::class.java)
-                            startActivity(intent)
+                            if(body.message[position].username != App.prefs.getString("username", "")) {
+                                val intent = Intent(this@SaleProductListActivity,
+                                    OthersProfileActivity::class.java)
+                                intent.putExtra("username", body.message[position].username)
+                                intent.putExtra("nickname", body.message[position].nickname)
+                                startActivity(intent)
+                            } else{
+                                val intent = Intent(this@SaleProductListActivity, MainActivity::class.java)
+                                intent.putExtra("isProfile", true)
+                                startActivity(intent)
+                                finish()
+                            }
                         }
                         override fun onUserNicknameClick(position: Int) {   // 유저 닉네임 클릭 시 해당 유저 프로필로 이동
-                            val intent = Intent(this@SaleProductListActivity, OthersProfileActivity::class.java)
-                            startActivity(intent)
+                            if(body.message[position].username != App.prefs.getString("username", "")) {
+                                val intent = Intent(this@SaleProductListActivity,
+                                    OthersProfileActivity::class.java)
+                                intent.putExtra("username", body.message[position].username)
+                                intent.putExtra("nickname", body.message[position].nickname)
+                                startActivity(intent)
+                            } else{
+                                val intent = Intent(this@SaleProductListActivity, MainActivity::class.java)
+                                intent.putExtra("isProfile", true)
+                                startActivity(intent)
+                                finish()
+                            }
                         }
 
                     })

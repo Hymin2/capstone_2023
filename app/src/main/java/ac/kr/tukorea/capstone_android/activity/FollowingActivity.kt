@@ -31,7 +31,7 @@ class FollowingActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        userService.getFollowerList(App.prefs.getString("access_token", ""), App.prefs.getString("username", "")).enqueue(object : retrofit2.Callback<FollowResponseBody>{
+        userService.getFollowingList(App.prefs.getString("access_token", ""), App.prefs.getString("username", "")).enqueue(object : retrofit2.Callback<FollowResponseBody>{
             override fun onResponse(
                 call: Call<FollowResponseBody>,
                 response: Response<FollowResponseBody>,

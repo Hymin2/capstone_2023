@@ -9,6 +9,7 @@ import ac.kr.tukorea.capstone_android.databinding.ActivitySaleDetailBinding
 import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -39,6 +40,7 @@ class SaleDetailActivity : AppCompatActivity() {
         val detail = intent.getSerializableExtra("detail") as PostInfo
         var isLike = detail.isLike
 
+
         Log.d("좋아요", isLike.toString())
         if(isLike){
             var animator : ValueAnimator
@@ -58,6 +60,33 @@ class SaleDetailActivity : AppCompatActivity() {
             saleDetailProductPrice.text = toLongFormat(detail.price)
             saleDetailProductName.text = detail.productName
 
+            saleDetailUserNickName.setOnClickListener {
+                if(detail.username != App.prefs.getString("username", "")) {
+                    var intent = Intent(this@SaleDetailActivity, OthersProfileActivity::class.java)
+                    intent.putExtra("username", detail.username)
+                    intent.putExtra("nickname", detail.nickname)
+                    startActivity(intent)
+                } else{
+                    val intent = Intent(this@SaleDetailActivity, MainActivity::class.java)
+                    intent.putExtra("isProfile", true)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+
+            saleDetailUserProfileImage.setOnClickListener{
+                if(detail.username != App.prefs.getString("username", "")) {
+                    var intent = Intent(this@SaleDetailActivity, OthersProfileActivity::class.java)
+                    intent.putExtra("username", detail.username)
+                    intent.putExtra("nickname", detail.nickname)
+                    startActivity(intent)
+                } else{
+                    val intent = Intent(this@SaleDetailActivity, MainActivity::class.java)
+                    intent.putExtra("isProfile", true)
+                    startActivity(intent)
+                    finish()
+                }
+            }
 
             likeBtn.setOnClickListener {
                 val animator: ValueAnimator

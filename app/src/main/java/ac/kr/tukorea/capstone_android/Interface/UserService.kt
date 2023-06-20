@@ -29,6 +29,8 @@ interface UserService {
     @POST("api/v1/user/follow")
     fun registerFollow(@Header("Authorization") token: String, @Body followRegisterRequestBody : FollowRegisterRequestBody) : Call<ResponseBody>
 
-    @DELETE("api/v1/user/follow/{follow}")
-    fun deleteFollow(@Header("Authorization") token: String, @Path("follow") followId : Long) : Call<Unit>
+    @DELETE("api/v1/user/follow")
+    fun deleteFollow(@Header("Authorization") token: String,
+                     @Query("followingUsername") followingUsername : String,
+                     @Query("followerUsername") followerUsername : String) : Call<Unit>
 }

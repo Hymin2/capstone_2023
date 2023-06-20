@@ -32,15 +32,11 @@
         android:layout_below="@+id/saleProductList_toolBar">
 
         <CheckBox
+            android:id="@+id/saleProductList_btnIsOnSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="판매 중" />
+            android:text="판매 중인 상품만 보기" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="판매 완료" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

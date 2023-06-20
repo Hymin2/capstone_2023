@@ -56,7 +56,7 @@ class FollowAdapter(private val followList: ArrayList<Follow>, val context : Con
     override fun onBindViewHolder(holder: FollowAdapter.MyViewHolder, position: Int) {
         val item = followList[position]
 
-        if(item.image.isNotEmpty()){
+        if(item.image != null){
             val glideUrl = GlideUrl(
                 ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + item.image
             )
