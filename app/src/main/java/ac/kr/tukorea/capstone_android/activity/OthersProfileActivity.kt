@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class OthersProfileActivity : AppCompatActivity() {
     private lateinit var binding : ActivityOthersProfileBinding
     val retrofit = RetrofitAPI.userService
+    var isFollow : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +43,6 @@ class OthersProfileActivity : AppCompatActivity() {
         var isFollow = intent.getBooleanExtra("isFollow", false)
 
         binding.apply {
-            if(!isFollow){
-                followButton.text = "팔로우"
-            } else{
-                followButton.text = "팔로우 해제"
-            }
-
             followButton.setOnClickListener {
                 if(!isFollow) {
                     val follow = FollowRegisterRequestBody(App.prefs.getString("username", ""), username!!)
@@ -59,6 +54,7 @@ class OthersProfileActivity : AppCompatActivity() {
                             ) {
                                 if (response.isSuccessful) {
                                     followButton.text = "팔로우 해제"
+                                    othersFollowerNum.text = (othersFollowerNum.text.toString().toInt() + 1).toString()
                                     isFollow = true
                                 }
                             }
@@ -72,6 +68,7 @@ class OthersProfileActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                             if(response.isSuccessful){
                                 followButton.text = "팔로우"
+                                othersFollowerNum.text = (othersFollowerNum.text.toString().toInt() - 1).toString()
                                 isFollow = false
                             }
                         }
@@ -84,7 +81,7 @@ class OthersProfileActivity : AppCompatActivity() {
                 }
             }
 
-            retrofit.getUserInfo(App.prefs.getString("access_token", ""), username!!).enqueue(object : Callback<UserInfoResponseBody>{
+            retrofit.getUserInfo(App.prefs.getString("access_token", ""), App.prefs.getString("username", ""), username!!).enqueue(object : Callback<UserInfoResponseBody>{
                 override fun onResponse(
                     call: Call<UserInfoResponseBody>,
                     response: Response<UserInfoResponseBody>,
@@ -97,6 +94,14 @@ class OthersProfileActivity : AppCompatActivity() {
                         othersFollowingNum.text = message.followingNum.toString()
                         othersOnSale.text = message.onSale.toString()
                         othersSoldOut.text = message.soldOut.toString()
+
+                        if(message.isFollow){
+                            followButton.text = "팔로우 해제"
+                            isFollow = true
+                        } else{
+                            followButton.text = "팔로우"
+                            isFollow = false
+                        }
 
                         if(message.image != null) {
                             val glideUrl = GlideUrl(

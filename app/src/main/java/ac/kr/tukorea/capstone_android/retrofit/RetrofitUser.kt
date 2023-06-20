@@ -22,7 +22,7 @@ class RetrofitUser {
     private val service = RetrofitAPI.userService
 
     fun getUserInfo(username : String, binding : FragmentMyProfileBinding){
-        service.getUserInfo(token = App.prefs.getString("access_token", ""), username).enqueue(object : Callback<UserInfoResponseBody>{
+        service.getUserInfo(token = App.prefs.getString("access_token", ""), username, null).enqueue(object : Callback<UserInfoResponseBody>{
             override fun onResponse(
                 call: Call<UserInfoResponseBody>,
                 response: Response<UserInfoResponseBody>,

@@ -46,7 +46,6 @@ class SaleDetailActivity : AppCompatActivity() {
         val detail = intent.getSerializableExtra("detail") as PostInfo
         var isLike = detail.isLike
 
-
         userName = detail.username
 
         setSupportActionBar(binding.saleDetailToolBar)

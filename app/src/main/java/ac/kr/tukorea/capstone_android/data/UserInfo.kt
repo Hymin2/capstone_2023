@@ -18,5 +18,7 @@ data class UserInfo(
     @SerializedName("followNum")
     val followNum : Int,
     @SerializedName("followingNum")
-    val followingNum : Int
+    val followingNum : Int,
+    @SerializedName("follow")
+    val isFollow : Boolean
 )

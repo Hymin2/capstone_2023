@@ -11,7 +11,8 @@ import retrofit2.http.*
 interface UserService {
     @GET("api/v1/user/{username}")
     fun getUserInfo(@Header("Authorization") token: String,
-                          @Path("username") username : String) : Call<UserInfoResponseBody>
+                    @Path("username") username : String,
+                    @Query("otherUsername") otherUsername : String?) : Call<UserInfoResponseBody>
 
     @PUT("api/v1/user/{username}")
     fun updateNickname(@Header("Authorization") token : String, @Path("username") username : String, @Body nickname : String) : Call<ResponseBody>
