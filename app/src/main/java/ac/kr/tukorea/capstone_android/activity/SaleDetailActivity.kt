@@ -34,6 +34,8 @@ class SaleDetailActivity : AppCompatActivity() {
     private var isHearting: Boolean = false
     private val service = RetrofitAPI.postService
 
+    var userName : String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySaleDetailBinding.inflate(layoutInflater)
@@ -42,6 +44,8 @@ class SaleDetailActivity : AppCompatActivity() {
         val intent = intent
         val detail = intent.getSerializableExtra("detail") as PostInfo
         var isLike = detail.isLike
+
+        userName = detail.username
 
         setSupportActionBar(binding.saleDetailToolBar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -186,8 +190,8 @@ class SaleDetailActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.sale_detail_menu, menu)
 
         // 글 작성자의 아이디와 사용자의 아이디 비교
-        val postAuthorId = "작성자 ID" // 작성자의 아이디를 가져와서 설정해주세요
-        val currentUserId = App.prefs.getString("username", "") // 사용자의 아이디를 가져와서 설정해주세요
+        val postAuthorId = userName // 작성자의 아이디를 가져와서 설정해주세요
+        val currentUserId = App.prefs.getString("username", "") // 사용자의 아이디
 
         if (postAuthorId == currentUserId) {
             // 글 작성자와 사용자의 아이디가 일치하는 경우에만 메뉴를 표시
@@ -208,10 +212,21 @@ class SaleDetailActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.delete_post -> {
                 AlertDialog.Builder(this)
-                    .setTitle("게시글 삭제")
+                    .setTitle("판매글 삭제")
                     .setMessage("판매글을 삭제하시겠습니까?")
                     .setPositiveButton("예") { dialog, which ->
                         // 게시글 삭제 로직
+                    }
+                    .setNegativeButton("아니오", null)
+                    .show()
+                return true
+            }
+            R.id.modify_post -> {
+                AlertDialog.Builder(this)
+                    .setTitle("판매글 수정")
+                    .setMessage("판매글을 수정하시겠습니까?")
+                    .setPositiveButton("예") { dialog, which ->
+                        // 게시글 수정 로직
                     }
                     .setNegativeButton("아니오", null)
                     .show()

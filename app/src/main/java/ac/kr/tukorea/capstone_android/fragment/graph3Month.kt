@@ -109,7 +109,7 @@ class graph3Month(val productId : Long) : Fragment() {
         binding.threeMonthLineChart.apply {
             axisRight.isEnabled = false   //y축 사용여부
             axisLeft.isEnabled = true
-            axisLeft.setDrawGridLines(false)
+            axisLeft.setDrawGridLines(true)
             axisLeft.setDrawAxisLine(true)
             legend.isEnabled = false    //legend 사용여부
             description.isEnabled = false //주석
@@ -130,7 +130,7 @@ class graph3Month(val productId : Long) : Fragment() {
 
 
             xAxis.apply {
-                setDrawGridLines(false)
+                setDrawGridLines(true)
                 setDrawAxisLine(true)
                 setDrawLabels(true)
                 position = XAxis.XAxisPosition.BOTTOM

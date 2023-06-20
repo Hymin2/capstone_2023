@@ -107,7 +107,7 @@ class graph1Month(val productId : Long) : Fragment() {
         binding.oneMonthLineChart.apply {
             axisRight.isEnabled = false   //y축 사용여부
             axisLeft.isEnabled = true
-            axisLeft.setDrawGridLines(false)
+            axisLeft.setDrawGridLines(true)
             axisLeft.setDrawAxisLine(true)
             legend.isEnabled = false    //legend 사용여부
             description.isEnabled = false //주석

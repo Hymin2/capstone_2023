@@ -5,4 +5,8 @@
     <item
         android:id="@+id/delete_post"
         android:title="게시글 삭제"/>
+
+    <item
+        android:id="@+id/modify_post"
+        android:title="게시글 수정"/>
 </menu>
