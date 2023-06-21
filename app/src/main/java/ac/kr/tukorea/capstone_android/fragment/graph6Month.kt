@@ -109,15 +109,6 @@ class graph6Month(val productId : Long) : Fragment() {
             isScaleYEnabled = false //y축 줌 사용여부
             isScaleXEnabled = false //x축 줌 사용여부
 
-/*
-            // 커스텀 마커뷰 설정
-            val customMarkerView = CustomMarkerView(context, layoutResource = R.layout.graphmarker)
-            marker = customMarkerView
-
-            // 커스텀 마커뷰 크기 설정
-            customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-            customMarkerView.layout(0, 0, customMarkerView.measuredWidth, customMarkerView.measuredHeight)
-*/
 
             xAxis.apply {
                 setDrawGridLines(false)
@@ -162,27 +153,4 @@ class graph6Month(val productId : Long) : Fragment() {
 
     }
 
-/*
-    class CustomMarkerView : MarkerView {
-        private var tvContent: TextView
-
-        // marker
-        constructor(context: Context?, layoutResource: Int) : super(context, layoutResource) {
-            tvContent = findViewById(R.id.tvContent)
-        }
-
-        // draw override를 사용해 marker의 위치 조정 (bar의 상단 중앙)
-        override fun draw(canvas: Canvas?) {
-            canvas!!.translate(-(width/100).toFloat(), -(height).toFloat() )
-            super.draw(canvas)
-        }
-
-        // entry를 content의 텍스트에 지정
-        override fun refreshContent(e: Entry?, highlight: Highlight?) {
-            tvContent.text = e?.y?.toInt().toString() + "원"
-            tvContent.setTextColor(Color.BLACK)
-            super.refreshContent(e, highlight)
-        }
-    }
-    */
 }

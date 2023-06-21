@@ -40,8 +40,8 @@ class Main : Fragment() {
                     when(tab!!.position){
                         0 -> {
                             filteringBoxPhone.visibility = View.VISIBLE
+                            filteringBoxTablet.visibility = View.GONE
                             textTopItem.text = "인기 스마트폰 TOP 10"
-
                             textProductList.text = "스마트폰 리스트"
 
                             retrofitProduct.getProductList(null, null, 1L, binding, this@Main)
@@ -49,9 +49,8 @@ class Main : Fragment() {
                         }
                         1 -> {
                             filteringBoxPhone.visibility = View.GONE
+                            filteringBoxTablet.visibility = View.VISIBLE
                             textTopItem.text = "인기 태블릿 TOP 10"
-
-
                             textProductList.text = "태블릿 리스트"
 
                             retrofitProduct.getProductList(null, null, 2L, binding, this@Main)
@@ -61,7 +60,6 @@ class Main : Fragment() {
                         2 -> {
                             filteringBoxPhone.visibility = View.GONE
                             textTopItem.text = "인기 노트북 TOP 10"
-
                             textProductList.text = "노트북 리스트"
                         }
                     }

@@ -589,6 +589,596 @@
                             </HorizontalScrollView>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/filtering_box_tablet"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:text="제조사"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_company_samsung_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="삼성"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_company_apple_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="애플"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_company_microsoft_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="MS" />
+
+                                    <CheckBox
+                                        android:id="@+id/_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="레노버" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_company_etc_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="기타"
+                                        android:textColor="@color/white" />
+
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_line1_tablet"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="가격"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:id="@+id/box_price_tablet"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_20_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="~20 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_40_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="20~40 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_60_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="40~60 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_80_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="60~80 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_100_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="80~100 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_120_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="100~120 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_140_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="120~140 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_160_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="140~160 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_180_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="160~180만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_price_200_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="180~200 만원"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_line2_tablet"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="크기"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_7_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="~7 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_8_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="7~8 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_9_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="8~9 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_10_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="9~10 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_11_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="10~11 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_12_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="11~12 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_13_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="12~13 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_14_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="13~14 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_15_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="14~15 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_16_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="15~16 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_17_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="16~17 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_18_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="17~18 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_size_19_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="18~19 인치"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/detail_line3_tablet"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="프로세서"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_processor_M2_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="M2"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_processor_M1_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="M1"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_processor_A15_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="A15 Bionic"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_processor_A14_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="A14 Bionic"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_processor_A13_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="A13 Bionic"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_processor_SD8Gen1_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="스냅드래곤8 Gen1"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_processor_SD800_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="스냅드래곤 800"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_processor_SD700_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="스냅드래곤 700"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_processor_SD600_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="스냅드래곤 600"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_processor_Exynos9_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="엑시노스9"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_processor_Exynos7_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="엑시노스7"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/detail_line4_tablet"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="RAM"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_ram_2GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="~2GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_ram_3GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="3GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_ram_4GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="4GB"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_ram_6GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="6GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_ram_8GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="8GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_ram_12GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="12GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_ram_16GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="16GB~"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_line5_tablet"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="내장 메모리"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_memory_32GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="32GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_memory_64GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="64GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_memory_128GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="128GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_memory_256GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="256GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_memory_512GB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="512GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_memory_1TB_tablet"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="1TB"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                    </LinearLayout>
                 </FrameLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -618,24 +1208,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:id="@+id/top_item_layout"
+            <LinearLayout
+                android:id="@+id/top_item_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_topItem">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/top_item_rv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/text_topItem">
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/searchresult_list_item">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/top_item_rv"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/searchresult_list_item">
+                </androidx.recyclerview.widget.RecyclerView>
 
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                </LinearLayout>
+            </LinearLayout>
 
 <!--
             <TextView

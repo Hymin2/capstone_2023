@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         if(profile){
             replaceFragment(myProfile())
+            bottomNavigationView.selectedItemId = R.id.my_menu
         }else {
             replaceFragment(Main())
         }

@@ -77,6 +77,30 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
             showBottomSheet1()
         }
 
+        // 인텐트에서 데이터 받아오기
+        val code = intent.getIntExtra("code",0)
+        val title = intent.getStringExtra("title")
+        val content = intent.getStringExtra("content")
+        val price = intent.getStringExtra("price")
+        val productName = intent.getStringExtra("productName")
+        val postImagesList = intent.getParcelableArrayListExtra<Uri>("postImages")
+
+        if (code == 1) {
+            binding.apply {
+                salePostTitle.setText(title)
+                salePostContent.setText(content)
+                salePostPrice.setText(price)
+                salePostProductName.setText(productName)
+
+                if (postImagesList != null) {
+                    for (uri in postImagesList) {
+                        Log.e("이미지", "$uri")
+                        imageList.add(uri)
+                    }
+                    imageAdapter.notifyDataSetChanged()
+                }
+            }
+        }
 
         binding.searchProductDialogButton.setOnClickListener {
             if(categoryList.contains(binding.salePostCategoryName.text)) {
