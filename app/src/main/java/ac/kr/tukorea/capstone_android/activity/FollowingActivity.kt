@@ -17,11 +17,6 @@ class FollowingActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityFollowingBinding
 
-    private lateinit var followArrayList: ArrayList<Follow>
-    private lateinit var followAdapter: FollowAdapter
-
-    private lateinit var followProfileImage: Array<Int>
-    private lateinit var followUserName: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,45 +10,45 @@
     card_view:cardBackgroundColor="#f7f2f3"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="3dp"
-    card_view:contentPadding="4dp">
+    card_view:contentPadding="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/product_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+        <ImageView
+            android:id="@+id/recommendModelImage_imgView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/recommendModelName_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="판매글 제목"
+            android:text="모델명"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_margin="10dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/product_image"
+            app:layout_constraintStart_toEndOf="@+id/recommendModelImage_imgView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/recommendAveragePrice_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="가격"
+            android:text="평균가"
             android:textSize="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
-            app:layout_constraintStart_toEndOf="@+id/product_image"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintStart_toEndOf="@+id/recommendModelImage_imgView"
+            app:layout_constraintTop_toBottomOf="@+id/recommendModelName_textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
