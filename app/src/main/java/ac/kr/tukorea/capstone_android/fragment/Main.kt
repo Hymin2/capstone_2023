@@ -71,16 +71,18 @@ class Main : Fragment() {
 
             mainSearchView.isSubmitButtonEnabled = true
             mainSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                val selectedTab : Long = 1
+
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     name = p0!!
-                    retrofitProduct.getProductList(name, filter, 1L, binding, this@Main)
+                    retrofitProduct.getProductList(name, filter, (searchDeviceTabs.selectedTabPosition + selectedTab), binding, this@Main)
                     mainSearchView.clearFocus()
                     return true
                 }
 
                 override fun onQueryTextChange(p0: String?): Boolean {
                     name = p0!!
-                    retrofitProduct.getProductList(name, filter, 1L, binding, this@Main)
+                    retrofitProduct.getProductList(name, filter, (searchDeviceTabs.selectedTabPosition + selectedTab), binding, this@Main)
 
                     return true
                 }
@@ -90,25 +92,42 @@ class Main : Fragment() {
                  phone 필터링
              */
 
-            val filterArrayList = arrayListOf(boxCompanySamsung, boxCompanyApple, boxCompanyEtc, boxPrice20,
+            val filterArrayListPhone = arrayListOf(boxCompanySamsung, boxCompanyApple, boxCompanyEtc, boxPrice20,
                 boxPrice40, boxPrice60, boxPrice80, boxPrice100, boxPrice120, boxPrice140, boxPrice160, boxPrice180, boxPrice200,
             boxSize5, boxSize6, boxSize7, boxSize8, boxProcessorSD8Gen2, boxProcessorSD8plusGen1, boxProcessorSD8Gen1, boxProcessorSD800, boxProcessorSD700, boxProcessorSD600,
             boxProcessorA16, boxProcessorA15, boxProcessorA14, boxProcessorA13, boxProcessorDimensity, boxProcessorExynos, boxProcessorHelio, boxProcessorMediaTek,
             boxRam2GB, boxRam3GB, boxRam4GB, boxRam6GB, boxRam8GB, boxRam12GB, boxRam16GB, boxMemory32GB, boxMemory64GB, boxMemory128GB, boxMemory256GB, boxMemory512GB, boxMemory1TB)
 
-
-            for (cb in filterArrayList){
+            for (cb in filterArrayListPhone){
                 cb.setOnClickListener {
                     if(cb.isChecked){
-                        filter += (1001 + filterArrayList.indexOf(cb)).toString()
+                        filter += "P" + (1001 + filterArrayListPhone.indexOf(cb)).toString()
                         retrofitProduct.getProductList(name, filter, 1L, binding, this@Main)
                     }else{
-                        filter = filter.replace((1001 + filterArrayList.indexOf(cb)).toString(), "")
+                        filter = filter.replace(("P" + (1001 + filterArrayListPhone.indexOf(cb))).toString(), "")
                         retrofitProduct.getProductList(name, filter, 1L, binding, this@Main)
                     }
                 }
             }
 
+            val filterArrayListTablet = arrayListOf(boxCompanySamsungTablet, boxCompanyAppleTablet, boxCompanyMicrosoftTablet, boxCompanyLenovoTablet, boxCompanyEtcTablet,
+                boxPrice20Tablet, boxPrice40Tablet, boxPrice60Tablet, boxPrice80Tablet, boxPrice100Tablet, boxPrice120Tablet, boxPrice140Tablet, boxPrice160Tablet, boxPrice180Tablet, boxPrice200Tablet,
+                boxSize7Tablet, boxSize8Tablet, boxSize9Tablet, boxSize10Tablet, boxSize11Tablet, boxSize12Tablet, boxSize13Tablet, boxSize14Tablet, boxSize15Tablet, boxSize16Tablet, boxSize17Tablet, boxSize18Tablet, boxSize19Tablet,
+                boxProcessorM2Tablet, boxProcessorM1Tablet, boxProcessorA15Tablet, boxProcessorA14Tablet, boxProcessorA13Tablet, boxProcessorSD8Gen1Tablet, boxProcessorSD800Tablet, boxProcessorSD700Tablet, boxProcessorSD600, boxProcessorExynos9Tablet, boxProcessorExynos7Tablet,
+                boxRam2GBTablet, boxRam3GBTablet, boxRam4GBTablet, boxRam6GBTablet, boxRam8GBTablet, boxRam12GBTablet, boxRam16GBTablet,
+                boxMemory32GBTablet, boxMemory64GBTablet, boxMemory128GBTablet, boxMemory256GBTablet, boxMemory512GBTablet, boxMemory1TBTablet)
+
+            for (cb in filterArrayListTablet){
+                cb.setOnClickListener {
+                    if(cb.isChecked){
+                        filter += "T" + (2001 + filterArrayListTablet.indexOf(cb)).toString()
+                        retrofitProduct.getProductList(name, filter, 2L, binding, this@Main)
+                    }else{
+                        filter = filter.replace(("T" + (2001 + filterArrayListTablet.indexOf(cb))).toString(), "")
+                        retrofitProduct.getProductList(name, filter, 2L, binding, this@Main)
+                    }
+                }
+            }
         }
 
         super.onViewCreated(view, savedInstanceState)
