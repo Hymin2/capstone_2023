@@ -33,7 +33,9 @@ class FollowerActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        userService.getFollowerList(App.prefs.getString("access_token", ""), App.prefs.getString("username", "")).enqueue(object : retrofit2.Callback<FollowResponseBody>{
+        val username = intent.getStringExtra("username")
+
+        userService.getFollowerList(App.prefs.getString("access_token", ""), username!!).enqueue(object : retrofit2.Callback<FollowResponseBody>{
             override fun onResponse(
                 call: Call<FollowResponseBody>,
                 response: Response<FollowResponseBody>,
@@ -49,10 +51,18 @@ class FollowerActivity : AppCompatActivity() {
 
                         followAdapter.setOnItemClickListener(object : FollowAdapter.onItemClickListener{
                             override fun onItemClick(position: Int) {
-                                var intent = Intent(this@FollowerActivity, OthersProfileActivity::class.java)
-                                intent.putExtra("username", follows[position].username)
-                                intent.putExtra("nickname", follows[position].nickname)
-                                startActivity(intent)
+                                if(follows[position].username != App.prefs.getString("username", "")) {
+                                    var intent = Intent(this@FollowerActivity,
+                                        OthersProfileActivity::class.java)
+                                    intent.putExtra("username", follows[position].username)
+                                    intent.putExtra("nickname", follows[position].nickname)
+                                    startActivity(intent)
+                                } else{
+                                    val intent = Intent(this@FollowerActivity, MainActivity::class.java)
+                                    intent.putExtra("isProfile", true)
+                                    startActivity(intent)
+                                    finish()
+                                }
                             }
 
                         })

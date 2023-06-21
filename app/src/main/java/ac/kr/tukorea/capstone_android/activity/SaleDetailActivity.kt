@@ -70,6 +70,12 @@ class SaleDetailActivity : AppCompatActivity() {
             saleDetailProductPrice.text = toLongFormat(detail.price)
             saleDetailProductName.text = detail.productName
 
+            if(detail.username == App.prefs.getString("username", "")) saleDetailChatBtn.visibility = View.INVISIBLE
+
+            saleDetailChatBtn.setOnClickListener {
+                if(detail.isOnSale == "N") Toast.makeText(this@SaleDetailActivity, "이미 판매된 상품입니다.", Toast.LENGTH_SHORT).show()
+            }
+
             saleDetailUserNickName.setOnClickListener {
                 if(detail.username != App.prefs.getString("username", "")) {
                     var intent = Intent(this@SaleDetailActivity, OthersProfileActivity::class.java)

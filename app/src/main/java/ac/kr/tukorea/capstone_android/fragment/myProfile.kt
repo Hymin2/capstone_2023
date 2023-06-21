@@ -56,11 +56,13 @@ class myProfile : Fragment() {
 
         binding.myFollowerLinear.setOnClickListener {
             val intent = Intent(context, FollowerActivity::class.java)
+            intent.putExtra("username", App.prefs.getString("username", ""))
             startActivity(intent)
         }
 
         binding.myFollowingLinaer.setOnClickListener {
             val intent = Intent(context, FollowingActivity::class.java)
+            intent.putExtra("username", App.prefs.getString("username", ""))
             startActivity(intent)
         }
 

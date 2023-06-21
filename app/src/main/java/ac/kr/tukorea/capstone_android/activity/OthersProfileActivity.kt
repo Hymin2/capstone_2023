@@ -10,6 +10,7 @@ import ac.kr.tukorea.capstone_android.fragment.SoldOut
 import ac.kr.tukorea.capstone_android.fragment.onSale
 import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.ServerInfo
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,18 @@ class OthersProfileActivity : AppCompatActivity() {
         var isFollow = intent.getBooleanExtra("isFollow", false)
 
         binding.apply {
+            othersFollowerLinear.setOnClickListener {
+                val intent = Intent(this@OthersProfileActivity, FollowerActivity::class.java)
+                intent.putExtra("username", username)
+                startActivity(intent)
+            }
+
+            othersFollowingLinear.setOnClickListener {
+                val intent = Intent(this@OthersProfileActivity, FollowingActivity::class.java)
+                intent.putExtra("username", username)
+                startActivity(intent)
+            }
+
             followButton.setOnClickListener {
                 if(!isFollow) {
                     val follow = FollowRegisterRequestBody(App.prefs.getString("username", ""), username!!)

@@ -103,7 +103,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="5dp"
             android:text="판매글 제목"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -122,6 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="20dp"
+        android:textSize="15dp"
         android:maxLines="1"
         android:ellipsize="end"
         android:text="판매글 내용. . . "/>

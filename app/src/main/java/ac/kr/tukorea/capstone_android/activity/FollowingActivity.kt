@@ -32,7 +32,9 @@ class FollowingActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        userService.getFollowingList(App.prefs.getString("access_token", ""), App.prefs.getString("username", "")).enqueue(object : retrofit2.Callback<FollowResponseBody>{
+        val username = intent.getStringExtra("username")
+
+        userService.getFollowingList(App.prefs.getString("access_token", ""), username!!).enqueue(object : retrofit2.Callback<FollowResponseBody>{
             override fun onResponse(
                 call: Call<FollowResponseBody>,
                 response: Response<FollowResponseBody>,
@@ -48,10 +50,18 @@ class FollowingActivity : AppCompatActivity() {
 
                         followAdapter.setOnItemClickListener(object : FollowAdapter.onItemClickListener{
                             override fun onItemClick(position: Int) {
-                                var intent = Intent(this@FollowingActivity, OthersProfileActivity::class.java)
-                                intent.putExtra("username", follows[position].username)
-                                intent.putExtra("nickname", follows[position].nickname)
-                                startActivity(intent)
+                                if(follows[position].username != App.prefs.getString("username", "")) {
+                                    var intent = Intent(this@FollowingActivity,
+                                        OthersProfileActivity::class.java)
+                                    intent.putExtra("username", follows[position].username)
+                                    intent.putExtra("nickname", follows[position].nickname)
+                                    startActivity(intent)
+                                } else{
+                                    val intent = Intent(this@FollowingActivity, MainActivity::class.java)
+                                    intent.putExtra("isProfile", true)
+                                    startActivity(intent)
+                                    finish()
+                                }
                             }
 
                         })
