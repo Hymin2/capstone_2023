@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isBackPressed = false
 
+    var profile : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val profile = intent.getBooleanExtra("isProfile", false)
+        profile = intent.getBooleanExtra("isProfile", false)
 
         if(profile){
             replaceFragment(myProfile())
@@ -80,14 +81,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (isBackPressed) {
-            finishAffinity()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+
+        if(currentFragment is myProfile) {
+            if(profile == true){
+                finish()
+            } else {
+                if (isBackPressed) {
+                    finishAffinity()
+                } else {
+                    isBackPressed = true
+                    Toast.makeText(this, "앱을 종료하시려면 한 번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        isBackPressed = false
+                    }, 2000) // 2초 동안 뒤로가기 버튼을 누르지 않으면 isBackPressed를 다시 false로 설정
+                }
+            }
         } else {
-            isBackPressed = true
-            Toast.makeText(this, "앱을 종료하시려면 한 번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
-            Handler(Looper.getMainLooper()).postDelayed({
-                isBackPressed = false
-            }, 2000) // 2초 동안 뒤로가기 버튼을 누르지 않으면 isBackPressed를 다시 false로 설정
+            if (isBackPressed) {
+                finishAffinity()
+            } else {
+                isBackPressed = true
+                Toast.makeText(this, "앱을 종료하시려면 한 번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    isBackPressed = false
+                }, 2000) // 2초 동안 뒤로가기 버튼을 누르지 않으면 isBackPressed를 다시 false로 설정
+            }
         }
     }
 }
