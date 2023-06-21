@@ -27,7 +27,7 @@ class OthersProfileActivity : AppCompatActivity() {
     private lateinit var binding : ActivityOthersProfileBinding
     val retrofit = RetrofitAPI.userService
     var isFollow : Boolean = false
-
+    var username : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,7 +38,7 @@ class OthersProfileActivity : AppCompatActivity() {
 
         // retrofit.getUserInfo(App.prefs.getString("username", ""), binding)
 
-        val username = intent.getStringExtra("username")
+        username = intent.getStringExtra("username")
         val nickname = intent.getStringExtra("nickname")
         var isFollow = intent.getBooleanExtra("isFollow", false)
 
@@ -146,9 +146,9 @@ class OthersProfileActivity : AppCompatActivity() {
         override fun createFragment(position: Int): Fragment {
             // 해당 탭에 대한 프래그먼트 반환
             return when (position) {
-                0 -> onSale(App.prefs.getString("username", ""))
-                1 -> SoldOut(App.prefs.getString("username", ""))
-                2 -> Like(App.prefs.getString("username", ""))
+                0 -> onSale(username!!)
+                1 -> SoldOut(username!!)
+                2 -> Like(username!!)
                 else -> throw IllegalArgumentException("Invalid tab position: $position")
             }
         }

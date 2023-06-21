@@ -6,6 +6,7 @@ import ac.kr.tukorea.capstone_android.data.Follow
 import ac.kr.tukorea.capstone_android.data.FollowResponseBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityFollowingBinding
 import ac.kr.tukorea.capstone_android.util.App
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,7 +48,10 @@ class FollowingActivity : AppCompatActivity() {
 
                         followAdapter.setOnItemClickListener(object : FollowAdapter.onItemClickListener{
                             override fun onItemClick(position: Int) {
-
+                                var intent = Intent(this@FollowingActivity, OthersProfileActivity::class.java)
+                                intent.putExtra("username", follows[position].username)
+                                intent.putExtra("nickname", follows[position].nickname)
+                                startActivity(intent)
                             }
 
                         })
