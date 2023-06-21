@@ -63,13 +63,14 @@
             <EditText
                 android:id="@+id/message_edtText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/all_font"
                 android:padding="10dp"
                 android:background="@android:color/transparent"
                 android:hint="메시지를 입력하세요"
-                android:textSize="20dp" />
+                android:maxLines="1"
+                android:textSize="18dp" />
 
             <ImageButton
                 android:id="@+id/btn_sendMessage"
