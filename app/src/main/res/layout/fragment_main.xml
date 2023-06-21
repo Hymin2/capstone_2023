@@ -643,7 +643,7 @@
                                         android:text="MS" />
 
                                     <CheckBox
-                                        android:id="@+id/_tablet"
+                                        android:id="@+id/box_company_lenovo_tablet"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginHorizontal="5dp"

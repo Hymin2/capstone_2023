@@ -151,6 +151,7 @@
             android:textSize="20dp" />
 
         <Button
+            android:id="@+id/saleDetail_chat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
