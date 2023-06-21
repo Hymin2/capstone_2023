@@ -14,13 +14,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 
 class FollowAdapter(private val followList: ArrayList<Follow>, val context : Context) : RecyclerView.Adapter<FollowAdapter.MyViewHolder>() {
-    private lateinit var mListener : FollowAdapter.onItemClickListener
+    private lateinit var mListener : onItemClickListener
 
     interface onItemClickListener {
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: FollowAdapter.onItemClickListener) {
+    fun setOnItemClickListener(listener: onItemClickListener) {
         mListener = listener
     }
 
@@ -30,7 +30,7 @@ class FollowAdapter(private val followList: ArrayList<Follow>, val context : Con
 
     class MyViewHolder(
         itemView: View,
-        listener: FollowAdapter.onItemClickListener
+        listener: onItemClickListener
     ) : RecyclerView.ViewHolder(itemView) {
         val followProfileImage = itemView.findViewById<ImageView>(R.id.follow_profileImage)
         val followUserName = itemView.findViewById<TextView>(R.id.follow_userName)
@@ -45,7 +45,7 @@ class FollowAdapter(private val followList: ArrayList<Follow>, val context : Con
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FollowAdapter.MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.follow_list_item,
             parent, false
@@ -53,7 +53,7 @@ class FollowAdapter(private val followList: ArrayList<Follow>, val context : Con
         return MyViewHolder(itemView, mListener)
     }
 
-    override fun onBindViewHolder(holder: FollowAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = followList[position]
 
         if(item.image != null){

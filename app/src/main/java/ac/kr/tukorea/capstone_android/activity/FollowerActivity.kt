@@ -16,11 +16,6 @@ import retrofit2.Response
 class FollowerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFollowerBinding
-    private lateinit var followArrayList: ArrayList<Follow>
-    private lateinit var followAdapter: FollowAdapter
-
-    private lateinit var followProfileImage: Array<Int>
-    private lateinit var followUserName: Array<String>
 
     private val userService = RetrofitAPI.userService
 

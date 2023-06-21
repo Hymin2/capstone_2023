@@ -67,7 +67,7 @@ class ProductAdapter(private val productList : ArrayList<ProductList>, val conte
         )
 
         Glide.with(context).load(glideUrl)
-            .override(150)
+            .override(75)
             .into(holder.productImage)
     }
 
