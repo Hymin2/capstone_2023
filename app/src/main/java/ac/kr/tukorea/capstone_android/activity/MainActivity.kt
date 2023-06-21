@@ -8,6 +8,9 @@ import ac.kr.tukorea.capstone_android.fragment.myProfile
 import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,17 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
 
-    init {
-        instance = this
-    }
+    private var isBackPressed = false
 
-    companion object {
-        private var instance: MainActivity? = null
-
-        fun getInstance(): MainActivity? 		{
-            return instance
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -38,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        //getSupportActionBar()?.hide()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -77,10 +70,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    interface onBackPressedListener {
-        fun onBackPressed()
-    }
-
     private fun replaceFragment(fragment: Fragment){
 
         val fragmentManager = supportFragmentManager
@@ -91,12 +80,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val fragmentList = supportFragmentManager.fragments
-        for (fragment in fragmentList) {
-            if (fragment is onBackPressedListener){
-                (fragment as onBackPressedListener).onBackPressed()
-                return
-            }
+        if (isBackPressed) {
+            finishAffinity()
+        } else {
+            isBackPressed = true
+            Toast.makeText(this, "앱을 종료하시려면 한 번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                isBackPressed = false
+            }, 2000) // 2초 동안 뒤로가기 버튼을 누르지 않으면 isBackPressed를 다시 false로 설정
         }
     }
 }

@@ -1,7 +1,9 @@
 package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.FollowerActivity
 import ac.kr.tukorea.capstone_android.activity.FollowingActivity
+import ac.kr.tukorea.capstone_android.activity.LoginActivity
 import ac.kr.tukorea.capstone_android.activity.ProfileEditActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitUser
@@ -9,9 +11,8 @@ import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -27,7 +28,11 @@ class myProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyProfileBinding.inflate(inflater)
+        setHasOptionsMenu(true)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.myProfileToolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +41,7 @@ class myProfile : Fragment() {
         // 탭 레이아웃과 뷰페이저 설정
         val pagerAdapter = MyPagerAdapter()
         binding.myProfileViewPager.adapter = pagerAdapter
+
 
         // TabLayout과 ViewPager2 간의 상호작용 설정
         TabLayoutMediator(binding.myProfileTabLayout, binding.myProfileViewPager) { tab, position ->
@@ -67,6 +73,24 @@ class myProfile : Fragment() {
         val retrofitUser = RetrofitUser()
 
         retrofitUser.getUserInfo(App.prefs.getString("username", ""), binding)
+
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.my_profile_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_logOut -> {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private inner class MyPagerAdapter : FragmentStateAdapter(this) {
