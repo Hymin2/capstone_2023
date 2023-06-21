@@ -1,5 +1,6 @@
 package ac.kr.tukorea.capstone_android.fragment
 
+import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.FollowerActivity
 import ac.kr.tukorea.capstone_android.activity.FollowingActivity
@@ -12,16 +13,21 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_my_profile.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class myProfile : Fragment() {
 
     private lateinit var binding: FragmentMyProfileBinding
+    private val userService = RetrofitAPI.userService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,8 +91,23 @@ class myProfile : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_logOut -> {
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
+                userService.logout(App.prefs.getString("access_token", ""),
+                    App.prefs.getString("refresh_token", ""),
+                    App.prefs.getString("username", "")).enqueue(object : Callback<Unit>{
+                    override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                        if(response.isSuccessful){
+                            App.prefs.setString("username", "")
+                            App.prefs.setString("access_token", "")
+                            App.prefs.setString("refresh_token", "")
+
+                            val intent = Intent(context, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Unit>, t: Throwable) {
+                        Toast.makeText(context, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    } })
                 return true
             }
         }

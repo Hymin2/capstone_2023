@@ -34,4 +34,9 @@ interface UserService {
     fun deleteFollow(@Header("Authorization") token: String,
                      @Query("followingUsername") followingUsername : String,
                      @Query("followerUsername") followerUsername : String) : Call<Unit>
+
+    @DELETE("api/v1/user/logout")
+    fun logout(@Header("Authorization") token : String,
+                @Header("Authorization-refresh") refresh : String,
+                @Query("username") username : String) : Call<Unit>
 }
