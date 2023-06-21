@@ -24,7 +24,8 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/oneMonthLineChart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="invisible"/>
         </LinearLayout>
     </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

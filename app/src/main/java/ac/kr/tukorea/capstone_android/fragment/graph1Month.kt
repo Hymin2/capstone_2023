@@ -68,7 +68,7 @@ class graph1Month(val productId : Long) : Fragment() {
                 if(response.isSuccessful){
                     graphDataList = response.body()!!.message.usedProductPrices as MutableList<UsedProductPrice>
                     createGraph(view)
-
+                    binding.oneMonthLineChart.visibility = View.VISIBLE
                 }
             }
 
