@@ -55,6 +55,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
     private val categoryList = ArrayList<String>()
     private var modelList = ArrayList<String>()
     private var productIdList = ArrayList<Long>()
+    private var avgPrice = ArrayList<Int>()
     private val imageList = ArrayList<Uri?>()
 
     val imageAdapter = MultiImageAdapter(imageList, this)
@@ -264,6 +265,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
                 if(response.isSuccessful){
                     modelList = response.body()!!.message.productList.stream().map(ProductList::productName).collect(Collectors.toList()) as ArrayList<String>
                     productIdList = response.body()!!.message.productList.stream().map(ProductList::id).collect(Collectors.toList()) as ArrayList<Long>
+                    avgPrice = response.body()!!.message.productList.stream().map(ProductList::averagePrice).collect(Collectors.toList()) as ArrayList<Int>
                 } else{
 
                 }
@@ -280,6 +282,7 @@ class SalePostActivity : AppCompatActivity(), DialogCategoryAdapter.OnItemClickL
     override fun onItemClick2(position: Int) {
         binding.salePostProductName.text = modelList[position]
         productId = productIdList[position]
+        binding.salePostPrice.hint = "평균 시세: " + toLongFormat(avgPrice[position] + 0L)
 
         dialog.dismiss()
     }
