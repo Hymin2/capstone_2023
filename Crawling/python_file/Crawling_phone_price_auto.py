@@ -34,14 +34,14 @@ def isExistCSS(CSS_selector, implicitly_wait_time=0, old_wait=25):
 
 #상품명 리스트 뽑기
 def get_product_list():
-    phone_df = pd.read_excel('./file/danawa_crawling_product_detail_result_class.xlsx')
+    phone_df = pd.read_excel('./file/danawa_crawling_phone_detail_result_class.xlsx')
     phone_df = phone_df.astype('string')
     global phone_name
     global phone_mem
     phone_name = []
     phone_mem = []
     
-    phone_name_list = phone_df['상품명']
+    phone_name_list = phone_df['Product_name']
     phone_mem_list = phone_df['내장메모리']
     for n in phone_name_list:
         phone_name_single = n.split()
@@ -115,11 +115,11 @@ def search_detail(excepts):
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[3]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[4]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[21]').click()
+    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[22]').click()
     time.sleep(1)
 
     #상세 설정
@@ -268,8 +268,8 @@ options = Options()
 #options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
 #네이버 아이디와 비번 각자 작성
-user_id = '네이버 아이디'
-user_pw = '네이버 비번'
+user_id = '네이버아이디'
+user_pw = '네이버비번'
 
 #핸드폰 크롤링 시작
 for idx in range(len(phone_name)):
