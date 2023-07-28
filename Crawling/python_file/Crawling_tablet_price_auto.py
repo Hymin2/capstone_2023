@@ -136,7 +136,7 @@ def search_detail(excepts, adder):
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[3]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[5]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
@@ -290,8 +290,8 @@ get_product_list()
 options = Options()
 #options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-user_id = '네이버id'
-user_pw = '네이버pw'
+user_id = 'jihoon815'
+user_pw = 'guswlgns3!50'
 tablet_price_total = []
 
 pid = 150
