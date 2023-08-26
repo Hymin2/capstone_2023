@@ -278,8 +278,8 @@ get_product_list()
 
 options = Options()
 
-user_id = 'jihoon815'
-user_pw = 'guswlgns3!50'
+user_id = '네이버ID'
+user_pw = '네이버PW'
 product_price_total = []
 
 pid = 1
