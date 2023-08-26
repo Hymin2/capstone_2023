@@ -28,16 +28,25 @@ class RecommendProductAdapter (private var items: ArrayList<ProductList>, val co
         mListener = listener
     }
 
-    class RecommenListViewHolder(itemView: View, listener: RecommendProductAdapter.onItemClickListener) : RecyclerView.ViewHolder(itemView) {
-        val productImage: ImageView = itemView.findViewById(R.id.recommendModelImage_imgView)
-        val productName: TextView = itemView.findViewById(R.id.recommendModelName_textView)
-        val avgPrice: TextView = itemView.findViewById(R.id.recommendAveragePrice_textView)
+    fun getItem(position: Int) : ProductList{
+        return items[position]
+    }
 
+    class RecommenListViewHolder(itemView: View, listener: RecommendProductAdapter.onItemClickListener) : RecyclerView.ViewHolder(itemView) {
+        val productImage: ImageView = itemView.findViewById(R.id.recommend_image_view)
+        val productName: TextView = itemView.findViewById(R.id.recommend_name_tv)
+        val avgPrice: TextView = itemView.findViewById(R.id.recommend_price_tv)
+
+        init {
+            itemView.setOnClickListener{
+                listener.onItemClick(adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommenListViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_recommend_product, parent, false)
+            .inflate(R.layout.recommend_list_item, parent, false)
         return RecommenListViewHolder(view, mListener)
     }
 
@@ -48,7 +57,7 @@ class RecommendProductAdapter (private var items: ArrayList<ProductList>, val co
             ServerInfo.SERVER_URL.url + ServerInfo.PRODUCT_IMAGE_URI.url + item.images[0]
         )
         Glide.with(context).load(glideUrl)
-            .override(150)
+            .override(100)
             .into(holder.productImage)
 
         holder.productName.text = item.productName

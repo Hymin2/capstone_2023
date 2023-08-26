@@ -15,7 +15,9 @@ data class MessageProductDetails(
     @SerializedName("id")
     val id : Long,
     @SerializedName("productDetails")
-    val productDetails : List<ProductDetails>
+    val productDetails : List<ProductDetails>,
+    @SerializedName("recommendProducts")
+    val recommendProducts : List<ProductList>
 )
 
 data class ProductDetails(

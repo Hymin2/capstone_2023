@@ -3,6 +3,7 @@ package ac.kr.tukorea.capstone_android.retrofit
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
 import ac.kr.tukorea.capstone_android.adapter.ProductAdapter
+import ac.kr.tukorea.capstone_android.adapter.RecommendProductAdapter
 import ac.kr.tukorea.capstone_android.adapter.TopItemAdapter
 import ac.kr.tukorea.capstone_android.data.ProductDetailsResponseBody
 import ac.kr.tukorea.capstone_android.data.ProductList
@@ -15,6 +16,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -137,6 +139,10 @@ class RetrofitProduct{
             ) {
                 if(response.isSuccessful) {
                     var details = response.body()!!.message.productDetails
+                    var recommend = response.body()!!.message.recommendProducts
+                    val recommendAdapter = RecommendProductAdapter(recommend as ArrayList<ProductList>, binding.root.context)
+
+
                     binding.apply {
                         details.stream().forEach { item ->
                             when (item.detailName) {
@@ -154,6 +160,22 @@ class RetrofitProduct{
                                 "배터리" -> batteryValueTextView.text = item.detailContent
                             }
                         }
+
+                        recommendListRecyclerView.layoutManager = LinearLayoutManager(this.root.context, LinearLayoutManager.HORIZONTAL, false)
+                        recommendListRecyclerView.adapter = recommendAdapter
+                        recommendAdapter.setOnItemClickListener(object: RecommendProductAdapter.onItemClickListener{
+                            override fun onItemClick(position: Int) {
+                                var intent =
+                                    Intent(binding.root.context, DetailActivity::class.java)
+                                var item = recommendAdapter.getItem(position)
+
+                                intent.putExtra("productId", item.id)
+                                intent.putExtra("productName", item.productName)
+                                intent.putExtra("productPath", item.images[0])
+
+                                activity.startActivity(intent)
+                            }
+                        })
                     }
 
                 } else{
