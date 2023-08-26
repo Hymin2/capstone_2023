@@ -97,7 +97,7 @@ def phone_Crawling(driver):
     prod_detail_total = total
 
     data = pd.DataFrame(prod_detail_total)
-    data.columns = ['Category','Product_ID','Product_name', 'model_name','company_name', '출시OS', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '이미지']
+    data.columns = ['Category','Product_name', 'model_name','company_name', '출시OS', '화면크기' ,'화면정보', '시스템', '램', '내장메모리', '통신', '카메라', '사운드', '보안/기능', '배터리', '규격', '이미지']
     data = data.drop_duplicates(subset='Product_ID', keep='first')
     
     data.to_excel('./file/danawa_crawling_phone_detail_result_class.xlsx', index =False)
@@ -106,7 +106,6 @@ def phone_Crawling(driver):
 #---------------- 핸드폰 컨텐츠 크롤링 ---------------------
 def get_phone_items(prod_items):    
     prod_data = []
-    global pid
     
     for prod_item in prod_items:
         try:  #상품명, 기업명 크롤링
@@ -239,11 +238,10 @@ def get_phone_items(prod_items):
         except:
             img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
         if product_name:
-            mylist = [1, pid, product_name, model_name, company_name, release_os, screen_size, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, img_link]
+            mylist = [1, product_name, model_name, company_name, release_os, screen_size, screen_info, system, ram, mem, connect, camera, sound, function, battery, size, img_link]
             
         if mylist[0]:
             prod_data.append(mylist)
-            pid += 1
 
     return(prod_data)
 
@@ -302,7 +300,7 @@ def tablet_Crawling(driver):
     prod_detail_total = total
 
     data = pd.DataFrame(prod_detail_total)
-    data.columns = ['Category', 'Product_ID', 'Product_name', 'model_name', 'company_name', '출시OS', '화면정보', '프로세서', '램', '내장메모리', '통신', '카메라', '사운드', '악세서리', '배터리', '규격', '이미지']
+    data.columns = ['Category', 'Product_name', 'model_name', 'company_name', '출시OS', '화면정보', '프로세서', '램', '내장메모리', '통신', '카메라', '사운드', '악세서리', '배터리', '규격', '이미지']
     data = data.drop_duplicates(subset='Product_ID', keep='first')
     data.to_excel('./file/danawa_crawling_tablit_detail_result_class.xlsx', index =False)
 
@@ -310,7 +308,6 @@ def tablet_Crawling(driver):
 #---------------- 태블릿 컨텐츠 크롤링 ---------------------
 def get_tablet_items(prod_items):    
     prod_data = []
-    global pid
     
     for prod_item in prod_items:
     
@@ -496,7 +493,7 @@ def get_tablet_items(prod_items):
         if '램' in product_name:
             product_name = product_name.replace(ram, '').replace(', 램', '')
             
-        mylist = [2, pid, product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, accessory , battery, size, img_link]
+        mylist = [2, product_name, model_name, company_name, release_os, screen_info, system, ram, mem, connect, camera, sound, accessory , battery, size, img_link]
             
         if mylist[1]:
             if '태블릿PC' in product_type:
@@ -506,10 +503,337 @@ def get_tablet_items(prod_items):
                             if '완납' not in product_name:
                                 if '비즈니스' not in product_name:
                                     prod_data.append(mylist)
-                                    pid += 1
 
     return(prod_data)
 
+#---------------- 노트북 크롤링 ---------------------
+def laptop_Crawling(driver):
+    url = 'https://prod.danawa.com/list/?cate=112758&15main_11_02'  #노트북 전체
+    driver.get(url)
+    curPage = 1  #시작 페이지
+    #total_page = chech_total_page()  #총 페이지
+    total_page = 10
+
+    prod_detail_total = []
+
+    print('----- Laptop Crawling Start ------')
+    
+    while curPage <= total_page:
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        prod_items = soup.select('li.prod_item.prod_layer')
+        print('----- Current Page : {}'.format(curPage), '------')
+
+        prod_item_list = get_laptop_items(prod_items)
+        prod_detail_total.append(prod_item_list)
+
+        curPage += 1
+
+        if curPage > total_page:
+            print('Crawling succeed!\n')
+            print()
+            break
+
+        cur_css = 'div.number_wrap > a:nth-child({})'.format(curPage)
+        WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,cur_css))).click()    #페이지 넘기기
+
+        del soup
+        time.sleep(3)
+    
+    driver.close()
+
+    total = []
+    for temp in prod_detail_total:
+        total += temp
+    prod_detail_total = total
+
+    data = pd.DataFrame(prod_detail_total)
+    data.columns = ['Category','Product_name', 'model_name','company_name', 'os', '화면정보', '화면크기', 'CPU', '램', '그래픽', '저장장치', '네트워크', '영상입출력', '단자', '부가기능', '입력장치', '파워', '주요재원', '이미지']
+    data = data.drop_duplicates(subset='model_name', keep='first')
+    
+    data.to_excel('./file/danawa_crawling_laptop_detail_result_class.xlsx', index =False)
+
+#---------------- 노트북 컨텐츠 크롤링 ---------------------
+def get_laptop_items(prod_items):    
+    prod_data = []
+    
+    for prod_item in prod_items:
+        try:
+            product_list = prod_item.select('div.spec_list')[0].text.strip()
+            product_type_detail_list = product_list.split('/')
+            product_type_list = product_type_detail_list[0]
+            product_type = ''.join(product_type_list)
+            product_type = product_type.replace(' ', '')
+        except:
+            product_type = ''
+
+        try:  #상품명, 기업명 크롤링
+            product_name = prod_item.select('p.prod_name > a')[0].text.strip()
+            #product_name = product_name.replace(", 자급제", "").replace(", 공기계", "").replace("글로벌", "").replace("5G","").replace("LTE", "")
+            product_name_list = product_name.split()
+            company_name = product_name_list[0]
+            model_name = ''
+            del product_name_list[0]
+            
+            for word in reversed(product_name_list):
+                if '램' in word:
+                    product_name_list.remove(word)
+                elif 'WIN' in word:
+                    product_name_list.remove(word)
+                elif word == '4070':
+                    product_name_list.remove(word)
+                elif word == '4060':
+                    product_name_list.remove(word)
+                elif word == '4080':
+                    product_name_list.remove(word)
+                elif word == '3060':
+                    product_name_list.remove(word)
+                elif word == 'OLED':
+                    product_name_list.remove(word)
+                elif word == 'QHD':
+                    product_name_list.remove(word)  
+                elif word == 'R5':
+                    product_name_list.remove(word)
+                elif word == '4050':
+                    product_name_list.remove(word)
+                elif word == '내장그래픽':
+                    product_name_list.remove(word)
+                elif word == '외장그래픽':
+                    product_name_list.remove(word)
+                elif word == 'W11':
+                    product_name_list.remove(word)
+                elif word == '5D':
+                    product_name_list.remove(word)
+                elif word == 'Plus':
+                    product_name_list.remove(word)
+                elif word == '4K':
+                    product_name_list.remove(word)
+                elif word == 'Mini':
+                    product_name_list.remove(word)
+                elif word == 'LED':
+                    product_name_list.remove(word)
+                elif word == 'PRO':
+                    product_name_list.remove(word)
+                elif word == 'I7' or word == 'i7':
+                    product_name_list.remove(word)
+                elif word == 'I9' or word == 'i9':
+                    product_name_list.remove(word)
+                elif word == 'I5' or word == 'i5':
+                    product_name_list.remove(word)
+                elif word == '블랙':
+                    product_name_list.remove(word)
+                elif word == '블루':
+                    product_name_list.remove(word)
+                elif word == '그레이':
+                    product_name_list.remove(word)
+                elif word == '화이트':
+                    product_name_list.remove(word)
+                elif word == '베이직':
+                    product_name_list.remove(word)
+                elif word == '스타':
+                    product_name_list.remove(word)
+                elif word == '카본':
+                    product_name_list.remove(word)
+                elif word == '3050Ti':
+                    product_name_list.remove(word)
+                else:
+                    break
+                
+            model_name = ''.join(product_name_list[-1])
+            del product_name_list[-1]
+            product_name = ' '.join(product_name_list)
+
+        except:
+            product_name = ""
+            model_name = ''
+            company_name = ''
+        
+        product_list = prod_item.select('div.spec_list')[0].text.strip()
+        product_detail_list = product_list.split('/')
+        release_os = ''
+        screen_info = ''
+        screen_size = ''
+        cpu_info = ''
+        ram_info = ''
+        graphic_info = ''
+        memory_info = ''
+        network_info = ''
+        image_IO_info = ''
+        terminal_info = ''
+        add_function_info = ''
+        input_info = ''
+        power_info = ''
+        spec_info = ''
+        
+        idx = 0
+
+        release_os_list = []
+        screen_info_list = []
+        screen_size_list = []
+        cpu_info_list = []
+        ram_info_list = []
+        graphic_info_list = []
+        memory_info_list = []
+        network_info_list = []
+        image_IO_info_list = []
+        terminal_info_list = []
+        add_function_info_list = []
+        input_info_list = []
+        power_info_list = []
+        spec_info_list = []
+
+        for i in range(len(product_detail_list)):
+            if '운영체제' in product_detail_list[i]:
+                idx = 1
+            elif '화면정보' in product_detail_list[i]:
+                idx = 2
+            elif 'CPU' in product_detail_list[i]:
+                idx = 3
+            elif '램' in product_detail_list[i]:
+                idx = 4
+            elif '그래픽' in product_detail_list[i]:
+                idx = 5
+            elif '저장장치' in product_detail_list[i]:
+                idx = 6
+            elif '네트워크' in product_detail_list[i]:
+                idx = 7
+            elif '영상입출력' in product_detail_list[i]:
+                idx = 8
+            elif '단자 ' in product_detail_list[i]:
+                idx = 9
+            elif '부가기능' in product_detail_list[i]:
+                idx = 10
+            elif '입력장치' in product_detail_list[i]:
+                idx = 11
+            elif '파워' in product_detail_list[i]:
+                idx = 12
+            elif '주요제원' in product_detail_list[i]:
+                idx = 13
+            
+            if idx == 1:
+                release_os_list.append(product_detail_list[i])
+            elif idx == 2:
+                screen_info_list.append(product_detail_list[i])
+            elif idx == 3:
+                cpu_info_list.append(product_detail_list[i])
+            elif idx == 4:
+                ram_info_list.append(product_detail_list[i])
+            elif idx == 5:
+                graphic_info_list.append(product_detail_list[i])
+            elif idx == 6:
+                memory_info_list.append(product_detail_list[i])
+            elif idx == 7:
+                network_info_list.append(product_detail_list[i])
+            elif idx == 8:
+                image_IO_info_list.append(product_detail_list[i])
+            elif idx == 9:
+                terminal_info_list.append(product_detail_list[i])
+            elif idx == 10:
+                add_function_info_list.append(product_detail_list[i])
+            elif idx == 11:
+                input_info_list.append(product_detail_list[i])
+            elif idx == 12:
+                power_info_list.append(product_detail_list[i])
+            elif idx == 13:
+                spec_info_list.append(product_detail_list[i])
+
+        try:
+            release_os = ''.join(release_os_list)
+            release_os = release_os.replace(' 운영체제(OS): ','').replace(' ', '')
+        except:
+            release_os = ''
+        
+        try:
+            screen_info = ''.join(screen_info_list)
+            screen_info = screen_info.replace(' 화면정보 ','').replace('  ', '/ ')
+
+            screen_size = ''.join(screen_info_list[0])
+            screen_size_list = screen_size.split('(')
+            screen_size = ''.join(screen_size_list[1])
+            screen_size = screen_size.replace(') ','')
+            
+            screen_list = screen_info.split("cm")
+            screen_list = screen_list[0]
+        except:
+            screen_info = ''
+            screen_size = ''
+        
+        try:
+            cpu_info = ''.join(cpu_info_list)
+            cpu_info = cpu_info.replace(' CPU ','').replace('  ', '/ ')
+        except:
+            cpu_info = ''
+        
+        try:
+            ram_info = ''.join(ram_info_list)
+            ram_info = ram_info.replace(' 램 ','').replace('  ', '/ ')
+        except:
+            ram_info = ''
+        
+        try:
+            graphic_info = ''.join(graphic_info_list)
+            graphic_info = graphic_info.replace(' 그래픽 ','').replace('  ', '/ ')
+        except:
+            graphic_info = ''
+        
+        try:
+            memory_info = ''.join(memory_info_list)
+            memory_info = memory_info.replace(' 저장장치 ','').replace('  ', '/ ')
+        except:
+            memory_info = ''
+        
+        try:
+            network_info = ''.join(network_info_list)
+            network_info = network_info.replace(' 네트워크 ','').replace('  ', '/ ')
+        except:
+            network_info = ''
+        
+        try:
+            image_IO_info = ''.join(image_IO_info_list)
+            image_IO_info = image_IO_info.replace(' 영상입출력 ','').replace('  ', '/ ')
+        except:
+            image_IO_info = ''
+        
+        try:
+            terminal_info = ''.join(terminal_info_list)
+            terminal_info = terminal_info.replace(' 단자 ','').replace('  ', '/ ')
+        except:
+            terminal_info = ''
+        
+        try:
+            add_function_info = ''.join(add_function_info_list)
+            add_function_info = add_function_info.replace(' 부가기능 ','').replace('  ', '/ ')
+        except:
+            add_function_info = ''
+        
+        try:
+            input_info = ''.join(input_info_list)
+            input_info = input_info.replace(' 입력장치 ','').replace('  ', '/ ')
+        except:
+            input_info = ''
+        
+        try:
+            power_info = ''.join(power_info_list)
+            power_info = power_info.replace(' 파워 ','').replace('  ', '/ ')
+        except:
+            power_info = ''
+        
+        try:
+            spec_info = ''.join(spec_info_list)
+            spec_info = spec_info.replace(' 주요재원 ','').replace('  ', '/ ')
+        except:
+            spec_info = ''
+
+        try: 
+            img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('data-original')
+        except:
+            img_link = 'http:' + prod_item.select_one('div.thumb_image > a > img').get('src')
+ 
+        if product_name:
+            if '노트북' in product_type:
+                mylist = [3, product_name, model_name, company_name, release_os, screen_info, screen_size, cpu_info, ram_info, graphic_info, memory_info, network_info, image_IO_info, terminal_info, add_function_info, input_info, power_info, spec_info, img_link]
+                prod_data.append(mylist)
+
+    return(prod_data)
 
 #---------------- 검색 ---------------------
  
@@ -520,8 +844,6 @@ chromedriver_autoinstaller.install()
 driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(5)
 driver.set_window_size(1920,1280)
-global pid  #product_id
-pid = 1
 
 #---------------- 핸드폰 크롤링 ---------------------
 phone_Crawling(driver)
@@ -534,3 +856,11 @@ driver.set_window_size(1920,1280)
 
 #---------------- 태블릿 크롤링 ---------------------
 tablet_Crawling(driver)
+
+#---------------- 크롤링 재시작 ---------------------
+driver = webdriver.Chrome(options=options)
+driver.implicitly_wait(5)
+driver.set_window_size(1920,1280)
+
+#---------------- 노트북 크롤링 ---------------------
+laptop_Crawling(driver)
