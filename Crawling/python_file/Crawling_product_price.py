@@ -1,5 +1,4 @@
 from selenium import webdriver
-#import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -21,81 +20,64 @@ def isExistXpath(xpath, implicitly_wait_time=0, old_wait=25):
         driver.implicitly_wait(old_wait)
     return True
 
-def isExistCSS(CSS_selector, implicitly_wait_time=0, old_wait=25):
-    driver.implicitly_wait(implicitly_wait_time)
-    try:
-        driver.find_element(By.CSS_SELECTOR, xpath)
-    except Exception:
-        return False
-    finally:
-        driver.implicitly_wait(old_wait)
-    return True
-
 #상품명 리스트 뽑기
 def get_product_list():
-    teblit_df = pd.read_excel('./file/danawa_crawling_tablit_detail_result_class.xlsx')
-    teblit_df = teblit_df.astype('string')
-    teblit_df['내장메모리'] = teblit_df['내장메모리'].fillna('')
-    global teblit_name
-    global teblit_mem
+    product_df = pd.read_csv('./file/product.csv', encoding='cp949')
+    product_df = product_df.astype('string')
+    global product_name
+    global category_id
     global add_word
-    teblit_name = []
-    teblit_mem = []
+    product_name = []
+    category_id = []
     add_word = []
     
-    teblit_name_list = teblit_df['Product_name']
-    teblit_mem_list = teblit_df['내장메모리']
+    product_name_list = product_df['product_name']
+    category_id += list(map(int, product_df['category_id']))
     
-    i = 0
-
-    for n in teblit_name_list:
+    for n in product_name_list:
         i = 0
-        teblit_name_single = n.split()
-        for word in reversed(teblit_name_single):
-            if 'GB' in word:
-                teblit_name_single.remove(word)
+        product_name_single = n.split()
+        
+        for word in reversed(product_name_single):
             if '엘로' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '그린' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '퍼플' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '블루' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '레드' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '블랙' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '화이트' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '로즈' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if '알파인' in word:
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
             if 'Wi-Fi' in word:
                 add_word.append('wifi, 와이파이')
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
                 i=1
             elif 'LTE' in word:
                 add_word.append('LTE')
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
                 i=1
             elif '5G' in word:
                 add_word.append('5G')
-                teblit_name_single.remove(word)
+                product_name_single.remove(word)
                 i=1
+                
         if not i:
             add_word.append(' ')
+            
+        product_name_single = ' '.join(product_name_single)
+        product_name_single = product_name_single.replace('GB', '')
+        product_name.append(product_name_single)
 
-        teblit_name_single = ' '.join(teblit_name_single)
-        teblit_name.append(teblit_name_single)
-
-    for m in teblit_mem_list:
-        if m is not None:
-            teblit_mem_single = m.replace("GB", "").replace("TB", "")
-        teblit_mem.append(teblit_mem_single)
-    
-    print('----- 상품 갯수 : {}'.format(len(teblit_name)), '------')
+    print('----- 상품 갯수 : {}'.format(len(product_name)), '------')
 
 #검색
 def search_name(product):
@@ -112,16 +94,23 @@ def set_except(product):
             excepts = excepts + ', 플러스, plus, +'
         if ('울트라' or 'ultra') not in product:
             excepts = excepts + ', 울트라, ultra'
+        if ('플립' or '폴드') in product:
+            if('4') not in product:
+                excepts = excepts + ', 4'
+            if('3') not in product:
+                excepts = excepts + ', 3'
         if ('라이트' or 'lite') in product:
             excepts = excepts + ', 라이트, lite'
         if 'FE' in product:
             excepts = excepts + ', FE'
-        
+            
     elif '이폰' in product:
         if ('프로' or 'pro') not in product:
             excepts = excepts + ', 프로, pro'
         if ('에어' or 'air') not in product:
             excepts = excepts + ', 에어, air'
+        if ('맥스' or 'max') not in product:
+            excepts = excepts + ', 맥스, max'
         if ('미니' or 'mini') not in product:
             excepts = excepts + ', 미니, mini'
         if ('플러스' or 'plus') not in product:
@@ -130,19 +119,24 @@ def set_except(product):
     return excepts
 
 #상세 검색
-def search_detail(excepts, adder):
+def search_detail(excepts, adder, ctg):
     driver.switch_to.frame('cafe_main')
     
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[5]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[2]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[23]').click()
-    time.sleep(1)
-
+    
+    if ctg == 1:
+        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[22]').click()
+        time.sleep(1)
+    elif ctg == 2:
+        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[24]').click()
+        time.sleep(1)
+        
     #상세 설정
     driver.find_element(By.CSS_SELECTOR,'#detailSearchBtn').click()
     time.sleep(1)
@@ -203,7 +197,6 @@ def go_back(total_next_page):
         driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
     driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
 
-#전체 크롤링
 def Crawling_all(pid):
     total_page = chech_total_page()
     total_next_page = total_page // 10
@@ -243,11 +236,8 @@ def Crawling_all(pid):
     if cur_page > total_page:
         print('Crawling succeed!')
 
-
 #한 페이지 크롤링
 def do_Crawling(num, page, pid):
-    with_before = 0
-    
     #게시글 들어가기
     for i in range(len(driver.find_elements(By.CSS_SELECTOR, '.article'))):
         
@@ -286,22 +276,20 @@ def do_Crawling(num, page, pid):
 #상품명 불러오기
 get_product_list()
 
-
 options = Options()
-#options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-user_id = '네이버아이디'
-user_pw = '네이버비번'
-tablet_price_total = []
+user_id = 'jihoon815'
+user_pw = 'guswlgns3!50'
+product_price_total = []
 
-pid = 150
+pid = 1
 
 wb = Workbook()
 prod_price_total = wb.active
 prod_price_total.append(['time','price', 'product_id'])
 
 #크롤링 시작
-for idx in range(len(teblit_name)):
+for idx in range(len(product_name)):
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(5)
     driver.set_window_size(1920,1280)
@@ -328,21 +316,16 @@ for idx in range(len(teblit_name)):
     
     
     #시세를 찾을 검색어 설정/검색
-    name = teblit_name[idx]
-    mem = teblit_mem[idx]
-    product = name + ' ' + mem
-    excepts =  set_except(product) # 1개라도 포함되면 안됨
+    name = product_name[idx]
+    ctg = category_id[idx]
     adder = add_word[idx]
-    search_name(product)
-    #print(product + ', ' + mem + ', ' + excepts)
-    
-    #엑셀
+    excepts =  set_except(name) # 1개라도 포함되면 안됨
+    search_name(name)
 
-    
-    print('----- {} --- Product Name : {} || {}'.format(idx, product, mem), '------')
+    print('----- {} --- Product Name : {}'.format(idx, name), '------')
     
     #상세 검색
-    search_detail(excepts, adder)
+    search_detail(excepts, adder, ctg)
     
     if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
         #크롤링
@@ -352,6 +335,5 @@ for idx in range(len(teblit_name)):
     driver.quit()
     pid += 1
 
-
 print('----- Crawling finish! ------')
-wb.save(f'./file/joonggonara_crwling_tablet_price.xlsx')
+wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
