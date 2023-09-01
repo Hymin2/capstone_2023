@@ -8,6 +8,7 @@ from openpyxl import Workbook
 import time
 import pandas as pd
 import pyperclip
+import traceback
 
 #xpath가 존재하는지 확인
 def isExistXpath(xpath, implicitly_wait_time=0, old_wait=25):
@@ -289,51 +290,59 @@ prod_price_total = wb.active
 prod_price_total.append(['time','price', 'product_id'])
 
 #크롤링 시작
-for idx in range(len(product_name)):
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(5)
-    driver.set_window_size(1920,1280)
+try:
+    #크롤링 시작
+    for idx in range(len(product_name)):
+        driver = webdriver.Chrome(options=options)
+        driver.implicitly_wait(5)
+        driver.set_window_size(1920,1280)
     
-    url = 'https://cafe.naver.com/joonggonara.cafe'
-    driver.get(url)
+        url = 'https://cafe.naver.com/joonggonara.cafe'
+        driver.get(url)
     
-    driver.find_element(By.CSS_SELECTOR, '#gnb_login_button').click()
-    time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '#gnb_login_button').click()
+        time.sleep(1)
     
-    na_id = driver.find_element(By.CSS_SELECTOR, '#id')
-    na_id.click()
-    pyperclip.copy(user_id)
-    na_id.send_keys(Keys.CONTROL, 'v')
-    time.sleep(1)
+        na_id = driver.find_element(By.CSS_SELECTOR, '#id')
+        na_id.click()
+        pyperclip.copy(user_id)
+        na_id.send_keys(Keys.CONTROL, 'v')
+        time.sleep(1)
     
-    na_pw = driver.find_element(By.CSS_SELECTOR, '#pw')
-    na_pw.click()
-    pyperclip.copy(user_pw)
-    na_pw.send_keys(Keys.CONTROL, 'v')
-    time.sleep(1)
+        na_pw = driver.find_element(By.CSS_SELECTOR, '#pw')
+        na_pw.click()
+        pyperclip.copy(user_pw)
+        na_pw.send_keys(Keys.CONTROL, 'v')
+        time.sleep(1)
     
-    driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
+        driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
     
     
-    #시세를 찾을 검색어 설정/검색
-    name = product_name[idx]
-    ctg = category_id[idx]
-    adder = add_word[idx]
-    excepts =  set_except(name) # 1개라도 포함되면 안됨
-    search_name(name)
+        #시세를 찾을 검색어 설정/검색
+        name = product_name[idx]
+        ctg = category_id[idx]
+        adder = add_word[idx]
+        excepts =  set_except(name) # 1개라도 포함되면 안됨
+        search_name(name)
 
-    print('----- {} --- Product Name : {}'.format(idx, name), '------')
+        print('----- {} --- Product Name : {}'.format(idx, name), '------')
     
-    #상세 검색
-    search_detail(excepts, adder, ctg)
+        #상세 검색
+        search_detail(excepts, adder, ctg)
     
-    if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
-        #크롤링
-        Crawling_all(pid)
+        if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
+            #크롤링
+            Crawling_all(pid)
     
-    #크롤링 종료
-    driver.quit()
-    pid += 1
+        #크롤링 종료
+        driver.quit()
+        pid += 1
 
-print('----- Crawling finish! ------')
-wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
+    print('----- Crawling finish! ------')
+    wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
+
+except Exception as ex:
+    print("------ Crawling Error ------")
+    err_msg = traceback.format_exc()
+    print(err_msg)
+    wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
