@@ -1,5 +1,4 @@
 from selenium import webdriver
-#import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,6 +8,7 @@ from openpyxl import Workbook
 import time
 import pandas as pd
 import pyperclip
+import traceback
 
 #xpath가 존재하는지 확인
 def isExistXpath(xpath, implicitly_wait_time=0, old_wait=25):
@@ -21,60 +21,64 @@ def isExistXpath(xpath, implicitly_wait_time=0, old_wait=25):
         driver.implicitly_wait(old_wait)
     return True
 
-def isExistCSS(CSS_selector, implicitly_wait_time=0, old_wait=25):
-    driver.implicitly_wait(implicitly_wait_time)
-    try:
-        driver.find_element(By.CSS_SELECTOR, xpath)
-    except Exception:
-        return False
-    finally:
-        driver.implicitly_wait(old_wait)
-    return True
-
 #상품명 리스트 뽑기
 def get_product_list():
-    phone_df = pd.read_excel('./file/danawa_crawling_phone_detail_result_class.xlsx')
-    phone_df = phone_df.astype('string')
-    global phone_name
-    global phone_mem
-    phone_name = []
-    phone_mem = []
+    product_df = pd.read_csv('./file/product.csv', encoding='cp949')
+    product_df = product_df.astype('string')
+    global product_name
+    global category_id
+    global add_word
+    product_name = []
+    category_id = []
+    add_word = []
     
-    phone_name_list = phone_df['Product_name']
-    phone_mem_list = phone_df['내장메모리']
-
-    for n in phone_name_list:
-        phone_name_single = n.split()
-        for word in phone_name_single:
-            if 'GB' in word:
-                phone_name_single.remove(word)
+    product_name_list = product_df['product_name']
+    category_id += list(map(int, product_df['category_id']))
+    
+    for n in product_name_list:
+        i = 0
+        product_name_single = n.split()
+        
+        for word in reversed(product_name_single):
             if '엘로' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '그린' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '퍼플' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '블루' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '레드' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '블랙' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '화이트' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '로즈' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
             if '알파인' in word:
-                phone_name_single.remove(word)
+                product_name_single.remove(word)
+            if 'Wi-Fi' in word:
+                add_word.append('wifi, 와이파이')
+                product_name_single.remove(word)
+                i=1
+            elif 'LTE' in word:
+                add_word.append('LTE')
+                product_name_single.remove(word)
+                i=1
+            elif '5G' in word:
+                add_word.append('5G')
+                product_name_single.remove(word)
+                i=1
+                
+        if not i:
+            add_word.append(' ')
             
-        phone_name_single = ''.join(phone_name_single)
-        phone_name.append(phone_name_single)
+        product_name_single = ' '.join(product_name_single)
+        product_name_single = product_name_single.replace('GB', '')
+        product_name.append(product_name_single)
 
-    for m in phone_mem_list:
-        phone_mem_single = m.replace("GB", "")
-        phone_mem.append(phone_mem_single)
-    
-    print('----- 상품 갯수 : {}'.format(len(phone_name)), '------')
+    print('----- 상품 갯수 : {}'.format(len(product_name)), '------')
 
 #검색
 def search_name(product):
@@ -93,12 +97,19 @@ def set_except(product):
             excepts = excepts + ', 울트라, ultra'
         if ('플립' or '폴드') in product:
             if('4') not in product:
-                excepts = excepts + ', Z플립4'
+                excepts = excepts + ', 4'
             if('3') not in product:
-                excepts = excepts + ', Z플립3'
+                excepts = excepts + ', 3'
+        if ('라이트' or 'lite') in product:
+            excepts = excepts + ', 라이트, lite'
+        if 'FE' in product:
+            excepts = excepts + ', FE'
+            
     elif '이폰' in product:
         if ('프로' or 'pro') not in product:
             excepts = excepts + ', 프로, pro'
+        if ('에어' or 'air') not in product:
+            excepts = excepts + ', 에어, air'
         if ('맥스' or 'max') not in product:
             excepts = excepts + ', 맥스, max'
         if ('미니' or 'mini') not in product:
@@ -109,23 +120,29 @@ def set_except(product):
     return excepts
 
 #상세 검색
-def search_detail(excepts):
+def search_detail(excepts, adder, ctg):
     driver.switch_to.frame('cafe_main')
     
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[4]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[2]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[21]').click()
-    time.sleep(1)
-
+    
+    if ctg == 1:
+        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[22]').click()
+        time.sleep(1)
+    elif ctg == 2:
+        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[24]').click()
+        time.sleep(1)
+        
     #상세 설정
     driver.find_element(By.CSS_SELECTOR,'#detailSearchBtn').click()
     time.sleep(1)
     driver.find_element(By.XPATH,'//*[@id="srch_detail"]/div[2]/input').send_keys(excepts)
+    driver.find_element(By.XPATH,'//*[@id="srch_detail"]/div[3]/input').send_keys(adder)
     driver.find_element(By.CSS_SELECTOR,'.btn-search-green').click()
     time.sleep(1)
 
@@ -181,7 +198,6 @@ def go_back(total_next_page):
         driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
     driver.find_element(By.XPATH,'.//*[@id="main-area"]/div[7]/a[1]').click()
 
-#전체 크롤링
 def Crawling_all(pid):
     total_page = chech_total_page()
     total_next_page = total_page // 10
@@ -221,11 +237,8 @@ def Crawling_all(pid):
     if cur_page > total_page:
         print('Crawling succeed!')
 
-
 #한 페이지 크롤링
 def do_Crawling(num, page, pid):
-    with_before = 0
-    
     #게시글 들어가기
     for i in range(len(driver.find_elements(By.CSS_SELECTOR, '.article'))):
         
@@ -265,10 +278,10 @@ def do_Crawling(num, page, pid):
 get_product_list()
 
 options = Options()
-#options.add_argument('headless') # headless는 화면이나 페이지 이동을 표시하지 않고 동작하는 모드
 
-user_id = 'jihoon815'
-user_pw = 'guswlgns3!50'
+user_id = '네이버ID'
+user_pw = '네이버PW'
+product_price_total = []
 
 pid = 1
 
@@ -276,55 +289,60 @@ wb = Workbook()
 prod_price_total = wb.active
 prod_price_total.append(['time','price', 'product_id'])
 
-#핸드폰 크롤링 시작
-for idx in range(len(phone_name)):
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(5)
-    driver.set_window_size(1920,1280)
+#크롤링 시작
+try:
+    #크롤링 시작
+    for idx in range(len(product_name)):
+        driver = webdriver.Chrome(options=options)
+        driver.implicitly_wait(5)
+        driver.set_window_size(1920,1280)
     
-    url = 'https://cafe.naver.com/joonggonara.cafe'
-    driver.get(url)
+        url = 'https://cafe.naver.com/joonggonara.cafe'
+        driver.get(url)
     
-    driver.find_element(By.CSS_SELECTOR, '#gnb_login_button').click()
-    time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '#gnb_login_button').click()
+        time.sleep(1)
     
-    na_id = driver.find_element(By.CSS_SELECTOR, '#id')
-    na_id.click()
-    pyperclip.copy(user_id)
-    na_id.send_keys(Keys.CONTROL, 'v')
-    time.sleep(1)
+        na_id = driver.find_element(By.CSS_SELECTOR, '#id')
+        na_id.click()
+        pyperclip.copy(user_id)
+        na_id.send_keys(Keys.CONTROL, 'v')
+        time.sleep(1)
     
-    na_pw = driver.find_element(By.CSS_SELECTOR, '#pw')
-    na_pw.click()
-    pyperclip.copy(user_pw)
-    na_pw.send_keys(Keys.CONTROL, 'v')
-    time.sleep(1)
+        na_pw = driver.find_element(By.CSS_SELECTOR, '#pw')
+        na_pw.click()
+        pyperclip.copy(user_pw)
+        na_pw.send_keys(Keys.CONTROL, 'v')
+        time.sleep(1)
     
-    driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
+        driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
     
     
-    #시세를 찾을 검색어 설정/검색
-    name = phone_name[idx]
-    mem = phone_mem[idx]
-    product = name + ' ' + mem
-    excepts =  set_except(product) # 1개라도 포함되면 안됨
-    search_name(product)
-    #print(product + ', ' + mem + ', ' + excepts)
-    
-    print('----- {} --- Product Name : {} || {}'.format(idx, product, mem), '------')
-    
-    #상세 검색
-    search_detail(excepts)
-    
-    if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
-        #크롤링
-        Crawling_all(pid)
-    
-    #크롤링 종료
-    driver.quit()
-    pid += 1
+        #시세를 찾을 검색어 설정/검색
+        name = product_name[idx]
+        ctg = category_id[idx]
+        adder = add_word[idx]
+        excepts =  set_except(name) # 1개라도 포함되면 안됨
+        search_name(name)
 
+        print('----- {} --- Product Name : {}'.format(idx, name), '------')
+    
+        #상세 검색
+        search_detail(excepts, adder, ctg)
+    
+        if(isExistXpath('//*[@id="main-area"]/div[7]/a')):
+            #크롤링
+            Crawling_all(pid)
+    
+        #크롤링 종료
+        driver.quit()
+        pid += 1
 
-print('----- Crawling finish! ------')
+    print('----- Crawling finish! ------')
+    wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
 
-wb.save(f'./file/joonggonara_crwling_phone_price.xlsx')
+except Exception as ex:
+    print("------ Crawling Error ------")
+    err_msg = traceback.format_exc()
+    print(err_msg)
+    wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
