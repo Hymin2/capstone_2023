@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat"
-    android:id="@+id/fragment_chat">
+    tools:context="fragment.Chat"
+    android:id="@+id/fragment_chat"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/chatList_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/chatList_radio_buy"
+            android:text="구매"
+            android:textSize="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:layout_marginRight="17dp"
+            android:textSize="17dp"
+            android:layout_gravity="center" />
+
+        <RadioButton
+            android:id="@+id/chatList_radio_sell"
+            android:text="판매"
+            android:textSize="17dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"/>
+    </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatList_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/chat_list_item" />
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/chat_room_list_item" />
 
-</FrameLayout>
+</LinearLayout>

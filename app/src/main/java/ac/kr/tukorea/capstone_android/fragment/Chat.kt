@@ -57,15 +57,39 @@ class Chat : Fragment() {
             R.drawable.profile_image,
             R.drawable.profile_image,
             R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
+            R.drawable.profile_image,
             )
 
         chatOpponentName = arrayOf(
+            "한국공학대학교",
+            "TU KOREA",
+            "한국공학대학교",
+            "TU KOREA",
+            "한국공학대학교",
+            "TU KOREA",
+            "한국공학대학교",
+            "TU KOREA",
             "한국공학대학교",
             "TU KOREA",
             "한국공대"
             )
 
         chatRecentMessage = arrayOf(
+            "네 알겠습니다",
+            "안녕하세요~",
+            "네 알겠습니다",
+            "안녕하세요~",
+            "네 알겠습니다",
+            "안녕하세요~",
+            "네 알겠습니다",
+            "안녕하세요~",
             "네 알겠습니다",
             "안녕하세요~",
             "판매글 보고 문의 드립니다."

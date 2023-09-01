@@ -1,7 +1,6 @@
 package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.data.PostInfo
 import ac.kr.tukorea.capstone_android.data.ProductList
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
@@ -11,10 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.request.target.Target
 import java.text.DecimalFormat
 
 class RecommendProductAdapter (private var items: ArrayList<ProductList>, val context : Context) : RecyclerView.Adapter<RecommendProductAdapter.RecommenListViewHolder>() {

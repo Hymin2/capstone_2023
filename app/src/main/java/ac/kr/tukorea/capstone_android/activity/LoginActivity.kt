@@ -3,6 +3,7 @@ package ac.kr.tukorea.capstone_android.activity
 import ac.kr.tukorea.capstone_android.data.LoginRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityLoginBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitLogin
+import ac.kr.tukorea.capstone_android.util.FirebaseCloudMessageService
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -39,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     val retrofitLogin = RetrofitLogin()
                     val loginInfo = LoginRequestBody(edtIdLogin.text.toString(), edtPwLogin.text.toString())
+                    FirebaseCloudMessageService().getFirebaseToken()
+
 
                     retrofitLogin.login(loginInfo, binding, this@LoginActivity)
                 }

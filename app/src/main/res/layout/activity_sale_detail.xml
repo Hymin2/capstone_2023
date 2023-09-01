@@ -159,7 +159,4 @@
             android:layout_marginRight="10dp"
             android:text="채팅하기" />
     </RelativeLayout>
-
-
-
 </LinearLayout>

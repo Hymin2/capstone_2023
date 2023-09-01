@@ -3,7 +3,9 @@ package ac.kr.tukorea.capstone_android.activity
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.adapter.ChattingAdapter
 import ac.kr.tukorea.capstone_android.data.Chatting
+import ac.kr.tukorea.capstone_android.data.PostInfo
 import ac.kr.tukorea.capstone_android.databinding.ActivityChatBinding
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
@@ -14,9 +16,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_chat.*
+import java.text.DecimalFormat
 import java.time.LocalTime
 
 
@@ -36,9 +37,22 @@ class ChatActivity : AppCompatActivity() {
         setSupportActionBar(binding.chatToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        val bundle: Bundle? = intent.extras
-        val opponentName = bundle!!.getString("chatOpponentName")
-        binding.chatOpponentName.text = opponentName
+        val fromPost = intent.getBooleanExtra("fromPost", false)
+
+        if(fromPost){
+            val postId = intent.getLongArrayExtra("postId")
+            val username = intent.getStringExtra("username")
+            val nickname = intent.getStringExtra("nickname")
+            val userImage = intent.getStringExtra("userImage")
+
+            binding.apply {
+                chatOpponentName.text = nickname
+            }
+        }
+
+        binding.apply {
+
+        }
 
         binding.chattingRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 

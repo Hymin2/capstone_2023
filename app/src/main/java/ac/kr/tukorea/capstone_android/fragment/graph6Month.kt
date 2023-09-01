@@ -6,27 +6,20 @@ import ac.kr.tukorea.capstone_android.data.UsedProductPrice
 import ac.kr.tukorea.capstone_android.data.UsedProductPriceResponseBody
 import ac.kr.tukorea.capstone_android.databinding.FragmentGraph6monthBinding
 import ac.kr.tukorea.capstone_android.util.App
-import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import kotlinx.android.synthetic.main.fragment_graph_6month.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -125,7 +118,7 @@ class graph6Month(val productId : Long) : Fragment() {
             val horizontalScrollView = view.findViewById<HorizontalScrollView>(R.id.graphSixMonth_scrollview)
             horizontalScrollView.post{
                 horizontalScrollView.scrollTo(
-                    sixMonthLineChart.width,
+                    binding.sixMonthLineChart.width,
                     0
                 )
             }

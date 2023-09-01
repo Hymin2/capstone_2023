@@ -13,7 +13,6 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         if(profile){
             replaceFragment(myProfile())
-            bottomNavigationView.selectedItemId = R.id.my_menu
+            binding.bottomNavigationView.selectedItemId = R.id.my_menu
         }else {
             replaceFragment(Main())
         }

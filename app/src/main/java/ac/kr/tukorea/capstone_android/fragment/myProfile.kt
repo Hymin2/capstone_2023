@@ -19,7 +19,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_my_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,9 +66,9 @@ class myProfile : Fragment() {
         }
 
         binding.editProfile.setOnClickListener {
-            if (myProfile_profileImage.drawable != null) {
+            if (binding.myProfileProfileImage.drawable != null) {
                 val intent = Intent(context, ProfileEditActivity::class.java)
-                val bitmap: Bitmap = myProfile_profileImage.drawable.toBitmap(150, 150)
+                val bitmap: Bitmap = binding.myProfileProfileImage.drawable.toBitmap(150, 150)
                 intent.putExtra("image", bitmap)
                 startActivity(intent)
             } else {

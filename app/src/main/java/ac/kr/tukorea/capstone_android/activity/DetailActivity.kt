@@ -1,8 +1,6 @@
 package ac.kr.tukorea.capstone_android.activity
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.adapter.FollowAdapter
-import ac.kr.tukorea.capstone_android.adapter.RecommendProductAdapter
 import ac.kr.tukorea.capstone_android.adapter.ViewPagerAdapter
 import ac.kr.tukorea.capstone_android.databinding.ActivityDetailBinding
 import ac.kr.tukorea.capstone_android.fragment.graph1Month
@@ -15,7 +13,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide

@@ -179,6 +179,16 @@ class SaleDetailActivity : AppCompatActivity() {
                     .override(Target.SIZE_ORIGINAL)
                     .into(saleDetailUserProfileImage)
             }
+
+            // 채팅하기 버튼
+            saleDetailChatBtn.setOnClickListener {
+                var intent = Intent(this@SaleDetailActivity, ChatActivity::class.java)
+                intent.putExtra("postId", detail.postId)
+                intent.putExtra("username", detail.username)
+                intent.putExtra("nickname", detail.nickname)
+                intent.putExtra("userImage", detail.userImage)
+                startActivity(intent)
+            }
         }
 
         binding.saleDetailProductImageViewPager.apply {

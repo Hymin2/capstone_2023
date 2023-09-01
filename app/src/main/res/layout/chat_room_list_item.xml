@@ -5,13 +5,15 @@
     android:paddingBottom="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/chat_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:src="@drawable/profile_image"
+        android:background="@drawable/chat_profile_image_style"
+        android:clipToOutline="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,8 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:text="상대방 닉네임"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@id/chat_image"
         app:layout_constraintTop_toTopOf="@id/chat_image"/>
 
@@ -32,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="최근 대화 내역"
-        android:textSize="15dp"
+        android:textSize="13dp"
         app:layout_constraintLeft_toLeftOf="@id/chat_other_nickname"
         app:layout_constraintTop_toBottomOf="@id/chat_other_nickname" />
 
@@ -42,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:text="최근 대화 시간"
-        android:textSize="12dp"
+        android:textSize="11dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/chat_other_nickname" />
 
