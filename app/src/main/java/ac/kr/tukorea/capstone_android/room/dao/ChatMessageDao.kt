@@ -1,6 +1,5 @@
 package ac.kr.tukorea.capstone_android.room.dao
 
-import ac.kr.tukorea.capstone_android.data.ChatMessage
 import ac.kr.tukorea.capstone_android.room.entity.ChatMessageEntity
 import androidx.room.Dao
 import androidx.room.Insert

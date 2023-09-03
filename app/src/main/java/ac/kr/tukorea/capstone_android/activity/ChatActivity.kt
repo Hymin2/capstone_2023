@@ -38,7 +38,6 @@ import ua.naiksoftware.stomp.dto.StompHeader
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Collectors
-import kotlin.collections.ArrayList
 
 
 class ChatActivity : AppCompatActivity() {

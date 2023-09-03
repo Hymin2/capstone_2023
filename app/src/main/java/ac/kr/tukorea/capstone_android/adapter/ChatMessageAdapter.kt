@@ -5,7 +5,6 @@ import ac.kr.tukorea.capstone_android.data.ChatMessage
 import ac.kr.tukorea.capstone_android.util.ChatMessageViewType
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

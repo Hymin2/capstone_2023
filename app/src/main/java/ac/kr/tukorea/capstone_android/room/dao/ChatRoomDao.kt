@@ -1,7 +1,6 @@
 package ac.kr.tukorea.capstone_android.room.dao
 
 import ac.kr.tukorea.capstone_android.room.entity.ChatRoomEntity
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao

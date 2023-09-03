@@ -15,7 +15,6 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ChatListAdapter(private val chatList : ArrayList<ChatRoom>, val context : Context) :
     RecyclerView.Adapter<ChatListAdapter.MyViewHolder>() {

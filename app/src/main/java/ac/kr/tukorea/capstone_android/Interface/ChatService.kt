@@ -1,6 +1,9 @@
 package ac.kr.tukorea.capstone_android.Interface
 
-import ac.kr.tukorea.capstone_android.data.*
+import ac.kr.tukorea.capstone_android.data.ChatCreateRequestBody
+import ac.kr.tukorea.capstone_android.data.ChatCreateResponseBody
+import ac.kr.tukorea.capstone_android.data.ChatRoomMessageResponseBody
+import ac.kr.tukorea.capstone_android.data.ChatRoomResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
