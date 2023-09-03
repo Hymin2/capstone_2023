@@ -21,9 +21,9 @@ import retrofit2.Response
 class RetrofitLogin {
     private val service = RetrofitAPI.loginService
 
-    fun login(loginInfo : LoginRequestBody, binding: ActivityLoginBinding, activity: LoginActivity){
+    fun login(loginInfo : LoginRequestBody, binding: ActivityLoginBinding, activity: LoginActivity,token : String){
         CoroutineScope(Dispatchers.IO).launch {
-            service.login(loginInfo).enqueue(object : Callback<LoginResponseBody> {
+            service.login(token, loginInfo).enqueue(object : Callback<LoginResponseBody> {
                 override fun onResponse(
                     call: Call<LoginResponseBody>,
                     response: Response<LoginResponseBody>,

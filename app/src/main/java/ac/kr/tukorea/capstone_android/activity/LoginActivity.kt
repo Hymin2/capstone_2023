@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Log.d("fcm token", App.prefs.getString("fcm_token", ""))
 
-                    retrofitLogin.login(loginInfo, binding, this@LoginActivity)
+                    retrofitLogin.login(loginInfo, binding, this@LoginActivity, App.prefs.getString("fcm_token", ""))
                 }
             }
 

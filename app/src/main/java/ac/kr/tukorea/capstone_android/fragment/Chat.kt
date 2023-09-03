@@ -42,6 +42,17 @@ class Chat : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
+    override fun onResume() {
+        super.onResume()
+
+        if(binding.chatListRadioBuy.isChecked) {
+            getBuyChatRoom()
+        } else {
+            getSellChatRoom()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

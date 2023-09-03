@@ -136,6 +136,16 @@ class ChatActivity : AppCompatActivity() {
         stomp.disconnect()
     }
 
+    override fun onPause() {
+        super.onPause()
+        stomp.disconnect()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        readMessage()
+    }
+
     private fun initRoomID(roomId: Long){
         Log.d("init room id", "before")
         roomID = roomId
@@ -281,6 +291,7 @@ class ChatActivity : AppCompatActivity() {
 
         data.put("roomId", roomID!!)
         data.put("postId", postID!!)
+        data.put("username", App.prefs.getString("username", ""))
         data.put("nickname", App.prefs.getString("nickname", ""))
         data.put("message", message)
         data.put("userType", myUserType)
@@ -360,6 +371,7 @@ class ChatActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     fun readMessage(){
+
         stomp.topic("/sub/room/$roomID").subscribe { message ->
             val data = JSONObject(message.payload)
 
