@@ -33,6 +33,7 @@ class RetrofitLogin {
                         val responseBody = response.body()
 
                         App.prefs.setString("username", loginInfo.username)
+                        App.prefs.setString("nickname", responseBody!!.message)
                         App.prefs.setString("access_token", "Bearer " + responseBody!!.accessToken)
                         App.prefs.setString("refresh_token", "Bearer " + responseBody!!.refreshToken)
 

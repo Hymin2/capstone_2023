@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.Chat"
     android:id="@+id/fragment_chat"
     android:orientation="vertical">
@@ -37,6 +38,7 @@
             android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:button="@null"/>
     </RadioGroup>
 
@@ -44,6 +46,8 @@
         android:id="@+id/chatList_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
         tools:listitem="@layout/chat_room_list_item" />
 
 </LinearLayout>

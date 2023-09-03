@@ -3,12 +3,14 @@ package ac.kr.tukorea.capstone_android.activity
 import ac.kr.tukorea.capstone_android.data.LoginRequestBody
 import ac.kr.tukorea.capstone_android.databinding.ActivityLoginBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitLogin
+import ac.kr.tukorea.capstone_android.util.App
 import ac.kr.tukorea.capstone_android.util.FirebaseCloudMessageService
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseCloudMessageService().getFirebaseToken()
 
         binding.apply {
             btnLogin.setOnClickListener {
@@ -40,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     val retrofitLogin = RetrofitLogin()
                     val loginInfo = LoginRequestBody(edtIdLogin.text.toString(), edtPwLogin.text.toString())
-                    FirebaseCloudMessageService().getFirebaseToken()
 
+                    Log.d("fcm token", App.prefs.getString("fcm_token", ""))
 
                     retrofitLogin.login(loginInfo, binding, this@LoginActivity)
                 }

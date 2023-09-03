@@ -29,7 +29,7 @@ class SaleProductListActivity : AppCompatActivity() {
     private val service = RetrofitAPI.postService
 
     var productId : Long = 0
-    var searchString : String? = null
+    var searchString : String = ""
     var isOnSale : String = "ALL"
 
     override fun onCreate(savedInstanceState: Bundle?) {

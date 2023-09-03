@@ -187,6 +187,7 @@ class SaleDetailActivity : AppCompatActivity() {
                 intent.putExtra("username", detail.username)
                 intent.putExtra("nickname", detail.nickname)
                 intent.putExtra("userImage", detail.userImage)
+                intent.putExtra("userType", "Buyer")
                 startActivity(intent)
             }
         }

@@ -22,7 +22,7 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         Log.d(TAG, "new Token: $token")
 
-        App.prefs.setString("token", token)
+        App.prefs.setString("fcm_token", token)
 
         Log.i(TAG, "성공적으로 토큰을 저장함")
     }
@@ -97,17 +97,8 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
     fun getFirebaseToken() {
         //비동기 방식
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            App.prefs.setString("fcm_token", it)
             Log.d(TAG, "token=${it}")
         }
-
-//		  //동기방식
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//                if (!task.isSuccessful) {
-//                    Log.d(TAG, "Fetching FCM registration token failed ${task.exception}")
-//                    return@OnCompleteListener
-//                }
-//                var deviceToken = task.result
-//                Log.e(TAG, "token=${deviceToken}")
-//            })
     }
 }

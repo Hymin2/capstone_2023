@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/message_profile_image"
+        android:id="@+id/message_first_left_profile_image"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/profile_image"
@@ -17,15 +17,15 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/message_profile_nickname"
+        android:id="@+id/message_first_left_profile_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="닉네임"
         android:layout_marginLeft="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/message_profile_image"/>
+        app:layout_constraintTop_toTopOf="@id/message_first_left_profile_image"/>
     <TextView
-        android:id="@+id/message_left"
+        android:id="@+id/message_first_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="left message"
@@ -34,18 +34,20 @@
         android:padding="10dp"
         android:background="@drawable/chat_left_message_style"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="60dp"
-        app:layout_constraintTop_toBottomOf="@id/message_profile_nickname"
+        app:layout_constraintTop_toBottomOf="@id/message_first_left_profile_nickname"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
-        android:id="@+id/message_left_time"
+        android:id="@+id/message_first_left_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="시간"
         android:textSize="12dp"
         android:layout_marginLeft="5dp"
-        app:layout_constraintBottom_toBottomOf="@id/message_left"
-        app:layout_constraintLeft_toRightOf="@id/message_left"/>
+        app:layout_constraintBottom_toBottomOf="@id/message_first_left"
+        app:layout_constraintLeft_toRightOf="@id/message_first_left"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

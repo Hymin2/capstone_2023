@@ -1,15 +1,23 @@
 package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
-import ac.kr.tukorea.capstone_android.data.ChatList
+import ac.kr.tukorea.capstone_android.data.ChatRoom
+import ac.kr.tukorea.capstone_android.util.ServerInfo
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.request.target.Target
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ChatListAdapter(private val chatList : ArrayList<ChatList>) :
+class ChatListAdapter(private val chatList : ArrayList<ChatRoom>, val context : Context) :
     RecyclerView.Adapter<ChatListAdapter.MyViewHolder>() {
 
     private lateinit var chatListener : onItemClickListener
@@ -31,20 +39,43 @@ class ChatListAdapter(private val chatList : ArrayList<ChatList>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = chatList[position]
-        holder.chatProfileImageId.setImageResource(currentItem.profileImage)
-        holder.chatOpponentName.text = currentItem.opponentName
+
+        holder.chatOpponentName.text = currentItem.opponentNickname
         holder.chatRecentMessage.text = currentItem.recentMessage
+
+        if(currentItem.recentMessageTime != null) {
+            val dateTimeSplit = currentItem.recentMessageTime.split(" ")
+
+            val date = dateTimeSplit[0] + " " + dateTimeSplit[1] + " " + dateTimeSplit[2]
+
+            val timeFormatter = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+            timeFormatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+
+            if(timeFormatter.format(Calendar.getInstance().time) == date)
+                holder.chatRecentTime.text = dateTimeSplit[4] + " " + dateTimeSplit[5]
+            else holder.chatRecentTime.text = date
+        }
+
+        if(currentItem.opponentUserImage != null){
+            val glideUrl = GlideUrl(
+                ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + currentItem.opponentUserImage
+            )
+
+            Glide.with(context).load(glideUrl)
+                .override(Target.SIZE_ORIGINAL)
+                .into(holder.chatProfileImage)
+        }
     }
 
     override fun getItemCount(): Int {
         return chatList.size
     }
 
-    class MyViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView)
-    {
-        val chatProfileImageId : ImageView = itemView.findViewById(R.id.chat_image)
-        val chatOpponentName : TextView = itemView.findViewById(R.id.chat_other_nickname)
-        val chatRecentMessage : TextView = itemView.findViewById(R.id.chat_recent_message)
+    class MyViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
+        val chatProfileImage : ImageView = itemView.findViewById(R.id.chat_room_image)
+        val chatOpponentName : TextView = itemView.findViewById(R.id.chat_room_other_nickname)
+        val chatRecentMessage : TextView = itemView.findViewById(R.id.chat_room_recent_message)
+        val chatRecentTime : TextView = itemView.findViewById(R.id.chat_room_recent_time)
 
         init {
             itemView.setOnClickListener{

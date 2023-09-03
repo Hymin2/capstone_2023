@@ -7,7 +7,7 @@ data class ChatRoomAndMessages(
     @Embedded var room : ChatRoomEntity,
 
     @Relation(
-        parentColumn = "id",
-        entityColumn = "roomId"
+        parentColumn = "room_id",
+        entityColumn = "room_id"
     ) var messages : List<ChatMessageEntity>
 )
