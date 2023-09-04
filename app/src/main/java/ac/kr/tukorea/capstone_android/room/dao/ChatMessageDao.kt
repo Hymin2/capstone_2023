@@ -12,4 +12,7 @@ interface ChatMessageDao {
 
     @Query("SELECT * FROM chat_message_table WHERE room_id = :roomId")
     fun getAllMessageByRoomId(roomId : Long) : List<ChatMessageEntity>
+
+    @Query("SELECT view_type FROM chat_message_table WHERE room_id = :roomId ORDER BY id DESC LIMIT 1")
+    fun getLastMessageViewType(roomId: Long) : Int
 }

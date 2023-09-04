@@ -69,9 +69,9 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val db = MyDataBase.getInstance(this@ChatActivity)
-        val postId = intent.getLongExtra("postId", 0)
+        val postId = intent.getLongExtra("postId", 0L)
         val username = intent.getStringExtra("username")
-        val nickname = intent.getStringExtra("nickname")
+        val nickname = intent.getStringExtra("nickname").orEmpty()
         val userImage = intent.getStringExtra("userImage")
         val userType = intent.getStringExtra("userType")
 
@@ -85,13 +85,12 @@ class ChatActivity : AppCompatActivity() {
             } else{
                 initRoomID(chatRoom.roomId)
 
-                runStomp()
-                readMessage()
-
                 chatList = db!!.chatMessageDao().getAllMessageByRoomId(chatRoom.roomId)
                     .stream()
                     .map{ i -> ChatMessage(i.message, i.day, i.time, i.viewType)}
                     .collect(Collectors.toList()) as ArrayList<ChatMessage>
+
+                db!!.chatRoomDao().setZeroUnreadMessageNumber(chatRoom.roomId)
 
                 setListenerSendMessage()
             }
@@ -143,6 +142,7 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        runStomp()
         readMessage()
     }
 
@@ -351,7 +351,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun getDatetime(): String {
-        val timeFormatter = SimpleDateFormat("yyyy년 MM월 dd일 E요일 a hh:mm", Locale.KOREA)
+        val timeFormatter = SimpleDateFormat("yyyy년 MM월 dd일 E요일 a hh:mm:ss", Locale.KOREA)
         timeFormatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
         return timeFormatter.format(Calendar.getInstance().time)
@@ -363,7 +363,7 @@ class ChatActivity : AppCompatActivity() {
         return datetimeSplit[0] + " " + datetimeSplit[1] + " " + datetimeSplit[2] + " " + datetimeSplit[3]
     }
 
-    fun getTime(datetime: String): String {
+    private fun getTime(datetime: String): String {
         val datetimeSplit = datetime.split(" ")
 
         return datetimeSplit[4] + " " + datetimeSplit[5]

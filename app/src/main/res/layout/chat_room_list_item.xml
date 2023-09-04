@@ -49,5 +49,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/chat_room_other_nickname" />
 
+    <TextView
+        android:id="@+id/chat_room_unread_message_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/oval_style"
+        android:text="1"
+        android:textSize="11dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:padding="5dp"
+        app:layout_constraintRight_toRightOf="@id/chat_room_recent_time"
+        app:layout_constraintBottom_toBottomOf="@id/chat_room_image"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

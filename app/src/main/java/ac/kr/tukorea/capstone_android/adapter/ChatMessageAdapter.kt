@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.target.Target
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatMessageAdapter(private val items : ArrayList<ChatMessage>,
                          private val opponentNickname : String,
@@ -75,24 +78,29 @@ class ChatMessageAdapter(private val items : ArrayList<ChatMessage>,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = items[position]
+        val parser = SimpleDateFormat("a hh:mm:ss", Locale.KOREA)
+        val timeFormatter = SimpleDateFormat("a hh:mm", Locale.KOREA)
 
         if(holder is RightViewHolder){
             holder.message.text = item.message
-            holder.time.text = item.time
+
+            holder.time.text = timeFormatter.format(parser.parse(item.time))
 
             if(isTimeVisibility(position)) holder.time.visibility = View.VISIBLE
             else holder.time.visibility = View.INVISIBLE
 
         } else if(holder is LeftViewHolder){
             holder.message.text = item.message
-            holder.time.text = item.time
+
+            holder.time.text = timeFormatter.format(parser.parse(item.time))
 
             if(isTimeVisibility(position)) holder.time.visibility = View.VISIBLE
             else holder.time.visibility = View.INVISIBLE
 
         } else if(holder is FirstLeftViewHolder){
             holder.message.text = item.message
-            holder.time.text = item.time
+
+            holder.time.text = timeFormatter.format(parser.parse(item.time))
             holder.nickname.text = opponentNickname
 
             if(isTimeVisibility(position)) holder.time.visibility = View.VISIBLE

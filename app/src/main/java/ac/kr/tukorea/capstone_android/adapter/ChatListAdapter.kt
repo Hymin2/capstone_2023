@@ -2,6 +2,7 @@ package ac.kr.tukorea.capstone_android.adapter
 
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.ChatRoom
+import ac.kr.tukorea.capstone_android.room.entity.ChatRoomEntity
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
 import android.view.LayoutInflater
@@ -16,7 +17,7 @@ import com.bumptech.glide.request.target.Target
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChatListAdapter(private val chatList : ArrayList<ChatRoom>, val context : Context) :
+class ChatListAdapter(private val chatList : ArrayList<ChatRoomEntity>, val context : Context) :
     RecyclerView.Adapter<ChatListAdapter.MyViewHolder>() {
 
     private lateinit var chatListener : onItemClickListener
@@ -42,16 +43,28 @@ class ChatListAdapter(private val chatList : ArrayList<ChatRoom>, val context : 
         holder.chatOpponentName.text = currentItem.opponentNickname
         holder.chatRecentMessage.text = currentItem.recentMessage
 
-        if(currentItem.recentMessageTime != null) {
-            val dateTimeSplit = currentItem.recentMessageTime.split(" ")
+        if(currentItem.unReadMessageNumber == 0){
+            holder.chatUnreadMessageNumber.visibility = View.INVISIBLE
+        } else {
+            holder.chatUnreadMessageNumber.text = currentItem.unReadMessageNumber.toString()
+            holder.chatUnreadMessageNumber.visibility = View.VISIBLE
+        }
+
+        if(currentItem.recentTime != null) {
+            val dateTimeSplit = currentItem.recentTime!!.split(" ")
 
             val date = dateTimeSplit[0] + " " + dateTimeSplit[1] + " " + dateTimeSplit[2]
 
             val timeFormatter = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
             timeFormatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
-            if(timeFormatter.format(Calendar.getInstance().time) == date)
-                holder.chatRecentTime.text = dateTimeSplit[4] + " " + dateTimeSplit[5]
+            if(timeFormatter.format(Calendar.getInstance().time) == date) {
+                val parser = SimpleDateFormat("a hh:mm:ss", Locale.KOREA)
+                val timeFormatter = SimpleDateFormat("a hh:mm", Locale.KOREA)
+
+                holder.chatRecentTime.text = timeFormatter.format(parser.parse(dateTimeSplit[4] + " " + dateTimeSplit[5]))
+
+            }
             else holder.chatRecentTime.text = date
         }
 
@@ -75,6 +88,7 @@ class ChatListAdapter(private val chatList : ArrayList<ChatRoom>, val context : 
         val chatOpponentName : TextView = itemView.findViewById(R.id.chat_room_other_nickname)
         val chatRecentMessage : TextView = itemView.findViewById(R.id.chat_room_recent_message)
         val chatRecentTime : TextView = itemView.findViewById(R.id.chat_room_recent_time)
+        val chatUnreadMessageNumber : TextView = itemView.findViewById(R.id.chat_room_unread_message_number)
 
         init {
             itemView.setOnClickListener{
