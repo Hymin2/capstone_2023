@@ -28,12 +28,16 @@ def get_product_list():
     global product_name
     global category_id
     global add_word
+    global product_id
+    
     product_name = []
     category_id = []
     add_word = []
+    product_id = []
     
     product_name_list = product_df['product_name']
     category_id += list(map(int, product_df['category_id']))
+    product_id += list(map(int, product_df['id']))
     
     for n in product_name_list:
         i = 0
@@ -95,11 +99,18 @@ def set_except(product):
             excepts = excepts + ', 플러스, plus, +'
         if ('울트라' or 'ultra') not in product:
             excepts = excepts + ', 울트라, ultra'
-        if ('플립' or '폴드') in product:
+        if '플립' in product:
+            excepts = excepts + ', 폴드'
             if('4') not in product:
-                excepts = excepts + ', 4'
+                excepts = excepts + ', 플립4'
             if('3') not in product:
-                excepts = excepts + ', 3'
+                excepts = excepts + ', 플립3'
+        if '폴드' in product:
+            excepts = excepts + ', 플립'
+            if('4') not in product:
+                excepts = excepts + ', 폴드4'
+            if('3') not in product:
+                excepts = excepts + ', 폴드3'
         if ('라이트' or 'lite') in product:
             excepts = excepts + ', 라이트, lite'
         if 'FE' in product:
@@ -126,18 +137,20 @@ def search_detail(excepts, adder, ctg):
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[2]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[5]').click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
-    
+#//*[@id="divSearchMenuTop"]/ul/li[23]/a
     if ctg == 1:
-        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[22]').click()
-        time.sleep(1)
+        xpath = '//*[@id="divSearchMenuTop"]/ul//a[contains(text(), "휴대폰")]'
+        driver.find_element(By.XPATH, xpath).click()
     elif ctg == 2:
-        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[24]').click()
-        time.sleep(1)
+        xpath = '//*[@id="divSearchMenuTop"]/ul//a[contains(text(), "태블릿")]'
+        driver.find_element(By.XPATH, xpath).click()
         
+    time.sleep(1)
+    
     #상세 설정
     driver.find_element(By.CSS_SELECTOR,'#detailSearchBtn').click()
     time.sleep(1)
@@ -279,11 +292,9 @@ get_product_list()
 
 options = Options()
 
-user_id = '네이버ID'
-user_pw = '네이버PW'
+user_id = '네이버id'
+user_pw = '네이버pw'
 product_price_total = []
-
-pid = 1
 
 wb = Workbook()
 prod_price_total = wb.active
@@ -293,7 +304,7 @@ prod_price_total.append(['time','price', 'product_id'])
 try:
     #크롤링 시작
     for idx in range(len(product_name)):
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(options = options)
         driver.implicitly_wait(5)
         driver.set_window_size(1920,1280)
     
@@ -320,6 +331,7 @@ try:
     
         #시세를 찾을 검색어 설정/검색
         name = product_name[idx]
+        pid = product_id[idx]
         ctg = category_id[idx]
         adder = add_word[idx]
         excepts =  set_except(name) # 1개라도 포함되면 안됨
@@ -336,13 +348,13 @@ try:
     
         #크롤링 종료
         driver.quit()
-        pid += 1
 
     print('----- Crawling finish! ------')
     wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
 
 except Exception as ex:
     print("------ Crawling Error ------")
+    driver.quit()
     err_msg = traceback.format_exc()
     print(err_msg)
     wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
