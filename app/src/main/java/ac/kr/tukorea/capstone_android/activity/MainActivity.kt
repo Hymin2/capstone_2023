@@ -6,6 +6,7 @@ import ac.kr.tukorea.capstone_android.fragment.Chat
 import ac.kr.tukorea.capstone_android.fragment.Main
 import ac.kr.tukorea.capstone_android.fragment.myProfile
 import ac.kr.tukorea.capstone_android.util.App
+import ac.kr.tukorea.capstone_android.util.FirebaseCloudMessageService
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        if(App.prefs.getString("fcm_token", "") == "") FirebaseCloudMessageService().getFirebaseToken()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -39,8 +39,9 @@ class Main : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(tab!!.position){
                         0 -> {
-                            filteringBoxPhone.visibility = View.VISIBLE
                             filteringBoxTablet.visibility = View.GONE
+                            filteringBoxLaptop.visibility = View.GONE
+                            filteringBoxPhone.visibility = View.VISIBLE
                             textTopItem.text = "인기 스마트폰 TOP 10"
                             textProductList.text = "스마트폰 리스트"
 
@@ -49,6 +50,7 @@ class Main : Fragment() {
                         }
                         1 -> {
                             filteringBoxPhone.visibility = View.GONE
+                            filteringBoxLaptop.visibility = View.GONE
                             filteringBoxTablet.visibility = View.VISIBLE
                             textTopItem.text = "인기 태블릿 TOP 10"
                             textProductList.text = "태블릿 리스트"
@@ -58,7 +60,10 @@ class Main : Fragment() {
                         }
 
                         2 -> {
+                            filteringBoxTablet.visibility = View.GONE
                             filteringBoxPhone.visibility = View.GONE
+                            filteringBoxLaptop.visibility = View.VISIBLE
+
                             textTopItem.text = "인기 노트북 TOP 10"
                             textProductList.text = "노트북 리스트"
 
@@ -128,6 +133,26 @@ class Main : Fragment() {
                     }else{
                         filter = filter.replace(("T" + (2001 + filterArrayListTablet.indexOf(cb))).toString(), "")
                         retrofitProduct.getProductList(name, filter, 2L, binding, this@Main)
+                    }
+                }
+            }
+
+            val filterArrayListLaptop = arrayListOf(boxLaptopCompanySamsung, boxLaptopCompanyApple, boxLaptopCompanyLG, boxLaptopCompanyLenovo, boxLaptopCompanyMsi, boxLaptopCompanyAsus, boxLaptopCompanyEtc,
+                boxLaptopPrice50, boxLaptopPrice100, boxLaptopPrice150, boxLaptopPrice200, boxLaptopPrice250, boxLaptopPrice300, boxLaptopPrice300Exceed,
+                boxLaptopSize12, boxLaptopSize14, boxLaptopSize16, boxLaptopSize18,
+                boxLaptopProcessorM2, boxLaptopProcessorM1, boxLaptopProcessorI9, boxLaptopProcessorI7, boxLaptopProcessorI5, boxLaptopProcessorI3, boxLaptopProcessorRyzen9, boxLaptopProcessorRyzen7, boxLaptopProcessorRyzen5, boxLaptopProcessorRyzen3, boxLaptopProcessorEtc,
+                boxLaptopRam4GB, boxLaptopRam8GB, boxLaptopRam16GB, boxLaptopRam32GB, boxLaptopRam64GB,
+                boxLaptopGraphicM2, boxLaptopGraphicM1, boxLaptopGraphic4090, boxLaptopGraphic4080, boxLaptopGraphic4070, boxLaptopGraphic4060, boxLaptopGraphic4050, boxLaptopGraphic3080, boxLaptopGraphic3070, boxLaptopGraphic3060, boxLaptopGraphic3050,
+                boxLaptopGraphic2080, boxLaptopGraphic2070, boxLaptopGraphic2060, boxLaptopGraphic2050)
+
+            for (cb in filterArrayListLaptop){
+                cb.setOnClickListener {
+                    if(cb.isChecked){
+                        filter += "L" + (3001 + filterArrayListLaptop.indexOf(cb)).toString()
+                        retrofitProduct.getProductList(name, filter, 3L, binding, this@Main)
+                    }else{
+                        filter = filter.replace(("L" + (3001 + filterArrayListLaptop.indexOf(cb))).toString(), "")
+                        retrofitProduct.getProductList(name, filter, 3L, binding, this@Main)
                     }
                 }
             }

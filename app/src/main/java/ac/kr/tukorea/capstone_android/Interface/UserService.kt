@@ -39,4 +39,7 @@ interface UserService {
     fun logout(@Header("Authorization") token : String,
                 @Header("Authorization-refresh") refresh : String,
                 @Query("username") username : String) : Call<Unit>
+
+    @PUT("api/v1/fcm/{username}")
+    fun putFcmToken(@Header("Authorization") token: String, @Path("username") username: String, @Body fcmToken: String) : Call<Unit>
 }

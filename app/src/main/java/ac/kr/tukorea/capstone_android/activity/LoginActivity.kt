@@ -28,8 +28,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        FirebaseCloudMessageService().getFirebaseToken()
-
         binding.apply {
             btnLogin.setOnClickListener {
                 if(edtIdLogin.text.isEmpty()){

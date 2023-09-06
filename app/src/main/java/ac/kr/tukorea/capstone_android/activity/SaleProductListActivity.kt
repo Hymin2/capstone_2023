@@ -84,6 +84,12 @@ class SaleProductListActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
 
+                        override fun onProductImageViewPagerClick(position: Int) {
+                            val intent = Intent(this@SaleProductListActivity, SaleDetailActivity::class.java)
+                            intent.putExtra("detail", body.message[position])
+                            startActivity(intent)
+                        }
+
                         override fun onUserProfileImageClick(position: Int) {   // 유저 프로필 사진 클릭 시 해당 유저 프로필로 이동
                             if(body.message[position].username != App.prefs.getString("username", "")) {
                                 val intent = Intent(this@SaleProductListActivity,

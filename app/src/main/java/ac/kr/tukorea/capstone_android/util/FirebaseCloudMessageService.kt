@@ -4,6 +4,7 @@ import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.ChatActivity
 import ac.kr.tukorea.capstone_android.activity.MainActivity
+import ac.kr.tukorea.capstone_android.data.ChatMessage
 import ac.kr.tukorea.capstone_android.data.ChatRoom
 import ac.kr.tukorea.capstone_android.data.ChatRoomResponseBody
 import ac.kr.tukorea.capstone_android.room.database.MyDataBase
@@ -35,10 +36,23 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
 
     /** Token 생성 메서드(FirebaseInstanceIdService 사라짐) */
     override fun onNewToken(token: String) {
-        Log.d(TAG, "new Token: $token")
+        val access_token = App.prefs.getString("access_token", "")
+        val username = App.prefs.getString("username", "")
+
+        if(access_token != "" || username != "") {
+            RetrofitAPI.userService.putFcmToken(access_token, username, token).enqueue(object : Callback<Unit> {
+                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                }
+
+                override fun onFailure(call: Call<Unit>, t: Throwable) {
+                }
+
+            })
+
+            Log.d(TAG, "new Token: $token")
+        }
 
         App.prefs.setString("fcm_token", token)
-
         Log.i(TAG, "성공적으로 토큰을 저장함")
     }
 
@@ -79,16 +93,6 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-        val pm =
-            getSystemService(Context.POWER_SERVICE) as PowerManager
-        @SuppressLint("InvalidWakeLockTag") val wakeLock =
-            pm.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK
-                        or PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG"
-            )
-        wakeLock.acquire(3000)
-        wakeLock.release()
 
         //23.05.22 Android 최신버전 대응 (FLAG_MUTABLE, FLAG_IMMUTABLE)
         //PendingIntent.FLAG_MUTABLE은 PendingIntent의 내용을 변경할 수 있도록 허용, PendingIntent.FLAG_IMMUTABLE은 PendingIntent의 내용을 변경할 수 없음
@@ -181,6 +185,14 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
         val datetime = remoteMessage.data["datetime"].toString()
 
         CoroutineScope(Dispatchers.IO).launch{
+            var prevMessageDay : String = db!!.chatMessageDao().getLastMessageDay(roomId)
+            var currentMessageDay : String = getDate(datetime)
+
+            if(prevMessageDay != currentMessageDay){
+                var centerDayMessage = ChatMessageEntity(0, roomId, currentMessageDay, currentMessageDay, null, ChatMessageViewType.CENTER)
+                db!!.chatMessageDao().insert(centerDayMessage)
+            }
+
             var viewType : Int = if(messageType == "REQUEST" || messageType == "COMPLETE") {
                 ChatMessageViewType.CENTER
             } else {
@@ -218,7 +230,6 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
     fun getFirebaseToken() {
         //비동기 방식
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            App.prefs.setString("fcm_token", it)
             Log.d(TAG, "token=${it}")
         }
     }

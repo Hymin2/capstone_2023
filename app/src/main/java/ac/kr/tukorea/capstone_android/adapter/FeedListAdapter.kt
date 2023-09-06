@@ -22,7 +22,7 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
 
     interface onItemClickListener{
         fun onItemClick(position: Int)
-        fun oNproductImageViewPagerClick(position: Int)
+        fun onProductImageViewPagerClick(position: Int)
         fun onUserProfileImageClick(position: Int)
         fun onUserNicknameClick(position: Int)
     }
@@ -57,7 +57,7 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
             }
 
             productImageViewPager.setOnClickListener {
-                listener.oNproductImageViewPagerClick(adapterPosition)
+                listener.onProductImageViewPagerClick(adapterPosition)
             }
         }
     }

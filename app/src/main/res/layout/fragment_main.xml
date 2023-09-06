@@ -1176,9 +1176,574 @@
                                         android:text="1TB"
                                         android:textColor="@color/white" />
                                 </LinearLayout>
+
+
                             </HorizontalScrollView>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/filtering_box_laptop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:text="제조사"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_samsung"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="삼성"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_apple"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="애플"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_LG"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="LG"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_lenovo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="레노버"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_msi"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="MSI"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_asus"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="ASUS"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_company_etc"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="기타"
+                                        android:textColor="@color/white" />
+
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_laptop_line"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="가격"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:id="@+id/box_laptop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_50"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="~50 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_100"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="50~100 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_150"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="100~150 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_200"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="150~200 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_250"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="200~250 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_300"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="250~300 만원"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_price_300_exceed"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="300 만원 ~"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_laptop_line0"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="크기"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_size_12"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="10~12 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_size_14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="12~14 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_size_16"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="14~16 인치"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_size_18"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="16~18 인치"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_laptop_line1"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="프로세서"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_M2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="M2"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_M1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="M1"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_i9"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="i9"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_i7"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="i7"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_i5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="i5"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_i3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="i3"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_ryzen9"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="라이젠 9"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_ryzen7"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="라이젠 7"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_ryzen5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="라이젠 5"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_ryzen3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="라이젠 3"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_processor_etc"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="기타"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_laptop_line2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="RAM"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_ram_4GB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="4GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_ram_8GB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="8GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_ram_16GB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="16GB"
+                                        android:textColor="@color/white" />
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_ram_32GB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="32GB"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_ram_64GB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="64GB"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/detail_laptop_line3"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:gravity="center"
+                                android:text="그래픽"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <HorizontalScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scrollbars="none" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" >
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_M2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="M2"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_M1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="M1"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_4090"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 4090"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_4080"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 4080"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_4070"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 4070"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_4060"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 4060"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_4050"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 4050"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_3080"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 3080"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_3070"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 3070"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_3060"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 3060"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_3050"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 3050"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_2080"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 2080"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_2070"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 2070"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_2060"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 2060"
+                                        android:textColor="@color/white" />
+
+                                    <CheckBox
+                                        android:id="@+id/box_laptop_graphic_2050"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="5dp"
+                                        android:text="RTX 2050"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </FrameLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

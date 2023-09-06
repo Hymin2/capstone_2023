@@ -122,12 +122,25 @@ class ChatMessageAdapter(private val items : ArrayList<ChatMessage>,
     }
 
     private fun isTimeVisibility(position: Int) : Boolean{
+        if(position == items.size - 1) return true
+
         val item = items[position]
+        val nextItem = items[position + 1]
+
+        var currentTime = item.time
+        var nextTime = nextItem.time
+
+        if(item.time != null && nextItem.time != null) {
+            val parser = SimpleDateFormat("a hh:mm:ss", Locale.KOREA)
+            val timeFormatter = SimpleDateFormat("a hh:mm", Locale.KOREA)
+
+            currentTime = timeFormatter.format(parser.parse(item.time))
+            nextTime = timeFormatter.format(parser.parse(nextItem.time))
+        }
 
         if (items.size == 2) return true
-        else if(position == items.size - 1) return true
-        else if(items[position + 1].time == item.time && items[position + 1].viewType == item.viewType) return false
-        else if(items[position + 1].time == item.time && items[position + 1].viewType == ChatMessageViewType.LEFT && item.viewType == ChatMessageViewType.FIRST_LEFT) return false
+        else if(nextTime == currentTime && items[position + 1].viewType == item.viewType) return false
+        else if(nextTime == currentTime && items[position + 1].viewType == ChatMessageViewType.LEFT && item.viewType == ChatMessageViewType.FIRST_LEFT) return false
         else return true
     }
 

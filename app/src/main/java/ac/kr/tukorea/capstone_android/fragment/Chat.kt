@@ -78,9 +78,6 @@ class Chat : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            chatListRadioGroup.clearCheck()
-            chatListRadioGroup.check(R.id.chatList_radio_buy)
-
             chatListRadioGroup.setOnCheckedChangeListener { p0, rb ->
                 when (rb) {
                     R.id.chatList_radio_buy -> {
@@ -96,6 +93,10 @@ class Chat : Fragment() {
                     }
                 }
             }
+
+            chatListRadioGroup.clearCheck()
+            chatListRadioGroup.check(R.id.chatList_radio_buy)
+
         }
     }
 
