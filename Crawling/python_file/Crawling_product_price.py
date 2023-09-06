@@ -24,16 +24,25 @@ def isExistXpath(xpath, implicitly_wait_time=0, old_wait=25):
 #상품명 리스트 뽑기
 def get_product_list():
     product_df = pd.read_csv('./file/product.csv', encoding='cp949')
+    product_df = product_df.fillna(' ')
     product_df = product_df.astype('string')
     global product_name
     global category_id
     global add_word
+    global product_id
+    global model_name
+    
     product_name = []
     category_id = []
     add_word = []
+    product_id = []
+    model_name = []
     
     product_name_list = product_df['product_name']
     category_id += list(map(int, product_df['category_id']))
+    product_id += list(map(int, product_df['id']))
+    model_name = product_df['model_name']
+    
     
     for n in product_name_list:
         i = 0
@@ -88,22 +97,31 @@ def search_name(product):
 
 #except 설정
 def set_except(product):
-    excepts = '삽니다, 매입, 구매, 구입, 교환'
+    excepts = '삽니다, 매입, 구매, 구입, 교환, 최저가'
     
     if '럭시' in product:
         if ('플러스' or 'plus') not in product:
-            excepts = excepts + ', 플러스, plus, +'
+            excepts = excepts + ', 플러스, plus'
         if ('울트라' or 'ultra') not in product:
             excepts = excepts + ', 울트라, ultra'
-        if ('플립' or '폴드') in product:
+        if '플립' in product:
+            excepts = excepts + ', 폴드'
             if('4') not in product:
-                excepts = excepts + ', 4'
+                excepts = excepts + ', 플립4'
             if('3') not in product:
-                excepts = excepts + ', 3'
+                excepts = excepts + ', 플립3'
+        if '폴드' in product:
+            excepts = excepts + ', 플립'
+            if('4') not in product:
+                excepts = excepts + ', 폴드4'
+            if('3') not in product:
+                excepts = excepts + ', 폴드3'
         if ('라이트' or 'lite') in product:
             excepts = excepts + ', 라이트, lite'
         if 'FE' in product:
             excepts = excepts + ', FE'
+        if ('프로' or 'pro') not in product:
+            excepts = excepts + ', 프로, pro'
             
     elif '이폰' in product:
         if ('프로' or 'pro') not in product:
@@ -126,18 +144,29 @@ def search_detail(excepts, adder, ctg):
     #li[2] = 1일 / li[3] = 1주일 / li[4] = 1개월 / li[5] = 6개월 / li[6] = 1년
     driver.find_element(By.CSS_SELECTOR,'#currentSearchDateTop').click()
     time.sleep(1)
-    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[2]').click()
+    driver.find_element(By.XPATH,'//*[@id="select_list"]/li[4]').click()
     time.sleep(1)
+    
     driver.find_element(By.CSS_SELECTOR,'#currentSearchMenuTop').click()
     time.sleep(1)
     
     if ctg == 1:
-        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[22]').click()
-        time.sleep(1)
+        xpath = '//*[@id="divSearchMenuTop"]/ul//a[contains(text(), "휴대폰")]'
+        driver.find_element(By.XPATH, xpath).click()
     elif ctg == 2:
-        driver.find_element(By.XPATH, '//*[@id="divSearchMenuTop"]/ul/li[24]').click()
-        time.sleep(1)
-        
+        xpath = '//*[@id="divSearchMenuTop"]/ul//a[contains(text(), "태블릿")]'
+        driver.find_element(By.XPATH, xpath).click()
+    elif ctg == 3:
+        xpath = '//*[@id="divSearchMenuTop"]/ul//a[contains(text(), "노트북")]'
+        driver.find_element(By.XPATH, xpath).click()
+    
+    time.sleep(1)
+    
+    driver.find_element(By.CSS_SELECTOR,'#currentSearchByTop').click()
+    time.sleep(1)
+    driver.find_element(By.XPATH,'//*[@id="sl_general"]/li[2]/a').click()
+    time.sleep(1)
+    
     #상세 설정
     driver.find_element(By.CSS_SELECTOR,'#detailSearchBtn').click()
     time.sleep(1)
@@ -283,8 +312,6 @@ user_id = '네이버ID'
 user_pw = '네이버PW'
 product_price_total = []
 
-pid = 1
-
 wb = Workbook()
 prod_price_total = wb.active
 prod_price_total.append(['time','price', 'product_id'])
@@ -293,7 +320,7 @@ prod_price_total.append(['time','price', 'product_id'])
 try:
     #크롤링 시작
     for idx in range(len(product_name)):
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome(options = options)
         driver.implicitly_wait(5)
         driver.set_window_size(1920,1280)
     
@@ -320,9 +347,13 @@ try:
     
         #시세를 찾을 검색어 설정/검색
         name = product_name[idx]
+        pid = product_id[idx]
+        model = model_name[idx]
         ctg = category_id[idx]
         adder = add_word[idx]
         excepts =  set_except(name) # 1개라도 포함되면 안됨
+        if ctg == 3:
+            adder += model
         search_name(name)
 
         print('----- {} --- Product Name : {}'.format(idx, name), '------')
@@ -336,13 +367,15 @@ try:
     
         #크롤링 종료
         driver.quit()
-        pid += 1
 
     print('----- Crawling finish! ------')
+    
+    
     wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
 
 except Exception as ex:
     print("------ Crawling Error ------")
+    driver.quit()
     err_msg = traceback.format_exc()
     print(err_msg)
     wb.save(f'./file/joonggonara_crwling_product_price.xlsx')
