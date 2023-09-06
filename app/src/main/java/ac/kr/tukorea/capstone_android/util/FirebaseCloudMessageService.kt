@@ -9,6 +9,7 @@ import ac.kr.tukorea.capstone_android.data.ChatRoomResponseBody
 import ac.kr.tukorea.capstone_android.room.database.MyDataBase
 import ac.kr.tukorea.capstone_android.room.entity.ChatMessageEntity
 import ac.kr.tukorea.capstone_android.room.entity.ChatRoomEntity
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -16,6 +17,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.os.PowerManager
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -77,6 +79,16 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        val pm =
+            getSystemService(Context.POWER_SERVICE) as PowerManager
+        @SuppressLint("InvalidWakeLockTag") val wakeLock =
+            pm.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK
+                        or PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG"
+            )
+        wakeLock.acquire(3000)
+        wakeLock.release()
 
         //23.05.22 Android 최신버전 대응 (FLAG_MUTABLE, FLAG_IMMUTABLE)
         //PendingIntent.FLAG_MUTABLE은 PendingIntent의 내용을 변경할 수 있도록 허용, PendingIntent.FLAG_IMMUTABLE은 PendingIntent의 내용을 변경할 수 없음

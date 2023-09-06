@@ -3,8 +3,10 @@ package ac.kr.tukorea.capstone_android.retrofit
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.activity.DetailActivity
 import ac.kr.tukorea.capstone_android.adapter.ProductAdapter
+import ac.kr.tukorea.capstone_android.adapter.ProductDetailsAdapter
 import ac.kr.tukorea.capstone_android.adapter.RecommendProductAdapter
 import ac.kr.tukorea.capstone_android.adapter.TopItemAdapter
+import ac.kr.tukorea.capstone_android.data.ProductDetails
 import ac.kr.tukorea.capstone_android.data.ProductDetailsResponseBody
 import ac.kr.tukorea.capstone_android.data.ProductList
 import ac.kr.tukorea.capstone_android.data.ProductListResponseBody
@@ -140,27 +142,14 @@ class RetrofitProduct{
                 if(response.isSuccessful) {
                     var details = response.body()!!.message.productDetails
                     var recommend = response.body()!!.message.recommendProducts
+                    val detailAdapter = ProductDetailsAdapter(details as ArrayList<ProductDetails>)
                     val recommendAdapter = RecommendProductAdapter(recommend as ArrayList<ProductList>, binding.root.context)
 
 
                     binding.apply {
-                        details.stream().forEach { item ->
-                            when (item.detailName) {
-                                "프로세서" -> processorValueTextView.text =
-                                    item.detailContent.replace("/", "")
-                                "RAM" -> ramValueTextView.text = item.detailContent
-                                "내장메모리" -> memoryValueTextView.text = item.detailContent
-                                "통신" -> communicationValueTextView.text = item.detailContent
-                                "카메라" -> cameraValueTextView.text =
-                                    item.detailContent.replace("/ ", "\n")
-                                "보안/기능" -> functionValueTextView.text = item.detailContent
-                                "크기" -> inchValueTextView.text = item.detailContent + "인치"
-                                "디스플레이" -> displayValueTextView.text = item.detailContent
-                                "사운드" -> soundValueTextView.text = item.detailContent
-                                "배터리" -> batteryValueTextView.text = item.detailContent
-                            }
-                        }
-
+                        binding.productDetailRecyclerView.layoutManager = LinearLayoutManager(this.root.context, LinearLayoutManager.VERTICAL, false)
+                        binding.productDetailRecyclerView.adapter = detailAdapter
+                        
                         recommendListRecyclerView.layoutManager = LinearLayoutManager(this.root.context, LinearLayoutManager.HORIZONTAL, false)
                         recommendListRecyclerView.adapter = recommendAdapter
                         recommendAdapter.setOnItemClickListener(object: RecommendProductAdapter.onItemClickListener{

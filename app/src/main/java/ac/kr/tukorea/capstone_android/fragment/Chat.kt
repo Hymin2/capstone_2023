@@ -87,14 +87,12 @@ class Chat : Fragment() {
                         chatListRadioBuy.setTypeface(null, Typeface.BOLD)
                         chatListRadioSell.setTypeface(null, Typeface.NORMAL)
                         insertBuyChatRoom()
-                        getBuyChatRoom()
                     }
 
                     R.id.chatList_radio_sell -> {
                         chatListRadioBuy.setTypeface(null, Typeface.NORMAL)
                         chatListRadioSell.setTypeface(null, Typeface.BOLD)
                         insertSellChatRoom()
-                        getSellChatRoom()
                     }
                 }
             }
@@ -170,6 +168,10 @@ class Chat : Fragment() {
                                 .map { i -> ChatRoomEntity(i.roomId, i.postId, i.opponentUsername, i.opponentNickname, i.opponentUserImage, "buy", null, null) }
                                 .toList())
                         }
+
+                        withContext(Dispatchers.Main){
+                            getBuyChatRoom()
+                        }
                     }
                 }
             }
@@ -227,6 +229,10 @@ class Chat : Fragment() {
                                 .map { i -> ChatRoomEntity(i.roomId, i.postId, i.opponentUsername, i.opponentNickname, i.opponentUserImage, "sell", null, null) }
                                 .toList())
                         }
+
+                        withContext(Dispatchers.Main){
+                            getSellChatRoom()
+                        }
                     }
                 }
             }
@@ -264,7 +270,9 @@ class Chat : Fragment() {
                 intent.putExtra("username", rooms[position].opponentUsername)
                 intent.putExtra("nickname", rooms[position].opponentNickname)
                 intent.putExtra("userImage", rooms[position].opponentUserImage)
-                intent.putExtra("userType", "Buyer")
+
+                if(rooms[position].myUserType == "buy") intent.putExtra("userType", "Buyer")
+                else intent.putExtra("userType", "Seller")
 
                 startActivity(intent)
             }

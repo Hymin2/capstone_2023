@@ -31,7 +31,7 @@
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/drawable/post_image_box_style.xml" value="0.219" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/drawable/square_border.xml" value="0.22" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_chat.xml" value="0.4036458333333333" />
-        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_detail.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_detail.xml" value="0.39213806327900286" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_feed_list.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_follower.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/activity_following.xml" value="0.4036458333333333" />
@@ -82,6 +82,7 @@
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/myshop__list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/myshop_list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/post_image_box_list_item.xml" value="0.21197916666666666" />
+        <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/product_detail_list_item.xml" value="0.4" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/product_list_item.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/recommend_list_item.xml" value="0.40260416666666665" />
         <entry key="..\:/Users/khm82/Capstone_Android/app/src/main/res/layout/searchresult_list_item.xml" value="0.4036458333333333" />

@@ -61,6 +61,9 @@ class Main : Fragment() {
                             filteringBoxPhone.visibility = View.GONE
                             textTopItem.text = "인기 노트북 TOP 10"
                             textProductList.text = "노트북 리스트"
+
+                            retrofitProduct.getProductList(null, null, 3L, binding, this@Main)
+                            retrofitProduct.getTopProductList(3L, binding, this@Main)
                         }
                     }
                 }

@@ -10,6 +10,7 @@ import ac.kr.tukorea.capstone_android.databinding.ActivitySaleProductListBinding
 import ac.kr.tukorea.capstone_android.util.App
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -115,11 +116,13 @@ class SaleProductListActivity : AppCompatActivity() {
                     })
                     binding.saleProductListRecyclerView.adapter = adapter
                 }else{
+                    Log.d("log", "log")
                     Toast.makeText(this@SaleProductListActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<PostResponseBody>, t: Throwable) {
+                Log.d("log", t.message!!)
                 Toast.makeText(this@SaleProductListActivity, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
 

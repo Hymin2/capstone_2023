@@ -4,6 +4,7 @@ import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.data.PostInfo
 import ac.kr.tukorea.capstone_android.util.ServerInfo
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
 
     interface onItemClickListener{
         fun onItemClick(position: Int)
-
+        fun oNproductImageViewPagerClick(position: Int)
         fun onUserProfileImageClick(position: Int)
         fun onUserNicknameClick(position: Int)
     }
@@ -54,6 +55,10 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
             userNickname.setOnClickListener {
                 listener.onUserNicknameClick(adapterPosition)
             }
+
+            productImageViewPager.setOnClickListener {
+                listener.oNproductImageViewPagerClick(adapterPosition)
+            }
         }
     }
 
@@ -71,6 +76,8 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
         val imageAdapter = ImagePagerAdapter(context, item.postImages)
         holder.productImageViewPager.adapter = imageAdapter
 
+        Log.d("feed", item.nickname + ": " + item.userImage + " " + (item.userImage == null).toString())
+
         if(item.userImage != null) {
             val glideUrl = GlideUrl(
                 ServerInfo.SERVER_URL.url + ServerInfo.USER_IMAGE_URI.url + item.userImage
@@ -79,7 +86,11 @@ class FeedListAdapter(private var items: ArrayList<PostInfo>, val context : Cont
             Glide.with(context).load(glideUrl)
                 .override(Target.SIZE_ORIGINAL)
                 .into(holder.userProfileImage)
+        } else{
+            holder.userProfileImage.setImageResource(R.drawable.profile_image)
         }
+
+
         holder.title.text = item.postTitle
         holder.content.text = item.postContent
         holder.price.text = toLongFormat(item.price)
