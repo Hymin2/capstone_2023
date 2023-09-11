@@ -26,6 +26,9 @@ interface ChatRoomDao {
     @Query("SELECT * FROM chat_room_table WHERE post_id = :postId limit 1")
     fun getRoomByPostId(postId : Long) : ChatRoomEntity
 
+    @Query("SELECT * FROM chat_room_table WHERE room_id = :roomId limit 1")
+    fun getRoomByRoomId(roomId : Long) : ChatRoomEntity
+
     @Query("SELECT * FROM chat_room_table WHERE my_user_type = :myUserType ORDER BY recent_time DESC")
     fun getRoomsByMyUserType(myUserType : String) : List<ChatRoomEntity>
 

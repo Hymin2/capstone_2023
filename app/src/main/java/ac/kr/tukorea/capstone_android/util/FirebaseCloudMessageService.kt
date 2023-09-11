@@ -33,6 +33,7 @@ import retrofit2.Response
 
 class FirebaseCloudMessageService : FirebaseMessagingService() {
     private val TAG = "FirebaseService"
+    val intent = Intent(this, ChatActivity::class.java)
 
     /** Token 생성 메서드(FirebaseInstanceIdService 사라짐) */
     override fun onNewToken(token: String) {
@@ -84,13 +85,7 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
         // RequestCode, Id를 고유값으로 지정하여 알림이 개별 표시
         val uniId: Int = remoteMessage.data["roomId"]!!.toInt()
 
-        // 일회용 PendingIntent : Intent 의 실행 권한을 외부의 어플리케이션에게 위임
-        val intent = Intent(this, ChatActivity::class.java)
-        //각 key, value 추가
-        for(key in remoteMessage.data.keys){
-            if (key == "postId") intent.putExtra("postId", remoteMessage.data.getValue(key).toLong())
-            else intent.putExtra(key, remoteMessage.data.getValue(key))
-        }
+        saveRoomAndMessage(remoteMessage)
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
@@ -127,8 +122,6 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
 
         // 알림 생성
         notificationManager.notify(uniId, notificationBuilder.build())
-
-        saveRoomAndMessage(remoteMessage)
     }
 
     private fun saveRoomAndMessage(remoteMessage: RemoteMessage){
@@ -138,7 +131,17 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
             if(db!!.chatRoomDao().existRoom(remoteMessage.data["roomId"]!!.toLong()) == null){
                 getRoom(remoteMessage.data["roomId"]!!.toLong(), remoteMessage)
             }
-            else saveMessage(remoteMessage)
+            else{
+                val room = db!!.chatRoomDao().getRoomByRoomId(remoteMessage.data["roomId"]!!.toLong())
+
+                intent.putExtra("postId", room.postId)
+                intent.putExtra("username", room.opponentUsername)
+                intent.putExtra("nickname", room.opponentNickname)
+                intent.putExtra("userImage", room.opponentUserImage)
+                intent.putExtra("userType", room.myUserType)
+
+                saveMessage(remoteMessage)
+            }
         }
 
     }
@@ -170,6 +173,12 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
         CoroutineScope(Dispatchers.IO).launch {
             val chatRoomEntity = ChatRoomEntity(chatRoom.roomId, chatRoom.postId, chatRoom.opponentUsername, chatRoom.opponentNickname, chatRoom.opponentUserImage, "sell", null, null, 0)
             db!!.chatRoomDao().insert(chatRoomEntity)
+
+            intent.putExtra("postId", chatRoom.postId)
+            intent.putExtra("username", chatRoom.opponentUsername)
+            intent.putExtra("nickname", chatRoom.opponentNickname)
+            intent.putExtra("userImage", chatRoom.opponentUserImage)
+            intent.putExtra("userType", "sell")
 
             saveMessage(remoteMessage)
         }
