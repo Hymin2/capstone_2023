@@ -23,7 +23,7 @@ import retrofit2.Response
 class SoldOut(val username : String) : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private val service = RetrofitAPI.postService
+    private val service = RetrofitAPI.userService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +41,7 @@ class SoldOut(val username : String) : Fragment() {
         val gridLayoutManager = GridLayoutManager(context, 3)
         recyclerView.layoutManager = gridLayoutManager
 
-        service.getPostList(token = App.prefs.getString("access_token", ""), null, username, null, null , "N").enqueue(object :
+        service.getMyPosts(token = App.prefs.getString("access_token", ""),  username,  "N").enqueue(object :
             Callback<PostResponseBody> {
             override fun onResponse(
                 call: Call<PostResponseBody>,

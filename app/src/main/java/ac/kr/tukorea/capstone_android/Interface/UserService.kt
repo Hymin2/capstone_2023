@@ -1,9 +1,6 @@
 package ac.kr.tukorea.capstone_android.Interface
 
-import ac.kr.tukorea.capstone_android.data.FollowRegisterRequestBody
-import ac.kr.tukorea.capstone_android.data.FollowResponseBody
-import ac.kr.tukorea.capstone_android.data.ResponseBody
-import ac.kr.tukorea.capstone_android.data.UserInfoResponseBody
+import ac.kr.tukorea.capstone_android.data.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -26,6 +23,9 @@ interface UserService {
 
     @GET("api/v1/user/follow/follower")
     fun getFollowerList(@Header("Authorization") token: String, @Query("username") username : String) :Call<FollowResponseBody>
+
+    @GET("api/v1/user/my-posts")
+    fun getMyPosts(@Header("Authorization") token: String, @Query("username") username : String, @Query("isOnSale") isOnSale : String) : Call<PostResponseBody>
 
     @POST("api/v1/user/follow")
     fun registerFollow(@Header("Authorization") token: String, @Body followRegisterRequestBody : FollowRegisterRequestBody) : Call<ResponseBody>

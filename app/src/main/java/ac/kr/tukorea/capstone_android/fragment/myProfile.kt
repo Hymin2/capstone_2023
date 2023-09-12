@@ -99,6 +99,7 @@ class myProfile : Fragment() {
                     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                         if(response.isSuccessful){
                             App.prefs.setString("username", "")
+                            App.prefs.setString("nickname", "")
                             App.prefs.setString("access_token", "")
                             App.prefs.setString("refresh_token", "")
 
