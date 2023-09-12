@@ -40,10 +40,19 @@ class myProfile : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getMyInfo()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // 탭 레이아웃과 뷰페이저 설정
+    }
+
+
+    fun getMyInfo(){
         val pagerAdapter = MyPagerAdapter()
         binding.myProfileViewPager.adapter = pagerAdapter
 
@@ -80,10 +89,7 @@ class myProfile : Fragment() {
         val retrofitUser = RetrofitUser()
 
         retrofitUser.getUserInfo(App.prefs.getString("username", ""), binding)
-
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.my_profile_menu, menu)
