@@ -70,20 +70,34 @@ class ChatActivity : AppCompatActivity() {
 
         val db = MyDataBase.getInstance(this@ChatActivity)
         val postId = intent.getLongExtra("postId", 0L)
-        val username = intent.getStringExtra("username")
-        val nickname = intent.getStringExtra("nickname").orEmpty()
-        val userImage = intent.getStringExtra("userImage")
-        val userType = intent.getStringExtra("userType")
 
-        initData(postId, username!!, nickname!!, userImage, userType!!)
+        if(postId != 0L){
+            opponentUsername = intent.getStringExtra("username")
+            opponentNickname = intent.getStringExtra("nickname")
+            opponentUserImage = intent.getStringExtra("userImage")
+            myUserType = "Buyer"
+        }
+
+        val roomId = intent.getLongExtra("roomId", 0L)
 
         CoroutineScope(Dispatchers.IO).launch { // 다른애 한테 일 시키기
-            var chatRoom = db!!.chatRoomDao().getRoomByPostId(postId)
-
+            var chatRoom = db!!.chatRoomDao().getRoomByRoomId(roomId)
             if(chatRoom == null){
                 setListenerFirstSendMessage()
+
+                withContext(Dispatchers.Main) {
+                    binding.apply {
+                        chattingRecyclerView.layoutManager = LinearLayoutManager(this@ChatActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false)
+                        chattingRecyclerView.adapter = ChatMessageAdapter(chatList, opponentNickname!!, opponentUserImage, this@ChatActivity)
+                        chattingRecyclerView.scrollToPosition(chatList.size - 1)
+
+                        chatOpponentName.text = opponentNickname
+                    }
+                }
             } else{
-                initRoomID(chatRoom.roomId)
+                initData(chatRoom.postId, chatRoom.roomId, chatRoom.opponentUsername, chatRoom.opponentNickname, chatRoom.opponentUserImage, chatRoom.myUserType)
 
                 chatList = db!!.chatMessageDao().getAllMessageByRoomId(chatRoom.roomId)
                     .stream()
@@ -93,22 +107,22 @@ class ChatActivity : AppCompatActivity() {
                 db!!.chatRoomDao().setZeroUnreadMessageNumber(chatRoom.roomId)
 
                 setListenerSendMessage()
-            }
 
-            withContext(Dispatchers.Main) {
-                binding.apply {
-                    chattingRecyclerView.layoutManager = LinearLayoutManager(this@ChatActivity,
-                        LinearLayoutManager.VERTICAL,
-                        false)
-                    chattingRecyclerView.adapter = ChatMessageAdapter(chatList, opponentNickname!!, opponentUserImage, this@ChatActivity)
-                    chattingRecyclerView.scrollToPosition(chatList.size - 1)
+                withContext(Dispatchers.Main) {
+                    binding.apply {
+                        chattingRecyclerView.layoutManager = LinearLayoutManager(this@ChatActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false)
+                        chattingRecyclerView.adapter = ChatMessageAdapter(chatList, chatRoom.opponentNickname, chatRoom.opponentUserImage, this@ChatActivity)
+                        chattingRecyclerView.scrollToPosition(chatList.size - 1)
+
+                        chatOpponentName.text = chatRoom.opponentNickname
+                    }
                 }
             }
         }
 
         binding.apply {
-            chatOpponentName.text = nickname
-
             chatBtnBack.setOnClickListener {
                 onBackPressed()
             }
@@ -154,12 +168,14 @@ class ChatActivity : AppCompatActivity() {
 
     private fun initData(
         postId: Long,
+        roomId: Long,
         username: String,
         nickname: String,
         userImage: String?,
         userType: String
     ){
         postID = postId
+        roomID = roomId
         opponentUsername = username
         opponentNickname = nickname
         opponentUserImage = userImage

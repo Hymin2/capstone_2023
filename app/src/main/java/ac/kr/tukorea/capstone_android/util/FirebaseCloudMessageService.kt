@@ -33,7 +33,6 @@ import retrofit2.Response
 
 class FirebaseCloudMessageService : FirebaseMessagingService() {
     private val TAG = "FirebaseService"
-    val intent = Intent(this, ChatActivity::class.java)
 
     /** Token 생성 메서드(FirebaseInstanceIdService 사라짐) */
     override fun onNewToken(token: String) {
@@ -84,9 +83,11 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
     private fun sendNotification(remoteMessage: RemoteMessage) {
         // RequestCode, Id를 고유값으로 지정하여 알림이 개별 표시
         val uniId: Int = remoteMessage.data["roomId"]!!.toInt()
+        val intent = Intent(this, ChatActivity::class.java)
 
         saveRoomAndMessage(remoteMessage)
 
+        intent.putExtra("roomId", remoteMessage.data["roomId"]!!.toLong())
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         //23.05.22 Android 최신버전 대응 (FLAG_MUTABLE, FLAG_IMMUTABLE)
@@ -134,12 +135,6 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
             else{
                 val room = db!!.chatRoomDao().getRoomByRoomId(remoteMessage.data["roomId"]!!.toLong())
 
-                intent.putExtra("postId", room.postId)
-                intent.putExtra("username", room.opponentUsername)
-                intent.putExtra("nickname", room.opponentNickname)
-                intent.putExtra("userImage", room.opponentUserImage)
-                intent.putExtra("userType", room.myUserType)
-
                 saveMessage(remoteMessage)
             }
         }
@@ -173,12 +168,6 @@ class FirebaseCloudMessageService : FirebaseMessagingService() {
         CoroutineScope(Dispatchers.IO).launch {
             val chatRoomEntity = ChatRoomEntity(chatRoom.roomId, chatRoom.postId, chatRoom.opponentUsername, chatRoom.opponentNickname, chatRoom.opponentUserImage, "sell", null, null, 0)
             db!!.chatRoomDao().insert(chatRoomEntity)
-
-            intent.putExtra("postId", chatRoom.postId)
-            intent.putExtra("username", chatRoom.opponentUsername)
-            intent.putExtra("nickname", chatRoom.opponentNickname)
-            intent.putExtra("userImage", chatRoom.opponentUserImage)
-            intent.putExtra("userType", "sell")
 
             saveMessage(remoteMessage)
         }

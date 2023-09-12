@@ -267,10 +267,7 @@ class Chat : Fragment() {
             override fun onItemClick(position: Int) {
                 val intent = Intent(context, ChatActivity::class.java)
 
-                intent.putExtra("postId", rooms[position].postId)
-                intent.putExtra("username", rooms[position].opponentUsername)
-                intent.putExtra("nickname", rooms[position].opponentNickname)
-                intent.putExtra("userImage", rooms[position].opponentUserImage)
+                intent.putExtra("roomId", rooms[position].roomId)
 
                 if(rooms[position].myUserType == "buy") intent.putExtra("userType", "Buyer")
                 else intent.putExtra("userType", "Seller")

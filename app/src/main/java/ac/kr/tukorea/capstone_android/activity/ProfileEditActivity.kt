@@ -116,7 +116,10 @@ class ProfileEditActivity : AppCompatActivity() {
 
         if(nickname.isEmpty())
             Toast.makeText(this, "닉네임을 입력해주세요.", Toast.LENGTH_SHORT)
-        else retrofitUser.updateNickname(App.prefs.getString("username", ""), nickname, binding)
+        else {
+            App.prefs.setString("nickname", nickname)
+            retrofitUser.updateNickname(App.prefs.getString("username", ""), nickname, binding)
+        }
     }
 }
 

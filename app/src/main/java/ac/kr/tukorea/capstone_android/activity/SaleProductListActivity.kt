@@ -33,6 +33,11 @@ class SaleProductListActivity : AppCompatActivity() {
     var searchString : String = ""
     var isOnSale : String = "ALL"
 
+    override fun onResume() {
+        super.onResume()
+        searchPost()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,7 +49,7 @@ class SaleProductListActivity : AppCompatActivity() {
 
         productId = intent.getLongExtra("productId", 0L)
 
-        searchPost()
+
 
         val recyclerLayoutManager = LinearLayoutManager(this)
         binding.saleProductListRecyclerView.apply {
@@ -68,7 +73,7 @@ class SaleProductListActivity : AppCompatActivity() {
     }
 
     fun searchPost(){
-        service.getPostList(App.prefs.getString("access_token", ""), productId, null, searchString, searchString, isOnSale).enqueue(object:
+        service.getPostList(App.prefs.getString("access_token", ""), productId, App.prefs.getString("username", ""), searchString, searchString, isOnSale).enqueue(object:
             Callback<PostResponseBody> {
             override fun onResponse(
                 call: Call<PostResponseBody>,
