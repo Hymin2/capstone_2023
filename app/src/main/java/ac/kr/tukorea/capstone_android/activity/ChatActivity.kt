@@ -88,6 +88,22 @@ class ChatActivity : AppCompatActivity() {
                         opponentUserImage = intent.getStringExtra("userImage")
                         myUserType = "buy"
                         postID = postId
+
+                        withContext(Dispatchers.Main) {
+                            binding.apply {
+                                chattingRecyclerView.layoutManager =
+                                    LinearLayoutManager(this@ChatActivity,
+                                        LinearLayoutManager.VERTICAL,
+                                        false)
+                                chattingRecyclerView.adapter = ChatMessageAdapter(chatList,
+                                    opponentNickname!!,
+                                    opponentUserImage,
+                                    this@ChatActivity)
+                                chattingRecyclerView.scrollToPosition(chatList.size - 1)
+
+                                chatOpponentName.text = opponentNickname
+                            }
+                        }
                     } else {
                         initData(chatRoom.postId,
                             chatRoom.roomId,
