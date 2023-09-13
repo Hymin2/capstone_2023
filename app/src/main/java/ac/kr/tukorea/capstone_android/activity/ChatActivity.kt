@@ -72,10 +72,14 @@ class ChatActivity : AppCompatActivity() {
         val postId = intent.getLongExtra("postId", 0L)
 
         if(postId != 0L){
+            Log.d("채팅", postId.toString())
+
             opponentUsername = intent.getStringExtra("username")
             opponentNickname = intent.getStringExtra("nickname")
             opponentUserImage = intent.getStringExtra("userImage")
             myUserType = "Buyer"
+            postID = postId
+            Log.d("채팅", opponentUsername.toString())
         }
 
         val roomId = intent.getLongExtra("roomId", 0L)
