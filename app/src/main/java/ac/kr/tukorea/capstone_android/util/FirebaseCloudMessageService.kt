@@ -3,14 +3,11 @@ package ac.kr.tukorea.capstone_android.util
 import ac.kr.tukorea.capstone_android.API.RetrofitAPI
 import ac.kr.tukorea.capstone_android.R
 import ac.kr.tukorea.capstone_android.activity.ChatActivity
-import ac.kr.tukorea.capstone_android.activity.MainActivity
-import ac.kr.tukorea.capstone_android.data.ChatMessage
 import ac.kr.tukorea.capstone_android.data.ChatRoom
 import ac.kr.tukorea.capstone_android.data.ChatRoomResponseBody
 import ac.kr.tukorea.capstone_android.room.database.MyDataBase
 import ac.kr.tukorea.capstone_android.room.entity.ChatMessageEntity
 import ac.kr.tukorea.capstone_android.room.entity.ChatRoomEntity
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -18,9 +15,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.os.PowerManager
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.room.Transaction
 import com.google.firebase.messaging.FirebaseMessaging

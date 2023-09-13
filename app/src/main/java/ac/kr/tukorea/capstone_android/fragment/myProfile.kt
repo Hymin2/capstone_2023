@@ -8,7 +8,9 @@ import ac.kr.tukorea.capstone_android.activity.LoginActivity
 import ac.kr.tukorea.capstone_android.activity.ProfileEditActivity
 import ac.kr.tukorea.capstone_android.databinding.FragmentMyProfileBinding
 import ac.kr.tukorea.capstone_android.retrofit.RetrofitUser
+import ac.kr.tukorea.capstone_android.room.database.MyDataBase
 import ac.kr.tukorea.capstone_android.util.App
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -19,6 +21,9 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -102,12 +107,19 @@ class myProfile : Fragment() {
                 userService.logout(App.prefs.getString("access_token", ""),
                     App.prefs.getString("refresh_token", ""),
                     App.prefs.getString("username", "")).enqueue(object : Callback<Unit>{
+                    @SuppressLint("UseRequireInsteadOfGet")
                     override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                         if(response.isSuccessful){
                             App.prefs.setString("username", "")
                             App.prefs.setString("nickname", "")
                             App.prefs.setString("access_token", "")
                             App.prefs.setString("refresh_token", "")
+
+                            val db = MyDataBase.getInstance(this@myProfile.context!!)
+
+                            CoroutineScope(Dispatchers.IO).launch {
+                                db!!.clearAllTables()
+                            }
 
                             val intent = Intent(context, LoginActivity::class.java)
                             startActivity(intent)
